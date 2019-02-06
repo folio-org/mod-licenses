@@ -72,14 +72,14 @@ dependencies {
   runtime "org.grails.plugins:events"
 
   compile "org.grails.plugins:spring-security-core:3.2.0"
-  compile 'org.grails.plugins:database-migration:3.0.3'
-  compile 'org.liquibase:liquibase-core:3.5.3'
+  compile 'org.grails.plugins:database-migration:3.0.4'
+  compile 'org.liquibase:liquibase-core:3.5.5'
   compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
 }
 
 // Changed this to enable inline development of the includes listed below.
 def includes = [
-  'web-toolkit'   : 'com.k_int.grails:web-toolkit:3.3.22',
+  'web-toolkit'   : 'com.k_int.grails:web-toolkit:3.3.23',
   'grails-okapi'  : 'com.k_int.okapi:grails-okapi:3.3.20'
 ]
 
