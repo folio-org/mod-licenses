@@ -21,78 +21,89 @@
       ]
     }
   },
-  "propertyDefinitions" : [
-    {
+  "propertyDefinitions" : [{
+      "name" : "concurrentAccess",
+      "type" : "Integer",
+      "label" : "Number of concurrent users allowed",
+      "description" : "The number of concurrent users allowed by the resource",
+      "primary": true
+    },{
       "name" : "authorisedUsers",
       "type" : "Text",
       "label" : "Definition of authorised user",
       "description" : "The definition of an authorised user for a resource",
-      "weight": 1
-    },{
-      "name" : "concurrentAccess",
-      "type" : "Integer",
-      "label" : "Number of concurrent users allowed",
-      "description" : "The number of concurrent users allowed by the resource"
+      "weight": -1,
+      "primary": true
     },{
       "name" : "walkInAccess",
       "category" : .refdataCategories.yesno.id,
       "type" : "Refdata",
       "label" : "Walk-in access permitted?",
-      "description" : "Can non-members of the library/instittuion use the resource when in the library"
+      "description" : "Can non-members of the library/instittuion use the resource when in the library",
+      "primary": true
     },{
       "name" : "remoteAccess",
       "category" : .refdataCategories.yesno.id,
       "type" : "Refdata",
       "label" : "Access restricted to on-campus/campus network?",
-      "description" : "Can access to the resource be provided from outside the library or institutional location / network"
+      "description" : "Can access to the resource be provided from outside the library or institutional location / network",
+      "primary": true
     },{
       "name" : "illElectronic",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Electronic ILL",
-      "description" : "The right to provide the licensed materials via interlibrary loan by way of electronic copies"
+      "description" : "The right to provide the licensed materials via interlibrary loan by way of electronic copies",
+      "primary": true
     },{
       "name" : "illSecureElectronic",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Secure Electronic ILL",
-      "description" : "The right to provide the licensed materials via interlibrary loan by way of secure electronic transmission"
+      "description" : "The right to provide the licensed materials via interlibrary loan by way of secure electronic transmission",
+      "primary": true
     },{
       "name" : "illPrint",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Print ILL",
-      "description" : "The right to provide the licensed materials via interlibrary loan by way of print copies or facsimile transmission"
+      "description" : "The right to provide the licensed materials via interlibrary loan by way of print copies or facsimile transmission",
+      "primary": true
     },{
       "name" : "reservesElectronic",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Storage of electronic copies on secure network",
-      "description" : "The right to make electronic copies of the licensed materials and store them on a secure network"
+      "description" : "The right to make electronic copies of the licensed materials and store them on a secure network",
+      "primary": true
     },{
       "name" : "coursePackElectronic",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Use in electronic coursepacks",
-      "description" : "The right to use licensed materials in collections or compilations of materials assembled in an electronic format by faculty members for use by students in a class for purposes of instruction"
+      "description" : "The right to use licensed materials in collections or compilations of materials assembled in an electronic format by faculty members for use by students in a class for purposes of instruction",
+      "primary": true
     },{
       "name" : "coursePackPrint",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Use in print course packs",
-      "description" : "The right to use licensed materials in collections or compilations of materials assembled in a print format by faculty members for use by students in a class for purposes of instruction"
+      "description" : "The right to use licensed materials in collections or compilations of materials assembled in a print format by faculty members for use by students in a class for purposes of instruction",
+      "primary": true
     },{
       "name" : "copyDigital",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Making digital copies",
-      "description" : "The right of the licensee and authorized users to download and digitally copy a reasonable portion of the licensed materials"
+      "description" : "The right of the licensee and authorized users to download and digitally copy a reasonable portion of the licensed materials",
+      "primary": true
     },{
       "name" : "copyPrint",
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Making print copies",
-      "description" : "The right of the licensee and authorized users to print a reasonable portion of the licensed materials"
+      "description" : "The right of the licensee and authorized users to print a reasonable portion of the licensed materials",
+      "primary": true
     },{
       "name" : "scholarlySharing",
       "category" : .refdataCategories.permittedprohibited.id,
@@ -109,8 +120,7 @@
       "category" : .refdataCategories.permittedprohibited.id,
       "type" : "Refdata",
       "label" : "Text and Data mining",
-      "description" : "Whether it is permitted to use text and data mining processes on the content of the resource",
-      "weight": -1
+      "description" : "Whether it is permitted to use text and data mining processes on the content of the resource"
     },{
       "name" : "metadataUsage",
       "type" : "Text",
@@ -129,6 +139,13 @@
       "label" : "Access via a proxy supported?",
       "description" : "Whether authentication via a reverse proxy is supported"
     },{
+      "name" : "postCancellationAccess",
+      "category" : .refdataCategories.yesno.id,
+      "type" : "Refdata",
+      "label" : "Post-cancellation terms included?",
+      "description" : "Does the license include post-cancellation terms?",
+      "weight": 1
+    },{
       "name" : "authSAML",
       "category" : .refdataCategories.yesno.id,
       "type" : "Refdata",
@@ -145,12 +162,6 @@
       "type" : "Text",
       "label" : "Whether the resource is subject to an APC discount or subscription cost offsetting agreement",
       "description" : "Whether the resource is subject to an APC discount or subscription cost offsetting agreement"
-    },{
-      "name" : "postCancellationAccess",
-      "category" : .refdataCategories.yesno.id,
-      "type" : "Refdata",
-      "label" : "Post-cancellation terms included?",
-      "description" : "Does the license include post-cancellation terms?"
     }
   ],
   "licenseDefs": [
