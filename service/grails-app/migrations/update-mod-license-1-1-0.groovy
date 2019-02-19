@@ -86,5 +86,10 @@ databaseChangeLog = {
     addForeignKeyConstraint(baseColumnNames: "sao_role", baseTableName: "license_org", constraintName: "FK1c9a0516d1bmdsb2afw6uxgtd", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value")
   }
 
-
+  changeSet(author: "sosguthorpe (generated)", id: "2019-02-19-ERM-6") {
+    addColumn(tableName: "custom_property_definition") {
+      column(name: "pd_primary", type: "BOOLEAN")
+    }
+    addNotNullConstraint (tableName: "custom_property_definition", columnName: "pd_primary", defaultNullValue: 'FALSE')
+  }
 }
