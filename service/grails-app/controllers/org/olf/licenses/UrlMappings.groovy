@@ -5,7 +5,21 @@ class UrlMappings {
   static mappings = {
 
     "/"(controller: 'application', action:'index')
-    "/licenses/licenses"(resources:'license')
+    "/licenses/licenses"(resources:'license') {
+      "/linkedAgreements" {
+        namespace         = 'okapi'
+        controller        = 'resourceProxy'
+        targetPath        = '/erm/sas/linkedLicenses'
+        defaultParams     = [
+          'filters':[
+            { "remoteId==${params.licenseId}" }
+          ]
+        ]
+        withParameters    = true
+      }
+    }
+    
+    
     "/licenses/licenseLinks"(resources:'licenseLink')
 
     '/licenses/refdata'(resources: 'refdata') {
