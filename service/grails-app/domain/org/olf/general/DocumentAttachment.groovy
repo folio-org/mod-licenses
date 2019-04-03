@@ -14,7 +14,9 @@ class DocumentAttachment implements MultiTenant<DocumentAttachment> {
   Date dateCreated
   Date lastUpdated
 
-  @Defaults(['License', 'Misc', 'Consortium Negotiation Document'])
+  //	@Defaults(['License', 'Misc', 'Consortium Negotiation Document'])
+  @Defaults(['Consortium authorisation statement', 'Product data sheet', 'Vendor terms and conditions'])
+  
   RefdataValue atType
 
   static mapping = {
