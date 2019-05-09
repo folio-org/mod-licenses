@@ -1,0 +1,8 @@
+import groovy.transform.*
+import org.olf.licenses.InternalContact
+
+@Field InternalContact internalContact
+json g.render(internalContact, [expand: ['role',
+                                         'user']]) {
+
+}

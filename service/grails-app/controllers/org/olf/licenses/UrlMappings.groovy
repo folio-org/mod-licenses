@@ -22,6 +22,8 @@ class UrlMappings {
     
     "/licenses/licenseLinks"(resources:'licenseLink')
 
+    '/licenses/contacts'(resources: 'internalContact')
+
     '/licenses/refdata'(resources: 'refdata') {
       collection {
         "/$domain/$property" (controller: 'refdata', action: 'lookup')

@@ -3,7 +3,8 @@ import org.olf.licenses.License
 import groovy.transform.*
 
 @Field License license
-json g.render(license, [expand: ['licenseProps', 'tags', 'customProperties', 'status', 'type', 'orgs', 'docs', 'supplementaryDocs' ]]) {
+
+json g.render(license, [expand: ['licenseProps', 'tags', 'customProperties', 'status', 'type', 'orgs', 'contacts', 'docs', 'supplementaryDocs' ]]) {
   _links {
     linkedResources {
       href "/licenses/licenseLinks?filter=owner.id%3d${license.id}"
