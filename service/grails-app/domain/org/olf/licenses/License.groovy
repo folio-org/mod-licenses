@@ -63,7 +63,7 @@ class License implements CustomProperties,MultiTenant<License> {
   }
 
   static mapping = {
-                   id column: 'lic_id', generator: 'uuid', length:36
+                   id column: 'lic_id', generator: 'uuid2', length:36
                  name column: 'lic_name'
           description column: 'lic_description', type:'text'
                  type column: 'lic_type_rdv_fk'

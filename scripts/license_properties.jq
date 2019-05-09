@@ -226,16 +226,14 @@
           "role": "Licensor", 
           "org": { 
             "name": "EBSCO", 
-            "vendorsUuid": "1234-5678-9102-3356", 
-            "reference": "EBSCO" 
+            "orgsUuid": "1234-5678-9102-3356"
           } 
         },
         { 
           "role": "Licensee", 
           "org": { 
             "name": "Some Content Provider", 
-            "vendorsUuid": "1234-5678-9102-3355", 
-            "reference": "Some CP" 
+            "orgsUuid": "1234-5678-9102-3355"
           } 
         }
       ]
@@ -280,11 +278,11 @@
       orgs:[
         {
          "role": "Licensor",
-          "org": { "name": "Test1", "vendorsUuid": "1234-5678-9102-3357" }
+          "org": { "name": "Test1", "orgsUuid": "1234-5678-9102-3357" }
         },
         {
           "role": "Licensor",
-          "org": { "name": "Test2", "vendorsUuid": "1234-5678-9102-3358" }
+          "org": { "name": "Test2", "orgsUuid": "1234-5678-9102-3358" }
         }
       ]
     }

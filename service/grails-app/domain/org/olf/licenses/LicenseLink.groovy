@@ -46,7 +46,7 @@ class LicenseLink implements MultiTenant<LicenseLink> {
   }
 
   static mapping = {
-             id column: 'll_id', generator: 'uuid', length:36
+             id column: 'll_id', generator: 'uuid2', length:36
        linkType column: 'll_type'
          linkId column: 'll_remote_id'
       linkLabel column: 'll_label'

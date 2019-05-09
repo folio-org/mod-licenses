@@ -23,7 +23,7 @@ public class LicenseOrg implements MultiTenant<LicenseOrg>{
   ]
 
     static mapping = {
-                   id column: 'sao_id', generator: 'uuid', length:36
+                   id column: 'sao_id', generator: 'uuid2', length:36
               version column: 'sao_version'
                 owner column: 'sao_owner_fk'
                   org column: 'sao_org_fk'
