@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# get most recent jar file name
 the_jar_file=`ls build/libs/mod-licenses*.jar | tail -n 1`
 
 echo Start mod-licenses in external-register mode using jarfile $the_jar_file
