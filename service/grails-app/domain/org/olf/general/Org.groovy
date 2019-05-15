@@ -1,9 +1,7 @@
 package org.olf.general
-import org.olf.general.annotations.OkapiDistributedDomain
-
 import grails.gorm.MultiTenant
 
-@OkapiDistributedDomain(config='Org')
+//@OkapiDistributedDomain(config='Org')
 class Org implements MultiTenant<Org> {
 
   String id
