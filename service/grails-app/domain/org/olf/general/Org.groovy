@@ -1,13 +1,37 @@
 package org.olf.general
+import com.k_int.web.toolkit.databinding.BindUsingWhenRef
+
 import grails.gorm.MultiTenant
+import grails.web.databinding.DataBindingUtils
 
 //@OkapiDistributedDomain(config='Org')
+@BindUsingWhenRef({ obj, propName, source ->
+  // If the data is asking for null binding then ensure we return here.
+  if (source == null) {
+    return null
+  }
+  
+  Org org
+  if (source.orgsUuid) {
+    // Lookup the Org using the remote ID and ignore the local.
+    org = Org.findByOrgsUuid(source.orgsUuid)
+  } else if (source.id) {
+    org = Org.findById(source.id)
+  } else {
+    org = new Org()
+  }
+  
+  // bind the other properties
+  DataBindingUtils.bindObjectToInstance(org, source)
+  org.save(failOnError:true)
+  
+  org
+})
 class Org implements MultiTenant<Org> {
 
   String id
   String name
   String orgsUuid
-
 
   static mapping = {
             id column: 'org_id', generator: 'uuid2', length:36
@@ -17,7 +41,8 @@ class Org implements MultiTenant<Org> {
   }
 
   static constraints = {
-    orgsUuid(nullable:true, blank:false, unique:true)
+    id bindable: false
+    orgsUuid nullable:true, blank:false, unique:true
   }
 
   /**
@@ -37,7 +62,7 @@ class Org implements MultiTenant<Org> {
     }
 
     if ( changed ) {
-      this.save(flush:true, failOnError);
+      this.save(flush:true, failOnError:true);
     }
   }
 }
