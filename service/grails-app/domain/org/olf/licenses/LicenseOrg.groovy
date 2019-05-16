@@ -31,8 +31,8 @@ public class LicenseOrg implements MultiTenant<LicenseOrg>{
   }
 
   static constraints = {
-    owner(nullable:false, blank:false);
-    org(nullable:true, blank:false);
-    role(nullable:true, blank:false);
+    owner(nullable:false, blank:false)
+    org(nullable:true)
+    role(nullable:true)
   }
 }
