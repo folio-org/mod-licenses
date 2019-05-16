@@ -8,7 +8,6 @@ import groovy.transform.*
 final String objectProperty = 'orgsUuid_object'
 if ( controllerName == 'license' && actionName.toLowerCase() == 'show' ) {
   // Prefetch the orgs.
-  System.out.println("Prefetching")
   license.orgs?.each { LicenseOrg lo ->
     if(lo.org?.respondsTo(objectProperty)){
       // Just invoke. We will deal with the return value later. This will start the fetching now in parallel threads.
