@@ -1,8 +1,21 @@
 import org.olf.licenses.License
-
+import org.olf.licenses.LicenseOrg
 import groovy.transform.*
 
 @Field License license
+
+// We can start the pre-fetching of things we are going to need.
+final String objectProperty = 'orgsUuid_object'
+if ( controllerName == 'license' && actionName.toLowerCase() == 'show' ) {
+  // Prefetch the orgs.
+  System.out.println("Prefetching")
+  license.orgs?.each { LicenseOrg lo ->
+    if(lo.org?.respondsTo(objectProperty)){
+      // Just invoke. We will deal with the return value later. This will start the fetching now in parallel threads.
+      lo.org.invokeMethod(objectProperty, null)
+    }
+  }
+}
 
 json g.render(license, [expand: ['licenseProps', 'tags', 'customProperties', 'status', 'type', 'orgs', 'contacts', 'docs', 'supplementaryDocs' ]]) {
   _links {

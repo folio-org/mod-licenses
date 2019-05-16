@@ -1,28 +1,32 @@
 package org.olf.general
-import com.k_int.web.toolkit.databinding.BindUsingWhenRef
 
+import com.k_int.okapi.remote_resources.OkapiLookup
+import com.k_int.web.toolkit.databinding.BindUsingWhenRef
+import grails.databinding.SimpleMapDataBindingSource
 import grails.gorm.MultiTenant
 import grails.web.databinding.DataBindingUtils
 
 //@OkapiDistributedDomain(config='Org')
-@BindUsingWhenRef({ obj, propName, source ->
+@BindUsingWhenRef({ obj, propName, SimpleMapDataBindingSource source ->
   // If the data is asking for null binding then ensure we return here.
-  if (source == null) {
+  final def data = source?.getAt(propName)
+  if (data == null) {
     return null
   }
-  
   Org org
-  if (source.orgsUuid) {
+  if (data.orgsUuid) {
     // Lookup the Org using the remote ID and ignore the local.
-    org = Org.findByOrgsUuid(source.orgsUuid)
-  } else if (source.id) {
-    org = Org.findById(source.id)
+    org = Org.findOrCreateByOrgsUuid(data.orgsUuid)
+  } else if (data.id) {
+    System.out.println "Seen the ID ${data.id}"
+    org = Org.findOrCreateById(data.id)
   } else {
+    System.out.println "Just create a new one."
     org = new Org()
   }
   
   // bind the other properties
-  DataBindingUtils.bindObjectToInstance(org, source)
+  DataBindingUtils.bindObjectToInstance(org, data)
   org.save(failOnError:true)
   
   org
@@ -31,6 +35,10 @@ class Org implements MultiTenant<Org> {
 
   String id
   String name
+  
+  @OkapiLookup(
+    value = '/organizations-storage/organizations/${obj.orgsUuid}'
+  )
   String orgsUuid
 
   static mapping = {
