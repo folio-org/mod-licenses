@@ -1,4 +1,3 @@
-package licenseCore
 import org.olf.licenses.LicenseCore
 
 import groovy.transform.*
