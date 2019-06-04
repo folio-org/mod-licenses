@@ -52,6 +52,15 @@ class LicenseAmendmentSpec extends LicenseLifecycleSpec {
       licenseId << data['licenses'].collect { name, val -> val.id }
   }
   
+  void 'Test amendments serialized out' () {
+    given: 'Read first license'
+      Map httpResult = doGet("/licenses/licenses/${data['licenses'].values().getAt(0).get('id')}")
+    expect: 'Amendments should contain more than just the id property'
+      httpResult.amendments.every {
+        it.keySet().size() > 1
+      }
+  }
+  
   @Unroll
   void 'Remove amendment from #licenseId' (licenseId) {
       
