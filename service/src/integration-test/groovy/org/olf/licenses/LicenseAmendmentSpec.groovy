@@ -55,10 +55,15 @@ class LicenseAmendmentSpec extends LicenseLifecycleSpec {
   void 'Test amendments serialized out' () {
     given: 'Read first license'
       Map httpResult = doGet("/licenses/licenses/${data['licenses'].values().getAt(0).get('id')}")
+      
     expect: 'Amendments should contain more than just the id property'
-      httpResult.amendments.every {
+      assert httpResult.amendments.every {
         it.keySet().size() > 1
       }
+      
+    and: 'Amendment status should be active'
+      // Check first amendment has status property
+      assert httpResult['amendments'][0]['status']['value'] == 'active'
   }
   
   @Unroll
