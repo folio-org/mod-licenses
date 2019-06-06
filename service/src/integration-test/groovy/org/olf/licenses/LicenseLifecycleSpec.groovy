@@ -5,7 +5,7 @@ import static groovyx.net.http.HttpBuilder.configure
 import static org.springframework.http.HttpStatus.*
 
 import com.k_int.okapi.OkapiHeaders
-import com.k_int.okapi.testing.HttpSpec
+import com.k_int.web.toolkit.testing.HttpSpec
 import geb.spock.GebSpec
 import grails.gorm.multitenancy.Tenants
 import grails.plugins.rest.client.RestBuilder
@@ -30,6 +30,13 @@ import spock.lang.Unroll
 @Integration
 @Stepwise
 abstract class LicenseLifecycleSpec extends HttpSpec {
+  
+  def setupSpec() {
+    addDefaultHeaders(
+      (OkapiHeaders.TENANT): 'http_tests',
+      (OkapiHeaders.USER_ID): 'http_test_user'
+    )
+  }
   
   @Shared
   Map<String, String> data = [

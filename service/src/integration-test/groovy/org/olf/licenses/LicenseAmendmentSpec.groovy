@@ -1,11 +1,9 @@
 package org.olf.licenses
 
-import com.k_int.okapi.testing.HttpSpec
+import org.apache.commons.lang.math.RandomUtils
 
 import grails.testing.mixin.integration.Integration
 import groovy.util.logging.Slf4j
-import org.apache.commons.lang.math.RandomUtils
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 import spock.lang.Unroll
