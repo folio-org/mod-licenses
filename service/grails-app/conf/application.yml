@@ -178,8 +178,8 @@ environments:
         host: localhost
         port: 9130
 
-        register: true
-        deploy: true
+        register: false
+        deploy: false
         
     server:
       port: 8081
