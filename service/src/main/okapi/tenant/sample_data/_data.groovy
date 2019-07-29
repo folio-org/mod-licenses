@@ -46,7 +46,8 @@ List propertyDefinitions =  [[
     "type" : "Refdata",
     "label" : "Walk-in access permitted?",
     "description" : "Can non-members of the library/instittuion use the resource when in the library",
-    "primary": true
+    "primary": true,
+    "defaultInternal": false
   ],[
     "name" : "remoteAccess",
     "category" : yesno,
@@ -88,14 +89,16 @@ List propertyDefinitions =  [[
     "type" : "Refdata",
     "label" : "Use in electronic coursepacks",
     "description" : "The right to use licensed materials in collections or compilations of materials assembled in an electronic format by faculty members for use by students in a class for purposes of instruction",
-    "primary": true
+    "primary": true,
+    "defaultInternal": false
   ],[
     "name" : "coursePackPrint",
     "category" : permpro,
     "type" : "Refdata",
     "label" : "Use in print course packs",
     "description" : "The right to use licensed materials in collections or compilations of materials assembled in a print format by faculty members for use by students in a class for purposes of instruction",
-    "primary": true
+    "primary": true,
+    "defaultInternal": false
   ],[
     "name" : "copyDigital",
     "category" : permpro,
@@ -126,7 +129,8 @@ List propertyDefinitions =  [[
     "category" : permpro,
     "type" : "Refdata",
     "label" : "Text and Data mining",
-    "description" : "Whether it is permitted to use text and data mining processes on the content of the resource"
+    "description" : "Whether it is permitted to use text and data mining processes on the content of the resource",
+    "defaultInternal": false
   ],[
     "name" : "metadataUsage",
     "type" : "Text",

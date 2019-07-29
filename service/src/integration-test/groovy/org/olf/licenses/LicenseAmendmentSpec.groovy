@@ -59,9 +59,9 @@ class LicenseAmendmentSpec extends LicenseLifecycleSpec {
         it.keySet().size() > 1
       }
       
-//    and: 'Amendment status should be active'
-//      // Check first amendment has status property
-//      assert httpResult['amendments'][0]['status']['value'] == 'active'
+    and: 'Amendment status should be active'
+      // Check first amendment has status property
+      assert httpResult['amendments'][0]['status']['value'] == 'active'
   }
   
   @Unroll

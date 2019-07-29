@@ -20,6 +20,7 @@ import spock.lang.IgnoreRest
 import spock.lang.Shared
 import spock.lang.Stepwise
 import spock.lang.Unroll
+import spock.util.concurrent.PollingConditions
 
 
 
@@ -46,11 +47,24 @@ abstract class LicenseLifecycleSpec extends HttpSpec {
   ]
 
   void 'Ensure test tenant' () {
-    given:
-    def resp = doPost('/_/tenant', null)
+    
+    // Max time to wait is 10 seconds
+    def conditions = new PollingConditions(timeout: 10)
+    when: 'Create the tenant'
+      def resp = doPost('/_/tenant', {
+        parameters ([["key": "loadReference", "value": true]])
+      })
 
-    expect:
-    resp != null
+    then: 'Response obtained'
+      resp != null
+      
+    and: 'License terms added'
+    
+      List list
+      // Wait for the refdata to be loaded. 
+      conditions.eventually {
+        (list = doGet('/licenses/refdata')).size() > 0
+      }
   }
 
   @Unroll
@@ -107,6 +121,7 @@ abstract class LicenseLifecycleSpec extends HttpSpec {
         description "The definition of an authorised user for a resource"
         weight (-1)
         primary true
+        defaultInternal false
       },{
         name "remoteAccess"
         category data['refdata']['Yes/No/Other']
@@ -114,6 +129,7 @@ abstract class LicenseLifecycleSpec extends HttpSpec {
         label "Access restricted to on-campus/campus network?"
         description "Can access to the resource be provided from outside the library or institutional location / network"
         primary true
+        defaultInternal false
       },{
         name "illElectronic"
         category data['refdata']['Permitted/Prohibited']
@@ -124,19 +140,28 @@ abstract class LicenseLifecycleSpec extends HttpSpec {
       }]
   }
 
-  void 'Add Licenses' (payload) {
+  void 'Add Licenses' (payload, Map termData) {
 
     given: 'Create new License'
-    Map httpResult = doPost('/licenses/licenses', payload)
+      Map httpResult = doPost('/licenses/licenses', payload)
 
     and:
-    data['licenses'][httpResult.name] = httpResult
+      data['licenses'][httpResult.name] = httpResult
 
     expect: 'License created'
-    httpResult.id != null
+      httpResult.id != null
+      
+    and: 'Correct term data'
+      termData.every { Map.Entry it ->
+        final prop = httpResult.customProperties[it.key][0]
+        return prop.internal == it.value.internal &&
+          (it.value.note == null || prop.note == it.value.note) &&
+          (it.value.publicNote == null || prop.publicNote == it.value.publicNote)
+      }
 
     where:
-    payload << [{
+    
+      payload << [{
         name "License 1"
         description "License for the AAAS Science Classic Agreement"
         status "Active"
@@ -144,10 +169,10 @@ abstract class LicenseLifecycleSpec extends HttpSpec {
         startDate "2019-01-01"
         openEnded true
         customProperties {
-          concurrentAccess ([10])
-          authorisedUsers (["Anyone with campus login"])
-          remoteAccess (["Yes"])
-          illElectronic (["Prohibited (interpreted)"])
+          concurrentAccess ([[value:10, note: 'Note for concurrentAccess', publicNote: 'Public note for concurrentAccess']])
+          authorisedUsers ([[value:"Anyone with campus login", note: 'Note for authorisedUsers', publicNote: 'Public note for authorisedUsers']])
+          remoteAccess ([[value:"Yes"]])
+          illElectronic ([[value:"Prohibited (interpreted)"]])
         }
         docs ([
           {
@@ -189,10 +214,10 @@ abstract class LicenseLifecycleSpec extends HttpSpec {
         endDate "2020-01-01"
         endDateSemantics "Explicit"
         customProperties {
-          concurrentAccess (20)
-          authorisedUsers (["Open access"])
-          remoteAccess (["No"])
-          illElectronic (["Unmentioned"])
+          concurrentAccess ([[value:20, internal: false]])
+          authorisedUsers ([[value:"Open access", internal: true]])
+          remoteAccess ([[value:"No", internal: true]])
+          illElectronic ([[value:"Unmentioned", internal: false]])
         }
         tags ([
           "legacy"
@@ -214,6 +239,19 @@ abstract class LicenseLifecycleSpec extends HttpSpec {
           }
         ])
       }]
+      
+      // First set should use defaults, second should be overridden
+      termData << [[
+        'concurrentAccess': [internal: true, note: 'Note for concurrentAccess', publicNote: 'Public note for concurrentAccess'],
+        'authorisedUsers': [internal: false, note: 'Note for authorisedUsers', publicNote: 'Public note for authorisedUsers'],
+        'remoteAccess': [internal: false],
+        'illElectronic': [internal: true]
+      ],[
+        'concurrentAccess': [internal: false],
+        'authorisedUsers': [internal: true],
+        'remoteAccess': [internal: true],
+        'illElectronic': [internal: false]
+      ]]
   }
 
 
