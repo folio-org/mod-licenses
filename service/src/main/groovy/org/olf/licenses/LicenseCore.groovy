@@ -104,11 +104,28 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
    */
   public LicenseCore plus (LicenseCore la) {
     
-    this.customProperties.value = this.customProperties.value.collect { CustomProperty v -> 
-      la.customProperties.value.find { CustomProperty lav -> lav.definition.name == v.definition.name && lav.value } ?: v
+    final Set<String> seen = []
+    final List<CustomProperties> newList = la.customProperties.value.findResults { CustomProperty v -> 
+      if (seen.contains(v.definition.name)) {
+        return null
+      }
+      
+      seen << v.definition.name
+      v
     }
-    // Ensure we don't persist. Without it being explicitly actioned. 
+    
+    newList += this.customProperties.value.findResults { CustomProperty v ->
+      if (seen.contains(v.definition.name)) {
+        return null 
+      }
+      
+      seen << v.definition.name
+      v
+    }
+    
+    // Make sure we remove this object from the session so we don't persist changes, Without them being explicitly actioned.
     this.discard()
+    this.customProperties.value = newList
     this
   }
 }
