@@ -1,14 +1,10 @@
 package org.olf.licenses
 
-import grails.gorm.multitenancy.CurrentTenant
-import grails.gorm.transactions.Transactional
-import groovy.util.logging.Slf4j
-
-import org.olf.licenses.License
-
 import com.k_int.okapi.OkapiTenantAwareController
 import com.k_int.web.toolkit.refdata.RefdataValue
-import grails.converters.JSON
+
+import grails.gorm.multitenancy.CurrentTenant
+import grails.gorm.transactions.Transactional
 
 
 /**
@@ -27,7 +23,7 @@ class LicenseController extends OkapiTenantAwareController<License>  {
   @Transactional(readOnly=true)
   def show() {
     // Applicable amendments might be present.
-    final List<Serializable> am = params.list('amendments')
+    final List<Serializable> am = params.list('applyAmendment')
     if (!am) {
       // Just follow the super implementation
       return super.show()
