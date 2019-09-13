@@ -183,6 +183,19 @@ List licenseDefs = [
     type: "Local",
     startDate:"2019-01-01",
     openEnded:true,
+    amendments: [[
+      name: "Amendment 1",
+      description: "My first added amendment",
+      status: "Active",
+      startDate: "2019-03-01",
+      openEnded: true,
+      customProperties: [
+        "concurrentAccess": 15, // Override
+        "remoteAccess": "No", // Override
+        "remoteAccess": ["Yes"],
+        "annualOptOut": "Yes" // Addition
+      ]
+    ]],
     customProperties: [
       "walkInAccess": ["Yes"],
       "concurrentAccess": [10],
@@ -191,7 +204,7 @@ List licenseDefs = [
       "remoteAccess": ["Yes"],
       "illElectronic": ["Prohibited (interpreted)"],
       "APCAndOffsetting": ["Yes"],
-      postCancellationAccess: ["Yes"]
+      "postCancellationAccess": ["Yes"]
     ],
     docs:[
       [ "name": "A test document attachment", "location":"http://a.b.c/d/e/f.doc", "url":"http://a.b.c/d", "note":"This is a document attachment",  "atType":"License" ],
