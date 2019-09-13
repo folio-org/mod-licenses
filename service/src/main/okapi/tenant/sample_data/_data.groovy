@@ -190,10 +190,9 @@ List licenseDefs = [
       startDate: "2019-03-01",
       openEnded: true,
       customProperties: [
-        "concurrentAccess": 15, // Override
-        "remoteAccess": "No", // Override
-        "remoteAccess": ["Yes"],
-        "annualOptOut": "Yes" // Addition
+        "concurrentAccess": [15], // Override
+        "remoteAccess": ["No"], // Override
+        "annualOptOut": ["Yes"] // Addition
       ]
     ]],
     customProperties: [

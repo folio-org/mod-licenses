@@ -123,9 +123,8 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
       v
     }
     
-    // Make sure we remove this object from the session so we don't persist changes, Without them being explicitly actioned.
-    this.discard()
-    this.customProperties.value = newList
+    this.customProperties = new CustomPropertyContainer()
+    this.customProperties.value = newList as Set
     this
   }
 }

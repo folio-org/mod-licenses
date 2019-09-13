@@ -1,6 +1,7 @@
 package org.olf.licenses
 
 import grails.gorm.multitenancy.CurrentTenant
+import grails.gorm.transactions.Transactional
 import groovy.util.logging.Slf4j
 
 import org.olf.licenses.License
@@ -23,9 +24,10 @@ class LicenseController extends OkapiTenantAwareController<License>  {
   }
   
   // Override the show method
+  @Transactional(readOnly=true)
   def show() {
     // Applicable amendments might be present.
-    final def am = params.list('amendments')
+    final List<Serializable> am = params.list('amendments')
     if (!am) {
       // Just follow the super implementation
       return super.show()
@@ -39,7 +41,12 @@ class LicenseController extends OkapiTenantAwareController<License>  {
       RefdataValue active = LicenseAmendment.lookupStatus('active')
       
       // We found a license. Lets append the active amendments by startdate
-      List<LicenseAmendment> applicableAmendments = LicenseAmendment.findAllByOwnerAndStatus(license, active, [sort: "startDate", order: "desc"])
+      List<LicenseAmendment> applicableAmendments = LicenseAmendment.createCriteria().list {
+        'in' 'id', am
+        eq 'owner', license
+        eq 'status', active
+        order 'startDate', 'desc'
+      }
       
       if (applicableAmendments) {
         license += applicableAmendments.sum()
