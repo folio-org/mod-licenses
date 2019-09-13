@@ -59,7 +59,12 @@
   "launchDescriptor": {
     "dockerImage": "${info.app.name}:${info.app.version}",
     "dockerArgs": {
-      "HostConfig": { "PortBindings": { "8080/tcp":  [{ "HostPort": "%p" }] } }
+      "HostConfig": {
+        "Memory": 715827883,
+        "PortBindings": { 
+          "8080/tcp":  [{ "HostPort": "%p" }] 
+        }
+      }
     },
     "dockerPull" : false,
     "env": [
