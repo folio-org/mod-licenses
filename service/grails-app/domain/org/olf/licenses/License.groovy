@@ -36,6 +36,6 @@ class License extends LicenseCore implements CustomProperties,MultiTenant<Licens
   static mapping = {
     type column: 'lic_type_rdv_fk'
     orgs cascade: 'all-delete-orphan'
-    amendments cascade: 'all-delete-orphan', sort: 'dateCreated'
+    amendments cascade: 'all-delete-orphan', sort: 'startDate', order: 'desc'
   }
 }
