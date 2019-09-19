@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration
 import groovy.util.logging.Slf4j
+import io.undertow.UndertowOptions
 import io.undertow.Undertow.Builder
 
 
