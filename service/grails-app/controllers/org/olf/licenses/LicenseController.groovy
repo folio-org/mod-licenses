@@ -41,7 +41,7 @@ class LicenseController extends OkapiTenantAwareController<License>  {
         'in' 'id', am
         eq 'owner', license
         eq 'status', active
-        order 'startDate', 'desc'
+        order 'startDate', 'asc'
       }
       
       if (applicableAmendments) {
