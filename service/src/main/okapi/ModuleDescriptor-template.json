@@ -83,27 +83,27 @@
         
         {
           "methods": ["GET"],
-          "pathPattern": "/licenses/refdataValues",
+          "pathPattern": "/licenses/refdata",
           "permissionsRequired": [ "licenses.refdata.collection.get" ]
         },{
           "methods": ["GET"],
-          "pathPattern": "/licenses/refdataValues/{domain}/{property}",
+          "pathPattern": "/licenses/refdata/{domain}/{property}",
           "permissionsRequired": [ "licenses.refdata.collection.get" ]
         },{
           "methods": ["GET"],
-          "pathPattern": "/licenses/refdataValues/{id}",
+          "pathPattern": "/licenses/refdata/{id}",
           "permissionsRequired": [ "licenses.refdata.item.get" ]
         },{
           "methods": ["POST"],
-          "pathPattern": "/licenses/refdataValues",
+          "pathPattern": "/licenses/refdata",
           "permissionsRequired": [ "licenses.refdata.item.post" ]
         },{
           "methods": ["PUT"],
-          "pathPattern": "/licenses/refdataValues/{id}",
+          "pathPattern": "/licenses/refdata/{id}",
           "permissionsRequired": [ "licenses.refdata.item.put" ]
         },{
           "methods": ["DELETE"],
-          "pathPattern": "/licenses/refdataValues/{id}",
+          "pathPattern": "/licenses/refdata/{id}",
           "permissionsRequired": [ "licenses.refdata.item.delete" ]
         },
         
