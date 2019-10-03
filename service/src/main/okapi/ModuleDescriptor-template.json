@@ -158,7 +158,8 @@
     "subPermissions": [ 
       "licenses.licenses.collection.get",
       "licenses.licenses.item.get",
-      "licenses.licenses.item.linkedAgreements.get"
+      "licenses.licenses.item.linkedAgreements.get",
+      "licenses.agreements.linkedLicenses.get"
     ]
   },{
     "permissionName": "licenses.licenses.edit",
