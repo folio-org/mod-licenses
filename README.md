@@ -41,6 +41,10 @@ The /licenses resource allows module clients to Create, Retrieve, Update and Del
 
 /licenseLinks allows service clients to list all the resources that a license is connected to. N.B. This only reports links that mod-licenses manages, not inbound resources.
 
+## ModuleDescriptor
+
+https://github.com/folio-org/mod-licenses/blob/master/service/src/main/okapi/ModuleDescriptor-template.json
+
 # For developers wanting to maintain and extend mod-licenses
 
 ## Regenerating the liquibase migrations script
