@@ -37,7 +37,7 @@ class UrlMappings {
       collection {
         "/" (controller: 'customPropertyDefinition', action: 'index') {
           perPage = { params.perPage ?: 100 }
-          sort = [ 'primary;desc', 'weight;asc', 'id;asc']
+//          sort = [ 'primary;desc', 'weight;asc', 'id;asc']
         }
       }
     }
