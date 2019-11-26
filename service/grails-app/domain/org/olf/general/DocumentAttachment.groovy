@@ -1,9 +1,10 @@
 package org.olf.general
 
-import grails.gorm.MultiTenant
-import com.k_int.web.toolkit.refdata.RefdataValue
+import com.k_int.web.toolkit.files.SingleFileAttachment
 import com.k_int.web.toolkit.refdata.Defaults
-import org.olf.general.FileUpload
+import com.k_int.web.toolkit.refdata.RefdataValue
+
+import grails.gorm.MultiTenant
 
 class DocumentAttachment extends SingleFileAttachment implements MultiTenant<DocumentAttachment> {
 
