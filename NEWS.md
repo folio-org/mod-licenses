@@ -1,3 +1,6 @@
+## 2.0.1 2020-01-19
+ * ERM-675 mod-license upgrade from Q3.2 to Q4 fails 
+
 ## 2.0.0 2019-12-04
  * ERM-638 Use JVM features to manage container memory 
  * ERM-538 Support health check endpoint (for example /admin/health provided by RMB)
