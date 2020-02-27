@@ -210,3 +210,8 @@ okapi:
     register: false
     deploy: false
 
+webtoolkit:
+  converters:
+    numbers:
+      fixedLocale: true # Can be a boolean for default locale or an IETF BCP 47 language string
+      
