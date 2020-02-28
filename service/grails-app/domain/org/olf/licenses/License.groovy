@@ -13,6 +13,7 @@ class License extends LicenseCore implements CustomProperties,MultiTenant<Licens
 
   @Defaults(['Local', 'Consortial', 'National', 'Alliance' ])
   RefdataValue type
+  String localReference
 
   static hasMany = [
     orgs:LicenseOrg,
@@ -26,6 +27,7 @@ class License extends LicenseCore implements CustomProperties,MultiTenant<Licens
 
   static constraints = {
     type(nullable:true, blank:false)
+    localReference(nullable:true, blank:false)
     orgs (validator: { orgs ->
       int num_licensor_orgs = orgs.findAll { it.role?.value?.equalsIgnoreCase('Licensor') }.size()
       // If there is more than one licensor, return an error message relating to the i18n message validation.onlyOneLicensor
@@ -36,6 +38,7 @@ class License extends LicenseCore implements CustomProperties,MultiTenant<Licens
   static mapping = {
     type column: 'lic_type_rdv_fk'
     orgs cascade: 'all-delete-orphan'
+    localReference column: 'lic_local_reference'
     amendments cascade: 'all-delete-orphan', sort: 'startDate', order: 'desc'
   }
 }
