@@ -6,6 +6,11 @@ class UrlMappings {
 
     "/"(controller: 'application', action:'index')
     "/licenses/licenses"(resources:'license') {
+      
+      collection {
+        "/compareTerms" (controller: 'export', method: 'POST', format: 'csv')
+      }
+      
       "/linkedAgreements" {
         namespace         = 'okapi'
         controller        = 'resourceProxy'

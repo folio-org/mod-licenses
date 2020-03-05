@@ -80,6 +80,9 @@ dependencies {
   compile 'org.liquibase:liquibase-core:3.5.5'
   compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
   
+  
+  compile 'com.opencsv:opencsv:4.6'
+  
   // Better test reports.
   testCompile( 'com.athaydes:spock-reports:1.6.1' ) {
     transitive = false // this avoids affecting your version of Groovy/Spock
