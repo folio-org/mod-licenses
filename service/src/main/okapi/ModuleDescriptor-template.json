@@ -137,6 +137,12 @@
           "methods": ["GET"],
           "pathPattern": "/licenses/licenseLinks/{id}",
           "permissionsRequired": [ "licenses.licenseLinks.item.get" ]
+        },
+        
+        {
+          "methods": ["POST"],
+          "pathPattern": "/licenses/licenses/compareTerms",
+          "permissionsRequired": [ "licenses.compareTerms" ]
         }
       ]
     },{
@@ -159,7 +165,8 @@
       "licenses.licenses.collection.get",
       "licenses.licenses.item.get",
       "licenses.licenses.item.linkedAgreements.get",
-      "licenses.agreements.linkedLicenses.get"
+      "licenses.agreements.linkedLicenses.get",
+      "licenses.compareTerms"
     ]
   },{
     "permissionName": "licenses.licenses.edit",
