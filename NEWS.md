@@ -1,10 +1,10 @@
 ## 2.1.0 2020-03-13
-ERM-747 Custom Properties: Unable to correctly save decimals with german browser locale
-ERM-675 mod-license upgrade from Q3.2 to Q4 fails
-ERM-668 Add ability to search/filter licenses based on custom properties (aka "terms")
-ERM-655 Sorting limits output in some cases
-ERM-647 Sort custom properties alphabetically within order weights
-ERM-591 Filters across custom properties do not work
+ * ERM-747 Custom Properties: Unable to correctly save decimals with german browser locale
+ * ERM-675 mod-license upgrade from Q3.2 to Q4 fails
+ * ERM-668 Add ability to search/filter licenses based on custom properties (aka "terms")
+ * ERM-655 Sorting limits output in some cases
+ * ERM-647 Sort custom properties alphabetically within order weights
+ * ERM-591 Filters across custom properties do not work
 
 ## 2.0.1 2020-01-19
  * ERM-675 mod-license upgrade from Q3.2 to Q4 fails 
