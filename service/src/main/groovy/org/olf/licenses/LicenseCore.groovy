@@ -25,11 +25,19 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
   LocalDate startDate
   LocalDate endDate
 
+  /**
+   * We must specify the category ID here. If we didn't the category would be named
+   * LicenseCore.Status instead of License.Status
+   */
   @CategoryId('License.Status')
   @Defaults(['In negotiation','Not yet active', 'Active', 'Rejected', 'Expired'])
   RefdataValue status
 
-  @CategoryId('License.EndDateSemantics')
+  /**
+   * This is an internal category. Set the default internal here explicitly. When we provide multiple
+   * values to an annotation we have to explicitly declare the `value` field
+   */
+  @CategoryId(value='License.EndDateSemantics', defaultInternal=true)
   @Defaults(['Explicit', 'Open ended'])
   RefdataValue endDateSemantics
 
