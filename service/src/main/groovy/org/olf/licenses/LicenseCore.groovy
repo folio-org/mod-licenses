@@ -29,7 +29,7 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
    * We must specify the category ID here. If we didn't the category would be named
    * LicenseCore.Status instead of License.Status
    */
-  @CategoryId('License.Status')
+  @CategoryId(value='License.Status', defaultInternal=true)
   @Defaults(['In negotiation','Not yet active', 'Active', 'Rejected', 'Expired'])
   RefdataValue status
 
