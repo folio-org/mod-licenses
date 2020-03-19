@@ -1,6 +1,6 @@
 package org.olf.licenses
 import org.olf.general.Org
-
+import com.k_int.web.toolkit.refdata.CategoryId
 import com.k_int.web.toolkit.refdata.Defaults
 import com.k_int.web.toolkit.refdata.RefdataValue
 
@@ -15,6 +15,7 @@ public class LicenseOrg implements MultiTenant<LicenseOrg>{
   String id
   Org org
 
+  @CategoryId(defaultInternal=true)
   @Defaults(['Licensor', 'Licensee', 'Consortium', 'Consortium Administrator'])
   RefdataValue role
 
