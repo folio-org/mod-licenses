@@ -17,7 +17,7 @@ class RefdataController extends OkapiTenantAwareController<RefdataCategory> {
     super(RefdataCategory)
   }
   
-  /* def delete() {
+  def delete() {
     def instance = queryForResource(params.id)
     
     // Not found.
@@ -28,7 +28,7 @@ class RefdataController extends OkapiTenantAwareController<RefdataCategory> {
     }
     
     // Return invalid method if the status is disallowed 
-    if (instance.internal(true)) {
+    if (instance.internal == true) {
       render status: HttpStatus.METHOD_NOT_ALLOWED.value()
       return
     }
@@ -36,7 +36,7 @@ class RefdataController extends OkapiTenantAwareController<RefdataCategory> {
     deleteResource instance
 
     render status: HttpStatus.NO_CONTENT
-  } */
+  }
 
   def lookup (String domain, String property) {
     def c = DomainUtils.resolveDomainClass(domain)?.javaClass
