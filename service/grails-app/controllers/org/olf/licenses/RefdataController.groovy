@@ -1,5 +1,6 @@
 package org.olf.licenses
 
+import org.springframework.http.HttpStatus
 import com.k_int.okapi.OkapiTenantAwareController
 import com.k_int.web.toolkit.refdata.GrailsDomainRefdataHelpers
 import com.k_int.web.toolkit.refdata.RefdataCategory
@@ -22,7 +23,9 @@ class RefdataController extends OkapiTenantAwareController<RefdataCategory> {
     
     // Not found.
     if (instance == null) {
-      transactionStatus.setRollbackOnly()
+      RefdataCategory.withTransaction { t ->
+        t.setRollbackOnly()
+      }
       notFound()
       return
     }
