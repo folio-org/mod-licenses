@@ -1,3 +1,6 @@
+## 2.1.1 2020-04-01
+ * ERM-783 Term descriptions are limited to 255 characters
+
 ## 2.1.0 2020-03-13
  * ERM-747 Custom Properties: Unable to correctly save decimals with german browser locale
  * ERM-675 mod-license upgrade from Q3.2 to Q4 fails
