@@ -79,7 +79,7 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
             startDate column: 'lic_start_date'
               endDate column: 'lic_end_date'
      endDateSemantics column: 'lic_end_date_semantics_fk'
-                 tags cascade: 'all-delete-orphan', joinTable: [name: 'license_tag', key: 'license_tags_id']
+                tags cascade: 'save-update', joinTable: [name: 'license_tag', key: 'license_tags_id']
                 links cascade: 'all-delete-orphan'
              contacts cascade: 'all-delete-orphan'
                  docs cascade: 'all-delete-orphan', joinTable: [name: 'license_document_attachment', key: 'license_docs_id']
