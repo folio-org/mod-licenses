@@ -134,7 +134,7 @@ pipeline {
 
     stage('Kubernetes Deploy'){
       when {
-        branch 'FOLIO-2546' // testing with branch
+        branch 'master'
         expression { return env.doKubeDeploy }  
       }
       steps {
