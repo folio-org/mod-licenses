@@ -7,6 +7,7 @@ pipeline {
     GRADLEW_OPTS = '--console plain --no-daemon'
     BUILD_DIR = "${env.WORKSPACE}/service"
     MD = "${env.WORKSPACE}/service/build/resources/main/okapi/ModuleDescriptor.json"
+    doKubeDeploy = true
   }
 
   options {
@@ -130,7 +131,7 @@ pipeline {
         }
       }
     }
-    
+
     stage('Kubernetes Deploy'){
       when {
         branch 'FOLIO-2546' // testing with branch
