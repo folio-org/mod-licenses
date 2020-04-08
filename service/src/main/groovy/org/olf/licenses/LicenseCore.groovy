@@ -84,6 +84,7 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
              contacts cascade: 'all-delete-orphan'
                  docs cascade: 'all-delete-orphan', joinTable: [name: 'license_document_attachment', key: 'license_docs_id']
     supplementaryDocs cascade: 'all-delete-orphan', joinTable: [name: 'license_supp_doc', key: 'licsd_lic_fk', column: 'licsd_da_fk']
+     customProperties cascade: 'all-delete-orphan'
   }
 
   static transients = ['openEnded']
