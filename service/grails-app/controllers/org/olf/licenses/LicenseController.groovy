@@ -92,12 +92,12 @@ class LicenseController extends OkapiTenantAwareController<License>  {
       log.debug "Attempting to clone license ${licenseId} using props ${props}"
       License instance = queryForResource(licenseId).clone(props)
       
-//      instance.save()
-//      if (instance.hasErrors()) {
-//        transactionStatus.setRollbackOnly()
-//        respond instance.errors, view:'edit' // STATUS CODE 422 automatically when errors rendered.
-//        return
-//      }
+      instance.save()
+      if (instance.hasErrors()) {
+        transactionStatus.setRollbackOnly()
+        respond instance.errors, view:'edit' // STATUS CODE 422 automatically when errors rendered.
+        return
+      }
       respond instance, [status: OK]
       return
     }
