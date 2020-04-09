@@ -1,10 +1,13 @@
 package org.olf.licenses
 
+import java.time.LocalDate
+
 import org.olf.general.DocumentAttachment
 
 import com.k_int.web.toolkit.custprops.CustomProperties
 import com.k_int.web.toolkit.custprops.CustomProperty
 import com.k_int.web.toolkit.custprops.types.CustomPropertyContainer
+import com.k_int.web.toolkit.domain.traits.Clonable
 import com.k_int.web.toolkit.refdata.CategoryId
 import com.k_int.web.toolkit.refdata.Defaults
 import com.k_int.web.toolkit.refdata.RefdataValue
@@ -12,7 +15,6 @@ import com.k_int.web.toolkit.tags.Tag
 
 import grails.gorm.MultiTenant
 import grails.gorm.annotation.Entity
-import java.time.LocalDate
 
 @Entity
 abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> {

@@ -1,5 +1,6 @@
 package org.olf.licenses
 import org.olf.general.Org
+import com.k_int.web.toolkit.domain.traits.Clonable
 import com.k_int.web.toolkit.refdata.CategoryId
 import com.k_int.web.toolkit.refdata.Defaults
 import com.k_int.web.toolkit.refdata.RefdataValue
@@ -10,7 +11,7 @@ import grails.gorm.MultiTenant
 /**
  * Link a subscription agreement with an org and attach a role
  */
-public class LicenseOrg implements MultiTenant<LicenseOrg>{
+public class LicenseOrg implements MultiTenant<LicenseOrg>, Clonable<LicenseOrg>{
 
   String id
   Org org
@@ -35,5 +36,10 @@ public class LicenseOrg implements MultiTenant<LicenseOrg>{
     owner(nullable:false, blank:false)
     org(nullable:true)
     role(nullable:true)
+  }
+  
+  @Override
+  public LicenseOrg clone () {
+    Clonable.super.clone()
   }
 }

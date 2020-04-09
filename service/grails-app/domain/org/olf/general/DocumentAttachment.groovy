@@ -1,12 +1,13 @@
 package org.olf.general
 
+import com.k_int.web.toolkit.domain.traits.Clonable
 import com.k_int.web.toolkit.files.SingleFileAttachment
 import com.k_int.web.toolkit.refdata.Defaults
 import com.k_int.web.toolkit.refdata.RefdataValue
 
 import grails.gorm.MultiTenant
 
-class DocumentAttachment extends SingleFileAttachment implements MultiTenant<DocumentAttachment> {
+class DocumentAttachment extends SingleFileAttachment implements MultiTenant<DocumentAttachment>, Clonable<DocumentAttachment> {
 
   String name
   String location
@@ -38,6 +39,11 @@ class DocumentAttachment extends SingleFileAttachment implements MultiTenant<Doc
          atType(nullable:true, blank:false)
     dateCreated(nullable:true, blank:false)
     lastUpdated(nullable:true, blank:false)
+  }
+  
+  @Override
+  public DocumentAttachment clone () {
+    Clonable.super.clone()
   }
 
 }

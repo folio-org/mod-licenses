@@ -2,6 +2,7 @@ package org.olf.licenses
 
 import com.k_int.web.toolkit.custprops.CustomProperties
 import com.k_int.web.toolkit.custprops.types.CustomPropertyContainer
+import com.k_int.web.toolkit.domain.traits.Clonable
 import com.k_int.web.toolkit.tags.Tag
 import grails.gorm.MultiTenant
 import org.olf.general.Org
@@ -9,12 +10,18 @@ import org.olf.general.DocumentAttachment
 import com.k_int.web.toolkit.refdata.RefdataValue;
 import com.k_int.web.toolkit.refdata.Defaults;
 
-class License extends LicenseCore implements CustomProperties,MultiTenant<License> {
+class License extends LicenseCore implements CustomProperties, MultiTenant<License>, Clonable<License> {
 
   @Defaults(['Local', 'Consortial', 'National', 'Alliance' ])
   RefdataValue type
   String localReference
 
+  static copyByCloning = ['customProperties', 'docs', 'supplementaryDocs', 'contacts']
+  static cloneStaticValues = [
+    name: { "Copy of: ${owner.name}" /* Owner is the current object. */ },
+    version: { 0 }
+  ]  
+  
   static hasMany = [
     orgs:LicenseOrg,
     amendments:LicenseAmendment
@@ -40,5 +47,10 @@ class License extends LicenseCore implements CustomProperties,MultiTenant<Licens
     orgs cascade: 'all-delete-orphan'
     localReference column: 'lic_local_reference'
     amendments cascade: 'all-delete-orphan', sort: 'startDate', order: 'desc'
+  }
+  
+  @Override
+  public License clone () {
+    Clonable.super.clone()
   }
 }
