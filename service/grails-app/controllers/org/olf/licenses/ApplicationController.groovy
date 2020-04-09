@@ -2,12 +2,11 @@ package org.olf.licenses
 
 
 import grails.core.GrailsApplication
-import grails.plugins.*
 import grails.gorm.multitenancy.CurrentTenant
+import grails.plugins.*
 import groovy.util.logging.Slf4j
 
 @Slf4j
-@CurrentTenant
 class ApplicationController implements PluginManagerAware {
 
   GrailsApplication grailsApplication
@@ -17,7 +16,8 @@ class ApplicationController implements PluginManagerAware {
   def index() {
     [grailsApplication: grailsApplication, pluginManager: pluginManager]
   }
-
+  
+  @CurrentTenant
   def config() {
     if ( request.method=='POST' ) {
       log.debug("ApplicationController::config POST");
