@@ -8,6 +8,8 @@ import grails.gorm.transactions.Transactional
 import net.sf.json.JSONObject
 import static org.springframework.http.HttpStatus.*
 
+import java.time.LocalDate
+
 
 /**
  * Control access to subscription agreements.
@@ -61,6 +63,7 @@ class LicenseController extends OkapiTenantAwareController<License>  {
     organizations: ['orgs'],
     coreDocs: ['docs'],
     terms: ['customProperties'],
+    licenseDateInfo: ['endDateSemantics', 'startDate', 'endDate']
 //    supplementaryDocs: ['supplementaryDocs']
   ]
   
