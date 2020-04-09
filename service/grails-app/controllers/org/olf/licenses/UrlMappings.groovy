@@ -22,6 +22,8 @@ class UrlMappings {
         ]
         withParameters    = true
       }
+      
+      '/clone' (controller: 'license', action: 'doClone', method: 'POST')
     }
     
     
