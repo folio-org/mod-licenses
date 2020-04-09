@@ -51,6 +51,7 @@ if (Environment.isDevelopmentMode() || Environment.currentEnvironment == Environ
   logger ('com.k_int.web.toolkit.utils.RequestUtils', DEBUG)
   logger ('com.k_int.okapi.remote_resources.RemoteOkapiLinkListener', DEBUG)
   logger ('com.k_int.okapi.OkapiTenantAdminService', TRACE)
+  logger ('com.k_int.web.toolkit', DEBUG)
   
   // Uncomment below logging for output of OKAPI client http.
   logger ('com.k_int.okapi.OkapiClient', TRACE)
