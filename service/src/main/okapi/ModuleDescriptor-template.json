@@ -36,7 +36,8 @@
         },{
           "methods": ["DELETE"],
           "pathPattern": "/licenses/licenses/{id}",
-          "permissionsRequired": [ "licenses.licenses.item.delete" ]
+          "permissionsRequired": [ "licenses.licenses.item.delete" ],
+          "modulePermissions": [ "erm.agreements.collection.get" ]
         },
         
         {
