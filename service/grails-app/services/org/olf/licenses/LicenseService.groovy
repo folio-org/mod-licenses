@@ -1,4 +1,4 @@
-package org.olf
+package org.olf.licenses
 
 import com.google.common.eventbus.Subscribe
 import com.k_int.okapi.OkapiClient
