@@ -20,10 +20,23 @@ class LicenseService {
   
   OkapiClient okapiClient
   
-  boolean canDelete(License license) {
+  List<Serializable> checkAttachedAgreements(License license) {
+    List<Serializable> attachedAgreements = []
     
-    okapiClient.withTenant().canTalk("erm", "")
+    if (okapiClient.withTenant().providesInterface("erm", "~2.3")) {
+      // Needs to be blocking...
+      List links = okapiClient.getSync("/erm/sas/linkedLicenses", [
+        filters: [
+          "remoteId==${params.licenseId}"
+        ]
+      ])
+      
+      if (links?.size() > 0) {
+        attachedAgreements.addAll( links.collect { "${it.id}" } )
+      }
+    }
     
-    return false
+    
+    return attachedAgreements
   }
 }
