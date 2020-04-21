@@ -23,7 +23,7 @@ class LicenseService {
   List<Serializable> checkAttachedAgreements(License license) {
     List<Serializable> attachedAgreements = []
     
-    if (okapiClient.withTenant().providesInterface("erm", "~2.3")) {
+    if (okapiClient.withTenant().providesInterface("erm", "^2.3")) {
       // Needs to be blocking...
       List links = okapiClient.getSync("/erm/sas/linkedLicenses", [
         filters: [

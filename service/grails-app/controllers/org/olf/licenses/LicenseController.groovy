@@ -1,14 +1,13 @@
 package org.olf.licenses
 
+import static org.springframework.http.HttpStatus.*
+
 import com.k_int.okapi.OkapiTenantAwareController
 import com.k_int.web.toolkit.refdata.RefdataValue
 
 import grails.gorm.multitenancy.CurrentTenant
 import grails.gorm.transactions.Transactional
 import net.sf.json.JSONObject
-import static org.springframework.http.HttpStatus.*
-
-import java.time.LocalDate
 
 
 /**
@@ -17,8 +16,10 @@ import java.time.LocalDate
  * SAs have start dates, end dates and renewal dates. This controller exposes functions for interacting with the list of SAs
  */
 @CurrentTenant
-class LicenseController extends OkapiTenantAwareController<License>  {
+class LicenseController extends OkapiTenantAwareController<License> {
 
+  LicenseService licenseService
+  
   LicenseController() {
     super(License)
   }
@@ -108,5 +109,27 @@ class LicenseController extends OkapiTenantAwareController<License>  {
     respond ([statusCode: 404])
   }
   
+  @Transactional
+  def delete() {
+    License license = queryForResource(params.id)
+    
+    // Not found.
+    if (license == null) {
+      transactionStatus.setRollbackOnly()
+      notFound()
+      return
+    }
+    
+    // Return the relevant status if not allowed to delete.
+    List<Serializable> agreementIds = licenseService.checkAttachedAgreements(license)
+    if (agreementIds.size() > 0) {
+      render status: METHOD_NOT_ALLOWED, text: "License is attached to agreements ${agreementIds.join(', ')}"
+      return
+    }
+    
+    // Finally delete the license if we get this far and respond.
+    deleteResource license
+    render status: NO_CONTENT
+  }
 }
 
