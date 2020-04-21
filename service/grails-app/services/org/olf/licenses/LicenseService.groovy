@@ -27,7 +27,7 @@ class LicenseService {
       // Needs to be blocking...
       List links = okapiClient.getSync("/erm/sas/linkedLicenses", [
         filters: [
-          "remoteId==${params.licenseId}"
+          "remoteId==${license.id}"
         ]
       ])
       

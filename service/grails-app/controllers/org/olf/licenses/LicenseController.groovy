@@ -123,6 +123,7 @@ class LicenseController extends OkapiTenantAwareController<License> {
     // Return the relevant status if not allowed to delete.
     List<Serializable> agreementIds = licenseService.checkAttachedAgreements(license)
     if (agreementIds.size() > 0) {
+      transactionStatus.setRollbackOnly()
       render status: METHOD_NOT_ALLOWED, text: "License is attached to agreements ${agreementIds.join(', ')}"
       return
     }
