@@ -1,3 +1,6 @@
+## 2.2.1 2020-06-23
+ * ERM-841 Duplicate license: Files are not copied to the duplicated license record
+
 ## 2.2.0 2020-06-11
  * ERM-880 remove duplicate JSON fields in mod-licenses
  * ERM-828 Add support for "Alternative name" for licenses
