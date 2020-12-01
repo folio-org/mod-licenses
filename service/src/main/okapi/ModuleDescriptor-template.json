@@ -20,7 +20,11 @@
           "permissionsRequired": [
             "licenses.licenses.item.linkedAgreements.get",
             "licenses.agreements.linkedLicenses.get"
-          ]
+          ],
+          "modulePermissions": [
+             "erm.agreements.item.get",
+             "erm.agreements.linkedLicenses.get"
+           ]
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/licenses",
