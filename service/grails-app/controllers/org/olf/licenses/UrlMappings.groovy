@@ -25,7 +25,10 @@ class UrlMappings {
       
       '/clone' (controller: 'license', action: 'doClone', method: 'POST')
     }
-    
+
+    "/licenses/amendments" (resources:'licenseAmendment') {
+      '/clone' (controller: 'licenseAmendment', action: 'doClone', method: 'POST')
+    }
     
     "/licenses/licenseLinks"(resources:'licenseLink')
 
