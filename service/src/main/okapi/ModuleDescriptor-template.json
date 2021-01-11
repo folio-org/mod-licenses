@@ -43,7 +43,32 @@
           "permissionsRequired": [ "licenses.licenses.item.delete" ],
           "modulePermissions": [ "erm.agreements.linkedLicenses.get" ]
         },
-        
+        {
+          "methods": ["GET"],
+          "pathPattern": "/licenses/amendments",
+          "permissionsRequired": [ "licenses.licenses.collection.get" ]
+        },{
+          "methods": ["GET"],
+          "pathPattern": "/licenses/amendments/{id}",
+          "permissionsRequired": [ "licenses.licenses.item.get" ]
+        },{
+          "methods": ["POST"],
+          "pathPattern": "/licenses/amendments",
+          "permissionsRequired": [ "licenses.licenses.item.post" ]
+        },{
+          "methods": ["PUT"],
+          "pathPattern": "/licenses/amendments/{id}",
+          "permissionsRequired": [ "licenses.licenses.item.put" ]
+        },{
+          "methods": ["POST"],
+          "pathPattern": "/licenses/amendments/{id}/clone",
+          "permissionsRequired": [ "licenses.licenses.item.clone" ]
+        },{
+          "methods": ["DELETE"],
+          "pathPattern": "/licenses/amendments/{id}",
+          "permissionsRequired": [ "licenses.licenses.item.delete" ],
+          "modulePermissions": [ "erm.agreements.linkedLicenses.get" ]
+        },
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/files",
