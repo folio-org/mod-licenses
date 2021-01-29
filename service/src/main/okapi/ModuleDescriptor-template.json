@@ -411,11 +411,6 @@
       ]
     },
     {
-      "permissionName": "licenses.licenseLinks.collection.get",
-      "displayName": "Licenses license links collection get",
-      "description": "Get a collection of license link records"
-    },
-    {
       "permissionName": "licenses.licenseLinks.item.get",
       "displayName": "Licenses license links item get",
       "description": "Get a license link record"
