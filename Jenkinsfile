@@ -45,7 +45,7 @@ pipeline {
             }
             else {
               env.dockerRepo = 'folioci'
-              env.version = "${gradleVersion}-SNAPSHOT.${env.BUILD_NUMBER}"
+              env.version = "${gradleVersion}.${env.BUILD_NUMBER}"
             }
           }
         }
@@ -62,7 +62,7 @@ pipeline {
     stage('Gradle Build') {
       steps {
         dir(env.BUILD_DIR) {
-          sh "./gradlew $env.GRADLEW_OPTS -PappVersion=${env.version} assemble"
+          sh "./gradlew $env.GRADLEW_OPTS assemble"
         }
       }
     }
@@ -70,7 +70,7 @@ pipeline {
     stage('Build Docker') {
       steps {
         dir(env.BUILD_DIR) {
-          sh "./gradlew $env.GRADLEW_OPTS -PappVersion=${env.version} -PdockerRepo=${env.dockerRepo} buildImage"
+          sh "./gradlew $env.GRADLEW_OPTS -PdockerRepo=${env.dockerRepo} buildImage"
         }
         // debug
         sh "cat $env.MD"
@@ -104,8 +104,11 @@ pipeline {
       }
       steps {
         script {
-          def foliociLib = new org.folio.foliociCommands()
-          foliociLib.updateModDescriptor(env.MD)
+          sh "mv $MD ${MD}.orig"
+          sh """
+          cat ${MD}.orig | jq '.launchDescriptor.dockerImage |= \"${env.dockerRepo}/${env.name}:${env.version}\" |
+              .launchDescriptor.dockerPull |= \"true\"' > $MD
+          """
         }
         postModuleDescriptor(env.MD)
       }
@@ -129,22 +132,6 @@ pipeline {
                           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh 'aws s3 sync folio-api-docs s3://foliodocs/api'
         }
-      }
-    }
-
-    stage('Kubernetes Deploy'){
-      when {
-        branch 'master'
-        expression { return env.doKubeDeploy }  
-      }
-      steps {
-        echo "Deploying to kubernetes cluster"
-        kubeDeploy('folio-default',
-                  "[{" +
-                    "\"name\" : \"${env.name}\"," +
-                    "\"version\" : \"${env.version}\"," +
-                    "\"deploy\":true" +
-                  "}]")
       }
     }
 
