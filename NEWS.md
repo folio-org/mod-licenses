@@ -1,3 +1,12 @@
+## 3.1.0 2021-03-15
+ * FOLIO-2989 Remove duplicate licenses.licenseLinks.collection.get permission
+ * ERM-1243 License Term values not duplicated on duplicating license
+ * ERM-1229 Ability to duplicate Amendment
+ * ERM-1204 It should not be possible to delete Licenses with attached Agreements
+ * ERM-1201 Editing Amendment causes error
+ * ERM-1188 For License CSV export use quote mark (ASCII 34) as escape character rather than backslash (ASCII 92)
+ * ERM-972 Missing permission definition
+
 ## 3.0.0 2020-10-14
  * ERM-1046 Non-phrase searching support for licenses
  * ERM-967 Add "Note" to Organisation link in Licenses
