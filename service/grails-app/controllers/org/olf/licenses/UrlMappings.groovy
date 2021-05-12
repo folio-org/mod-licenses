@@ -63,6 +63,8 @@ class UrlMappings {
       "/raw" ( controller: "fileUpload", action: "downloadFile", method: 'GET' )
     }
 
+    "/dashboard/definitions" (controller: 'dashboardDefinitions', action: 'getDefinitions' ,method: 'GET')
+
     "500"(view: '/error')
     "404"(view: '/notFound')
   }

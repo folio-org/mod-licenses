@@ -179,7 +179,20 @@
           "permissionsRequired": [ "licenses.compareTerms" ]
         }
       ]
-    },{
+    },
+    {
+      "id": "dashboard",
+      "interfaceType": "multiple",
+      "version": "1.0",
+      "handlers": [
+        {
+          "methods": [ "GET" ],
+          "pathPattern": "/dashboard/definitions",
+          "permissionsRequired": []
+        }
+      ]
+    },
+    {
       "id" : "_tenant",
       "version" : "1.2",
       "interfaceType" : "system",
