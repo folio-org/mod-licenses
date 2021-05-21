@@ -1,3 +1,6 @@
+## 3.2.0 (In Progress)
+ * Implemented dashboard interface ERM-1643
+
 ## 3.1.0 2021-03-15
  * FOLIO-2989 Remove duplicate licenses.licenseLinks.collection.get permission
  * ERM-1243 License Term values not duplicated on duplicating license
