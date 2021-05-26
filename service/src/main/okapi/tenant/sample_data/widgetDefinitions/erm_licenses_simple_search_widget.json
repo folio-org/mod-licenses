@@ -162,8 +162,9 @@
         {
           "name": "lastUpdated",
           "label": "Last updated",
+          "filterPath":"lastUpdated",
           "valueType": "Date",
-          "comparators": ["==", "!=", ">=", "<="]
+          "comparators": [">=", "<="]
         }
       ]
     },
