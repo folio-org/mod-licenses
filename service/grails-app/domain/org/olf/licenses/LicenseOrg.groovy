@@ -15,11 +15,17 @@ public class LicenseOrg implements MultiTenant<LicenseOrg>, Clonable<LicenseOrg>
 
   String id
   Org org
+  boolean primaryOrg = false
 
-  @CategoryId(defaultInternal=true)
-  @Defaults(['Licensor', 'Licensee', 'Consortium', 'Consortium Administrator'])
-  RefdataValue role
   String note
+
+  static hasMany = [
+    roles: LicenseOrgRole,
+  ]
+
+  static mappedBy = [
+    roles: 'owner',
+  ]
 
   static belongsTo = [
     owner: License
@@ -30,15 +36,16 @@ public class LicenseOrg implements MultiTenant<LicenseOrg>, Clonable<LicenseOrg>
               version column: 'sao_version'
                 owner column: 'sao_owner_fk'
                   org column: 'sao_org_fk'
-                 role column: 'sao_role'
                  note column: 'sao_note', type: 'text'
+           primaryOrg column: 'sao_primary_org'
+               roles cascade: 'all-delete-orphan', lazy: false
   }
 
   static constraints = {
     owner(nullable:false, blank:false)
     org(nullable:true)
-    role(nullable:true)
     note(nullable:true, blank:false)
+    primaryOrg(nullable:false, blank:false)
   }
   
   @Override
