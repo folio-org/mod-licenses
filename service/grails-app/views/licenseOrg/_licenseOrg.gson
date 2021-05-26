@@ -2,5 +2,5 @@ import groovy.transform.*
 import org.olf.licenses.LicenseOrg
 
 @Field LicenseOrg licenseOrg
-json g.render(licenseOrg, [expand: ['role', 'org' ]])
+json g.render(licenseOrg, [expand: ['roles', 'org' ]])
 

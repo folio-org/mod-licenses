@@ -40,10 +40,7 @@ class License extends LicenseCore implements CustomProperties, MultiTenant<Licen
     type(nullable:true, blank:false)
     localReference(nullable:true, blank:false)
     orgs (validator: { Collection<LicenseOrg> li_orgs, _obj, errors ->
-      int num_licensor_orgs = li_orgs?.findAll { it.roles.role?.value?.equalsIgnoreCase('Licensor') }.size()
-      // If there is more than one licensor, return an error message relating to the i18n message validation.onlyOneLicensor
-      if ( num_licensor_orgs > 1 ) return [ 'validation.onlyOneLicensor' ]
-      // it should be validated that primaryOrg is true only for one org per subscription agreement
+      // it should be validated that primaryOrg is true only for one org per license
       int primaryCount = ((li_orgs?.findAll({ LicenseOrg org -> org.primaryOrg == true })?.size()) ?: 0)
       if (primaryCount > 1) {
         errors.rejectValue('orgs', 'only.one.primary.org')

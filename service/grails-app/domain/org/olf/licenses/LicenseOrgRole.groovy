@@ -1,4 +1,4 @@
-package org.olf.erm
+package org.olf.licenses
 import org.olf.general.Org
 import com.k_int.web.toolkit.domain.traits.Clonable
 import com.k_int.web.toolkit.refdata.CategoryId
