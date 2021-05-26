@@ -21,7 +21,11 @@ if (object == null) {
   return
 }
 
-if (object instanceof Map) {
+if ( object instanceof String ) {
+  
+  out << JsonOutput.toJson(object)
+  
+} else if (object instanceof Map) {
   // Map
   Map m = object as Map
   json {
