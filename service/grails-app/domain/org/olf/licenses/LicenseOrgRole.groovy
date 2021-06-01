@@ -36,7 +36,7 @@ public class LicenseOrgRole implements MultiTenant<LicenseOrgRole>, Clonable<Lic
 
   static constraints = {
     owner(nullable:false, blank:false);
-    role(nullable:true, blank:false);
+    role(nullable:false, blank:false);
     note(nullable:true, blank:false);
   }
   
