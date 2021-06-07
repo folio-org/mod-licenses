@@ -5,6 +5,7 @@
   },
   "version": "1.0",
   "name":"ERM Licenses",
+  "resource": "license",
   "definition":{
     "baseUrl":"/licenses/licenses",
     "results": {
