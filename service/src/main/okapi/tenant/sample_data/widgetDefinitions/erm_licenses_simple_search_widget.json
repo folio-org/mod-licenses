@@ -65,6 +65,29 @@
         }
       ]
     },
+    "matches": {
+      "columns": [
+        {
+          "name": "licenseName",
+          "label": "Name",
+          "accessPath": "name",
+          "default": true
+        },
+        {
+          "name": "alternativeName",
+          "label": "Alternative name",
+          "accessPath": "alternateNames.name",
+          "default": false
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "accessPath": "description",
+          "default": false
+        }
+      ],
+      "termConfigurable": true
+    },
     "filters": {
       "columns": [
         {
