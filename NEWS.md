@@ -1,5 +1,14 @@
-## 3.2.0 (In Progress)
- * Implemented dashboard interface ERM-1643
+## 4.0.0 (In Progress)
+ * ERM-1543 Make organization roles for licenses editable in tenant settings
+ * ERM-1541 Support for multiple roles per organisation in Licenses
+
+## 3.2.0 2021-06-15
+ * ERM-1729 Is Set / Is Not Set doesn't work for Open Ended filter in license simple search widget
+ * ERM-1728 Error on retrieving License CustomProperties
+ * ERM-1696 Added match terms to WidgetDefinition
+ * ERM-1653 Licenses SimpleSearch WidgetDefinition
+ * ERM-1650 Add unique indexes for refdata tables
+ * ERM-1643 Implemented dashboard interface
 
 ## 3.1.0 2021-03-15
  * FOLIO-2989 Remove duplicate licenses.licenseLinks.collection.get permission

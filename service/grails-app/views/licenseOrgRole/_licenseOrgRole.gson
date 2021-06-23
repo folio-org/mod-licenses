@@ -1,0 +1,6 @@
+import groovy.transform.*
+import org.olf.licenses.LicenseOrgRole
+
+@Field LicenseOrgRole licenseOrgRole
+json g.render(licenseOrgRole, [expand: ['role']])
+
