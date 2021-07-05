@@ -53,9 +53,9 @@ pipeline {
       }
     }
 
-    stage('Lint raml-cop') {
+    stage('API lint') {
       steps {
-        runLintRamlCop()
+        runApiLint('RAML', 'ramls', '')
       }
     }
 
@@ -114,24 +114,18 @@ pipeline {
       }
     }
 
-    stage('Lint raml schema') {
+    stage('API schema lint') {
       steps {
-        runLintRamlSchema()
+        runApiSchemaLint('ramls', '')
       }
     }
 
-    stage('Publish API Docs') {
+    stage('Generate API docs') {
       when {
         branch 'master'
       }
       steps {
-        sh "python3 /usr/local/bin/generate_api_docs.py -r ${env.name} -l info -o folio-api-docs"
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding',
-                          accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                          credentialsId: 'jenkins-aws',
-                          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          sh 'aws s3 sync folio-api-docs s3://foliodocs/api'
-        }
+        runApiDoc('RAML', 'ramls', '')
       }
     }
 
