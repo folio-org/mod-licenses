@@ -79,8 +79,8 @@
           "permissionsRequired": [ "licenses.files.item.get" ]
         },{
           "methods": ["GET"],
-          "pathPattern": "/licenses/files/{id}/*",
-          "permissionsRequired": [ "licenses.files.item.get" ]
+          "pathPattern": "/licenses/files/{id}/raw",
+          "permissionsRequired": [ "licenses.files.item.download" ]
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/files",
@@ -293,6 +293,14 @@
       "subPermissions": [ 
         "licenses.files.collection.get",
         "licenses.files.item.get"
+      ]
+    },
+    {
+      "permissionName": "licenses.files.item.download",
+      "displayName": "Licenses files item download",
+      "description": "Download a raw files record",
+      "subPermissions": [
+        "licenses.files.view"
       ]
     },
     {
