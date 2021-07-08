@@ -1,9 +1,9 @@
-package org.olf
+package org.olf.licenses
 import org.olf.licenses.License
 
 /**
- * This service checks for existing Local KBs with the title 'LOCAL' and where readonly
- * is not set to TRUE. It sets readonly to TRUE for this RemoteKB.
+ * This service checks for existing Licenses with empty values for endDateSemantics
+ * and sets them to 'implicit' (RefDataValue)
  */
 public class EndDateSemanticsCleanup {
 

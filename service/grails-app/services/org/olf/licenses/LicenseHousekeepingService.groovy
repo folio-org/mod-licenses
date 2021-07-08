@@ -1,4 +1,4 @@
-package org.olf
+package org.olf.licenses
 
 import grails.gorm.transactions.Transactional
 
