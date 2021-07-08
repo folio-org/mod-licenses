@@ -1,5 +1,5 @@
 package org.olf
-import org.olf.licenses.LicenseCore
+import org.olf.licenses.License
 
 /**
  * This service checks for existing Local KBs with the title 'LOCAL' and where readonly
@@ -10,6 +10,8 @@ public class EndDateSemanticsCleanup {
     def checkUnsetValues() {
         log.debug("EndDateSemanticsCleanup: Check for unset values")
 
+          License lic = License.findByEndDateSemanticsIsNull()
+          log.debug(lic)
 //        RemoteKB kb = RemoteKB.findByName('LOCAL')
 //        if (kb) {
 //            if (!kb.readonly) {

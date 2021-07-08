@@ -147,7 +147,7 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
     log.debug("before beforeUpdate()");
     if (!isOpenEnded()) {
       log.debug("before beforeUpdate(): !isOpenEnded");
-      endDateSemantics = RefdataValue.normValue('Implicit');
+      endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics', 'Implicit') //LicenseCore.lookupEndDateSemanticsByValue('Implicit')
     }
   }
 }

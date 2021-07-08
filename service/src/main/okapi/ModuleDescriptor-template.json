@@ -177,6 +177,11 @@
           "methods": ["POST"],
           "pathPattern": "/licenses/licenses/compareTerms",
           "permissionsRequired": [ "licenses.compareTerms" ]
+        },
+        {
+          "methods": ["GET"],
+          "pathPattern": "/licenses/admin/*",
+          "permissionsRequired": ["erm.admin.action"]
         }
       ]
     },
@@ -213,7 +218,7 @@
         {
           "permissionsRequired" : [],
           "methods": [ "GET" ],
-          "pathPattern": "/erm/admin/triggerLicenseHousekeeping",
+          "pathPattern": "/licenses/admin/triggerHousekeeping",
           "unit": "minute",
           "delay": "2"
         }
