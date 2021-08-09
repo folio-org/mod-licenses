@@ -181,7 +181,7 @@
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/admin/*",
-          "permissionsRequired": ["erm.admin.action"]
+          "permissionsRequired": ["licenses.admin.action"]
         }
       ]
     },
@@ -501,6 +501,11 @@
         "licenses.custprops.edit",
         "licenses.custprops.item.delete"
       ]
+    },
+    {
+      "permissionName": "licenses.admin.action",
+      "displayName": "Admin endpoint perform action",
+      "description": "Performs action from admin endpoint"
     }
   ],
   "launchDescriptor": {
