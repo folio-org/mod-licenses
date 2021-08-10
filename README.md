@@ -81,4 +81,16 @@ module developers can run mod_erm and mod_licenses side by side in development m
 See project [MODLIC](https://issues.folio.org/browse/MODLIC)
 at the [FOLIO issue tracker](https://dev.folio.org/guidelines/issue-tracker).
 
+## Kubernetes Deployment Notes
+
+You may need to set OKAPI_SERVICE_PORT and/or OKAPI_SERVICE_HOST on the mod-licenses container.
+
+If you create a Service in Kubernetes named "okapi" and expose a port for Hazelcast and a port for HTTP, the Hazelcast port might be the default and mod-agreements will use that default.
+
+When this happens you will see an exception such as `REST API is not enabled`. Setting the above environment variables will correct this.
+
+
+
+
+
 
