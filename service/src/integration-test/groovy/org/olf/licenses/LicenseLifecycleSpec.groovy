@@ -298,7 +298,7 @@ class LicenseLifecycleSpec extends BaseSpec {
     Map httpResult = doPost('/licenses/licenses', payload)
 
     expect: 'endDateSemantics should be set to "implicit"'
-    assert httpResult.endDateSemantics == "Implicit"
+    assert httpResult.endDateSemantics.label == "Implicit"
 
     where:
     payload << [{
@@ -307,13 +307,6 @@ class LicenseLifecycleSpec extends BaseSpec {
               type "Local"
               startDate "2019-01-01"
             }
-//            ,
-//            {
-//              name "Test License 4"
-//              status "Active"
-//              type "Local"
-//              description "This is a test licenses"
-//            }
             ]
   }
 
