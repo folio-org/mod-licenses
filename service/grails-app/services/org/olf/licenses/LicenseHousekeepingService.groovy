@@ -19,16 +19,20 @@ public class LicenseHousekeepingService {
   def checkUnsetValues() {
         log.debug("EndDateSemanticsCleanup: Check for unset values")
 
-          License lic = License.findByEndDateSemanticsIsNull()
-          if (lic) {
+          int i = 0
+          License.findAllByEndDateSemanticsIsNull().each {lic ->
             lic.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics','Implicit')
             lic.save()
+            i++
           }
+          if (i>0) log.debug("Updated endDateSemantics for ${i} License(s), setting it to 'implicit'")
 
-          LicenseAmendment la = LicenseAmendment.findByEndDateSemanticsIsNull()
-          if (la) {
+          int j = 0
+          LicenseAmendment.findAllByEndDateSemanticsIsNull().each {la ->
             la.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics','Implicit')
             la.save()
+            j++
           }
+          if (j>0) log.debug("Updated endDateSemantics for ${j} License Amendment(s), setting it to 'implicit'")
     }
 }
