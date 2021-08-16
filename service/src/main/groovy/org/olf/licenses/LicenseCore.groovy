@@ -144,7 +144,7 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
 
   def beforeInsert() {
     if (!this.openEnded) {
-      endDateSemantics = lookupOrCreateEndDateSemantics('Implicit')
+      endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics', 'Implicit')
     }
   }
 }

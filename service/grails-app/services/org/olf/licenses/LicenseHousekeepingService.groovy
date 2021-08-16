@@ -15,24 +15,54 @@ public class LicenseHousekeepingService {
     this.checkUnsetValues();
   }
 
+  private List<List<String>> batchFetchAmendments(final int platformBatchSize, int platformBatchCount) {
+    List<List<String>> amendments = LicenseAmendment.createCriteria().list ([max: platformBatchSize, offset: platformBatchSize * platformBatchCount]) {
+      order 'id'
+    }
+    return amendments
+  }
+
+  private List<List<String>> batchFetchLicenses(final int platformBatchSize, int platformBatchCount) {
+    List<List<String>> licenses = License.createCriteria().list ([max: platformBatchSize, offset: platformBatchSize * platformBatchCount]) {
+      order 'id'
+    }
+    return licenses
+  }
 
   def checkUnsetValues() {
-        log.debug("EndDateSemanticsCleanup: Check for unset values")
+    log.debug("EndDateSemanticsCleanup: Check for unset values")
 
-          int i = 0
-          License.findAllByEndDateSemanticsIsNull().each {lic ->
-            lic.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics','Implicit')
-            lic.save()
-            i++
-          }
-          if (i>0) log.debug("Updated endDateSemantics for ${i} License(s), setting it to 'implicit'")
+    def count = 0
+    def batchSize = 2
 
-          int j = 0
-          LicenseAmendment.findAllByEndDateSemanticsIsNull().each {la ->
-            la.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics','Implicit')
-            la.save()
-            j++
+    License.withNewTransaction {
+      List<License> licenses = batchFetchLicenses(batchSize, count)
+      while (licenses && licenses.size() > 0) {
+        count++
+        licenses.each {License.findAllByEndDateSemanticsIsNull().each { la ->
+            la.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics', 'Implicit')
+            la.save(flush:true, failOnError:true)
           }
-          if (j>0) log.debug("Updated endDateSemantics for ${j} License Amendment(s), setting it to 'implicit'")
+        }
+        // Next page
+        licenses = batchFetchLicenses(batchSize, count)
+      }
     }
+
+    count = 0
+
+    LicenseAmendment.withNewTransaction {
+      List<LicenseAmendment> amendments = batchFetchAmendments(batchSize, count)
+      while (amendments && amendments.size() > 0) {
+        count++
+        amendments.each {LicenseAmendment.findAllByEndDateSemanticsIsNull().each { la ->
+            la.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics', 'Implicit')
+            la.save(flush:true, failOnError:true)
+          }
+        }
+        // Next page
+        amendments = batchFetchAmendments(batchSize, count)
+      }
+    }
+  }
 }
