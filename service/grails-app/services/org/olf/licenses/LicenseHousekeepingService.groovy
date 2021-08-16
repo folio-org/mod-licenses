@@ -33,7 +33,7 @@ public class LicenseHousekeepingService {
     log.debug("EndDateSemanticsCleanup: Check for unset values")
 
     def count = 0
-    def batchSize = 2
+    def batchSize = 25
 
     License.withNewTransaction {
       List<License> licenses = batchFetchLicenses(batchSize, count)
