@@ -15,15 +15,17 @@ public class LicenseHousekeepingService {
     this.checkUnsetValues();
   }
 
-  private List<List<String>> batchFetchAmendments(final int platformBatchSize, int platformBatchCount) {
-    List<List<String>> amendments = LicenseAmendment.createCriteria().list ([max: platformBatchSize, offset: platformBatchSize * platformBatchCount]) {
+  private List<LicenseAmendment> batchFetchAmendmentsWithEnddatesemanticsIsNull(final int amendmentBatchSize, int amendmentBatchCount) {
+    List<LicenseAmendment> amendments = LicenseAmendment.createCriteria().list ([max: amendmentBatchSize, offset: amendmentBatchSize * amendmentBatchCount]) {
+      isNull("endDateSemantics")
       order 'id'
     }
     return amendments
   }
 
-  private List<List<String>> batchFetchLicenses(final int platformBatchSize, int platformBatchCount) {
-    List<List<String>> licenses = License.createCriteria().list ([max: platformBatchSize, offset: platformBatchSize * platformBatchCount]) {
+  private List<License> batchFetchLicensesWithEnddatesemanticsIsNull(final int licenseBatchSize, int licenseBatchCount) {
+    List<License> licenses = License.createCriteria().list ([max: licenseBatchSize, offset: licenseBatchSize * licenseBatchCount]) {
+      isNull("endDateSemantics")
       order 'id'
     }
     return licenses
@@ -36,23 +38,23 @@ public class LicenseHousekeepingService {
     def batchSize = 25
 
     License.withNewTransaction {
-      List<License> licenses = batchFetchLicenses(batchSize, count)
+      List<License> licenses = batchFetchLicensesWithEnddatesemanticsIsNull(batchSize, count)
       while (licenses && licenses.size() > 0) {
         count++
-        licenses.each {License.findAllByEndDateSemanticsIsNull().each { la ->
-            la.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics', 'Implicit')
-            la.save(flush:true, failOnError:true)
+        licenses.each {License.findAllByEndDateSemanticsIsNull().each { lic ->
+            lic.endDateSemantics = RefdataValue.lookupOrCreate('endDateSemantics', 'Implicit')
+            lic.save(flush:true, failOnError:true)
           }
         }
         // Next page
-        licenses = batchFetchLicenses(batchSize, count)
+        licenses = batchFetchLicensesWithEnddatesemanticsIsNull(batchSize, count)
       }
     }
 
     count = 0
 
     LicenseAmendment.withNewTransaction {
-      List<LicenseAmendment> amendments = batchFetchAmendments(batchSize, count)
+      List<LicenseAmendment> amendments = batchFetchAmendmentsWithEnddatesemanticsIsNull(batchSize, count)
       while (amendments && amendments.size() > 0) {
         count++
         amendments.each {LicenseAmendment.findAllByEndDateSemanticsIsNull().each { la ->
@@ -61,7 +63,7 @@ public class LicenseHousekeepingService {
           }
         }
         // Next page
-        amendments = batchFetchAmendments(batchSize, count)
+        amendments = batchFetchAmendmentsWithEnddatesemanticsIsNull(batchSize, count)
       }
     }
   }
