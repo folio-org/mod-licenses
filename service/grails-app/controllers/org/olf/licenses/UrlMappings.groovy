@@ -6,11 +6,11 @@ class UrlMappings {
 
     "/"(controller: 'application', action:'index')
     "/licenses/licenses"(resources:'license') {
-      
+
       collection {
         "/compareTerms" (controller: 'export', method: 'POST', format: 'csv')
       }
-      
+
       "/linkedAgreements" {
         namespace         = 'okapi'
         controller        = 'resourceProxy'
@@ -22,14 +22,14 @@ class UrlMappings {
         ]
         withParameters    = true
       }
-      
+
       '/clone' (controller: 'license', action: 'doClone', method: 'POST')
     }
 
     "/licenses/amendments" (resources:'licenseAmendment') {
       '/clone' (controller: 'licenseAmendment', action: 'doClone', method: 'POST')
     }
-    
+
     "/licenses/licenseLinks"(resources:'licenseLink')
 
     '/licenses/contacts'(resources: 'internalContact')
@@ -37,7 +37,7 @@ class UrlMappings {
     '/licenses/refdata'(resources: 'refdata') {
       collection {
         "/$domain/$property" (controller: 'refdata', action: 'lookup')
-        
+
       }
     }
 
@@ -55,13 +55,15 @@ class UrlMappings {
         "/find/$id"(controller:'org', action:'find')
       }
     }
-    
+
     "/licenses/files" ( resources:'fileUpload', excludes: ['update', 'patch', 'save', 'edit', 'create']) {
       collection {
         '/' (controller: "fileUpload", action: "uploadFile", method: 'POST')
       }
       "/raw" ( controller: "fileUpload", action: "downloadFile", method: 'GET' )
     }
+
+    "/licenses/admin/$action"(controller:'admin')
 
     "/dashboard/definitions" (controller: 'dashboardDefinitions', action: 'getDefinitions' ,method: 'GET')
 

@@ -94,7 +94,7 @@
           "pathPattern": "/licenses/files/{id}",
           "permissionsRequired": [ "licenses.files.item.delete" ]
         },
-        
+
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/contacts",
@@ -104,7 +104,7 @@
           "pathPattern": "/licenses/contacts/{id}",
           "permissionsRequired": [ "licenses.contacts.item.get" ]
         },
-        
+
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/org",
@@ -114,7 +114,7 @@
           "pathPattern": "/licenses/org/{id}",
           "permissionsRequired": [ "licenses.orgs.item.get" ]
         },
-        
+
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/refdata",
@@ -140,7 +140,7 @@
           "pathPattern": "/licenses/refdata/{id}",
           "permissionsRequired": [ "licenses.refdata.item.delete" ]
         },
-        
+
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/custprops",
@@ -162,7 +162,7 @@
           "pathPattern": "/licenses/custprops/{id}",
           "permissionsRequired": [ "licenses.custprops.item.delete" ]
         },
-        
+
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/licenseLinks",
@@ -172,11 +172,16 @@
           "pathPattern": "/licenses/licenseLinks/{id}",
           "permissionsRequired": [ "licenses.licenseLinks.item.get" ]
         },
-        
+
         {
           "methods": ["POST"],
           "pathPattern": "/licenses/licenses/compareTerms",
           "permissionsRequired": [ "licenses.compareTerms" ]
+        },
+        {
+          "methods": ["GET"],
+          "pathPattern": "/licenses/admin/*",
+          "permissionsRequired": ["licenses.admin.action"]
         }
       ]
     },
@@ -202,6 +207,20 @@
         }, {
          "methods" : [ "POST" ],
          "pathPattern" : "/_/tenant/disable"
+        }
+      ]
+    },
+    {
+      "id": "_timer",
+      "version": "1.0",
+      "interfaceType": "system",
+      "handlers": [
+        {
+          "permissionsRequired" : [],
+          "methods": [ "GET" ],
+          "pathPattern": "/licenses/admin/triggerHousekeeping",
+          "unit": "hour",
+          "delay": "24"
         }
       ]
     }
@@ -234,7 +253,7 @@
     },
     {
       "permissionName": "licenses.licenses.view",
-      "subPermissions": [ 
+      "subPermissions": [
         "licenses.licenses.collection.get",
         "licenses.licenses.item.get",
         "licenses.licenses.item.linkedAgreements.get",
@@ -290,7 +309,7 @@
     },
     {
       "permissionName": "licenses.files.view",
-      "subPermissions": [ 
+      "subPermissions": [
         "licenses.files.collection.get",
         "licenses.files.item.get"
       ]
@@ -379,7 +398,7 @@
     },
     {
       "permissionName": "licenses.refdata.view",
-      "subPermissions": [ 
+      "subPermissions": [
         "licenses.refdata.collection.get",
         "licenses.refdata.item.get"
       ]
@@ -448,7 +467,7 @@
     },
     {
       "permissionName": "licenses.custprops.view",
-      "subPermissions": [ 
+      "subPermissions": [
         "licenses.custprops.collection.get",
         "licenses.custprops.item.get"
       ]
@@ -482,6 +501,11 @@
         "licenses.custprops.edit",
         "licenses.custprops.item.delete"
       ]
+    },
+    {
+      "permissionName": "licenses.admin.action",
+      "displayName": "Admin endpoint perform action",
+      "description": "Performs action from admin endpoint"
     }
   ],
   "launchDescriptor": {
@@ -489,8 +513,8 @@
     "dockerArgs": {
       "HostConfig": {
         "Memory": 805306368,
-        "PortBindings": { 
-          "8080/tcp":  [{ "HostPort": "%p" }] 
+        "PortBindings": {
+          "8080/tcp":  [{ "HostPort": "%p" }]
         }
       }
     },
