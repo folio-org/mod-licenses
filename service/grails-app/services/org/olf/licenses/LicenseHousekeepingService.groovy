@@ -1,6 +1,7 @@
 package org.olf.licenses
 
 import grails.gorm.transactions.Transactional
+import org.olf.general.Org
 import org.olf.licenses.License
 import org.olf.licenses.LicenseAmendment
 import com.k_int.web.toolkit.refdata.RefdataValue
@@ -13,6 +14,7 @@ public class LicenseHousekeepingService {
 
   public void triggerHousekeeping() {
     this.checkUnsetValues();
+    triggerOrgsCleanup();
   }
 
   private List<LicenseAmendment> batchFetchAmendmentsWithEnddatesemanticsIsNull(final int amendmentBatchSize, int amendmentBatchCount) {
@@ -67,4 +69,20 @@ public class LicenseHousekeepingService {
       }
     }
   }
+
+  void triggerOrgsCleanup() {
+    log.debug("LicenseHousekeepingService::triggerOrgsCleanup")
+    def orgCountBeforeCleanup = Org.executeQuery("""SELECT COUNT(*) FROM Org""".toString())[0]
+
+    Org.executeUpdate("""
+      DELETE from Org as theOrg WHERE NOT EXISTS (
+        FROM LicenseOrg as lo
+          WHERE lo.org = theOrg
+      )""".toString()
+    )
+
+    def orgCountAfterCleanup = Org.executeQuery("""SELECT COUNT(*) FROM Org""".toString())[0]
+    log.debug("triggerOrgsCleanup removed ${orgCountBeforeCleanup - orgCountAfterCleanup} Org records")
+  }
+
 }
