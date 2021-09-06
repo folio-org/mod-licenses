@@ -100,7 +100,8 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
   public void setOpenEnded(final boolean value) {
     // Determine/Set everything we can here.
     final String cat_desc = LicenseCore.getEndDateSemanticsCategory()
-    final String norm_value = value == true ? RefdataValue.normValue('Open ended') : RefdataValue.normValue('Explicit')
+    // This will only overwrite 'implicit' with 'explicit' where 'openEnded' is also sent. For FOLIO this works because we always send everything.
+    final String norm_value = value == true ? RefdataValue.normValue('Open ended') : (endDate != null ? RefdataValue.normValue('Explicit') : RefdataValue.normValue('Implicit'))
     // Just directly query.
     RefdataValue rdv = RefdataValue.createCriteria().get {
       createAlias ('owner', 'cat')
