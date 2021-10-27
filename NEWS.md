@@ -1,6 +1,14 @@
-## 4.0.0 (In Progress)
+## 4.1.0 (In progress)
+
+## 4.0.0 2021-10-01
+ * ERM-1849 Error on adding amendment to a license
+ * ERM-1775 Regularly remove organizations that do not have any links to Licenses
+ * ERM-1753 Migration to new Org / Org role structure leads to duplicate notes
+ * ERM-1739 Remove duplicate stanzas from application.yml
+ * ERM-1731 New licenses should have a default value for end date semantics
  * ERM-1543 Make organization roles for licenses editable in tenant settings
  * ERM-1541 Support for multiple roles per organisation in Licenses
+ * ERM-1001 Separate permissions for file download in Licenses/Agreements
 
 ## 3.2.0 2021-06-15
  * ERM-1729 Is Set / Is Not Set doesn't work for Open Ended filter in license simple search widget

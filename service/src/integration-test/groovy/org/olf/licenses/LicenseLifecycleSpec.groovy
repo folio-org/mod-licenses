@@ -293,6 +293,23 @@ class LicenseLifecycleSpec extends BaseSpec {
     semanticsdata << ['Open ended', 'Open ended']
   }
 
+  void 'Test endDateSemantics null value' (payload) {
+    given: 'Create new License'
+    Map httpResult = doPost('/licenses/licenses', payload)
+
+    expect: 'endDateSemantics should be set to "implicit"'
+    assert httpResult.endDateSemantics.label == "Implicit"
+
+    where:
+    payload << [{
+              name "Test License 3"
+              status "Active"
+              type "Local"
+              startDate "2019-01-01"
+            }
+            ]
+  }
+
   void 'Set tags' (licenseId) {
     given: 'Read license'
     Map httpResult = doGet("/licenses/licenses/${licenseId}")

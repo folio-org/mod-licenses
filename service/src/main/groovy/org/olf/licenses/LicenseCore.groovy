@@ -18,7 +18,7 @@ import grails.gorm.annotation.Entity
 
 @Entity
 abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> {
-  
+
   String id
   String name
   String description
@@ -40,7 +40,7 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
    * values to an annotation we have to explicitly declare the `value` field
    */
   @CategoryId(value='License.EndDateSemantics', defaultInternal=true)
-  @Defaults(['Explicit', 'Open ended'])
+  @Defaults(['Explicit', 'Open ended', 'Implicit'])
   RefdataValue endDateSemantics
 
   static hasMany = [
@@ -93,14 +93,15 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
     boolean result = false;
     if ( endDateSemantics?.value?.equalsIgnoreCase('open_ended') )
       result = true;
- 
+
     return result;
   }
 
   public void setOpenEnded(final boolean value) {
     // Determine/Set everything we can here.
     final String cat_desc = LicenseCore.getEndDateSemanticsCategory()
-    final String norm_value = value == true ? RefdataValue.normValue('Open ended') : RefdataValue.normValue('Explicit')
+    // This will only overwrite 'implicit' with 'explicit' where 'openEnded' is also sent. For FOLIO this works because we always send everything.
+    final String norm_value = value == true ? RefdataValue.normValue('Open ended') : (endDate != null ? RefdataValue.normValue('Explicit') : RefdataValue.normValue('Implicit'))
     // Just directly query.
     RefdataValue rdv = RefdataValue.createCriteria().get {
       createAlias ('owner', 'cat')
@@ -111,32 +112,32 @@ abstract class LicenseCore implements CustomProperties,MultiTenant<LicenseCore> 
     }
     if (rdv) this.setEndDateSemantics( rdv )
   }
-  
+
   /**
    * @param la LicenseCore
    * @return this license but with the custom properties (Terms) aggregated.
    */
   public LicenseCore plus (LicenseCore la) {
-    
+
     final Set<String> seen = []
-    List<CustomProperties> newList = la.customProperties.value.findResults { CustomProperty v -> 
+    List<CustomProperties> newList = la.customProperties.value.findResults { CustomProperty v ->
       if (seen.contains(v.definition.name)) {
         return null
       }
-      
+
       seen << v.definition.name
       v
     }
-    
+
     newList += this.customProperties.value.findResults { CustomProperty v ->
       if (seen.contains(v.definition.name)) {
-        return null 
+        return null
       }
-      
+
       seen << v.definition.name
       v
     }
-    
+
     this.customProperties = new CustomPropertyContainer()
     this.customProperties.value = newList as Set
     this
