@@ -1,9 +1,9 @@
 {
     "type": {
       "name": "SimpleSearch",
-      "version": "1.1.0"
+      "version": "1.0"
     },
-    "version": "1.1.0",
+    "version": "1.1",
     "name":"ERM Licenses",
     "definition":{
       "baseUrl":"/licenses/licenses",
@@ -214,7 +214,7 @@
           {
             "name":"orgs.role",
             "label": "Organization role",
-            "filterPath":"orgs.role.value",
+            "filterPath":"orgs.roles.role.label",
             "valueType": "String",
             "comparators": ["==", "!="]
           }
