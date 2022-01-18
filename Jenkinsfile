@@ -53,11 +53,11 @@ pipeline {
       }
     }
 
-    stage('API lint') {
+/*     stage('API lint') {
       steps {
         runApiLint('RAML', 'ramls', '')
       }
-    }
+    } */
 
     stage('Gradle Build') {
       steps {
