@@ -134,7 +134,6 @@ dependencies {
   }
   compile 'org.liquibase:liquibase-core:3.9.0'
   // compile 'org.liquibase:liquibase-core:3.10.1'                // Liquibase changed searchpath handling. Downgrading for now.
-//  compile 'org.liquibase:liquibase-core:3.5.5'
 
   compile 'com.opencsv:opencsv:5.2'
   compile 'commons-io:commons-io:2.6'
