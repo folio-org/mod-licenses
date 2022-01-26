@@ -7,12 +7,15 @@ import org.olf.general.Org
 import org.olf.licenses.License
 import org.olf.licenses.LicenseAmendment
 import com.k_int.web.toolkit.refdata.RefdataValue
+import com.k_int.web.toolkit.settings.AppSetting
 
 /**
  * This service works at the module level, it's often called without a tenant context.
  */
 @Transactional
 public class LicenseHousekeepingService {
+
+  def grailsApplication
 
   public void triggerHousekeeping() {
     this.checkUnsetValues();
