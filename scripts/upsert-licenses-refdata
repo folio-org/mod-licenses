@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Insert and update /licenses/refdata entries, the entries are taken from
+# a JSON file passed as parameter to this script.
+#
+# Intended usage: Deploy translated labels and additional entries commonly
+# used in a library union like GBV.
+#
+# It uses desc and value for matching because id is different for each tenant.
+
+set -e
+
+# The file $1 must be similar to the response from /licenses/refdata,
+# but doesn't need to have "id" properties; they are not used.
+NEW=`cat "$1"`
+
+set -x
+
+OKAPI="${OKAPI:-http://localhost:8081}"
+TENANT="${TENANT:-diku}"
+OKAPIUSERNAME="${OKAPIUSERNAME:-diku_admin}"
+OKAPIPASSWORD="${OKAPIPASSWORD:-admin}"
+TOKEN=$( curl -s -S -D - -H "X-Okapi-Tenant: $TENANT" -H "Content-type: application/json" \
+  -d "{\"tenant\":\"$TENANT\",\"username\":\"$OKAPIUSERNAME\",\"password\":\"$OKAPIPASSWORD\"}" $OKAPI/authn/login \
+  | grep -i "^x-okapi-token: " | tr -d "\n\r" )
+
+set +x
+
+OLD=$( curl -w"\n" -sS -H "$TOKEN" -H "X-Okapi-Tenant: $TENANT" \
+            -H "Content-type: application/json" -H "Accept: application/json" "$OKAPI/licenses/refdata?perPage=100" )
+
+LENGTH=$( echo "$OLD" | jq length )
+if [[ $LENGTH -gt 99 ]]
+then
+  echo "/licenses/refdata cannot process a perPage parameter value > 100"
+  echo "Therefore we can only handle up to 99 refdata entries, but found $LENGTH"
+  exit 1
+fi
+
+echo "$NEW" \
+| jq -c --argjson old "$OLD" \
+    ' INDEX($old[]; .desc) as $old
+    | .[] |= del(.id) | .[].values[] |= del(.id) | .[]
+    | [$old[.desc].values + .values | group_by(.value)? | .[] | add] as $values 
+    | . + $old[.desc] + {"values": $values}' \
+| while read JSON
+  do
+    ID=$( echo "$JSON" | jq -r .id )
+    if [[ $ID == "null" ]]
+    then
+      curl -w"\n" -sS -H "$TOKEN" -H "X-Okapi-Tenant: $TENANT" \
+           -H "Content-type: application/json" -H "Accept: application/json" \
+           -d "$JSON" -X POST "$OKAPI/licenses/refdata"
+    else
+      curl -w"\n" -sS -H "$TOKEN" -H "X-Okapi-Tenant: $TENANT" \
+           -H "Content-type: application/json" -H "Accept: application/json" \
+           -d "$JSON" -X PUT "$OKAPI/licenses/refdata/$ID"
+    fi
+  done
+

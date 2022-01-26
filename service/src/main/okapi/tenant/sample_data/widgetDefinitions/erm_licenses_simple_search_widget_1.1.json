@@ -1,0 +1,281 @@
+{
+    "type": {
+      "name": "SimpleSearch",
+      "version": "1.0"
+    },
+    "version": "1.1",
+    "name":"ERM Licenses",
+    "definition":{
+      "baseUrl":"/licenses/licenses",
+      "resource": "license",
+      "results": {
+        "columns": [
+          { 
+            "name":"licenseName",
+            "label": "License name",
+            "accessPath":"name",
+            "valueType": "Link"
+          },
+          {
+            "name":"licenseStatus",
+            "label": "Status",
+            "accessPath":"status.label",
+            "valueType": "String"
+          },
+          {
+            "name":"licenseType",
+            "label": "Type",
+            "accessPath":"type.label",
+            "valueType": "String"
+          },
+          {
+            "name":"startDate",
+            "label": "Start date",
+            "accessPath":"startDate",
+            "valueType": "Date"
+          },
+          { 
+            "name":"endDate",
+            "label": "End date",
+            "accessPath":"endDate",
+            "valueType": "Date"
+          },
+          {
+            "name":"openEnded",
+            "label": "Open ended?",
+            "accessPath":"openEnded",
+            "valueType": "Boolean"
+          },
+          {
+            "name": "internalContacts",
+            "label": "Internal contact(s)"
+          },
+          {
+            "name": "tags",
+            "label": "Tags",
+            "accessPath": "tags",
+            "valueType": "Array",
+            "arrayDisplayPath": "value"
+          },
+          {
+            "name": "lastUpdated",
+            "label": "Last updated",
+            "accessPath": "lastUpdated",
+            "valueType": "Date"
+          },
+          {
+            "name":"orgs",
+            "label": "Organization(s)",
+            "accessPath":"orgs",
+            "valueType": "Array"
+          }
+        ]
+      },
+      "matches": {
+        "columns": [
+          {
+            "name": "licenseName",
+            "label": "Name",
+            "accessPath": "name",
+            "default": true
+          },
+          {
+            "name": "alternativeName",
+            "label": "Alternative name",
+            "accessPath": "alternateNames.name",
+            "default": false
+          },
+          {
+            "name": "description",
+            "label": "Description",
+            "accessPath": "description",
+            "default": false
+          }
+        ],
+        "termConfigurable": true
+      },
+      "filters": {
+        "columns": [
+          {
+            "name":"licenseName",
+            "label": "License name",
+            "filterPath":"name",
+            "valueType": "String",
+            "comparators": ["==", "!=", "=~", "!~"]
+          },
+          {
+            "name":"license",
+            "label": "License",
+            "filterPath":"id",
+            "valueType": "UUID",
+            "resource": "license",
+            "comparators": ["==", "!="]
+          },
+          {
+            "name":"licenseStatus",
+            "label": "License status",
+            "filterPath":"status.value",
+            "valueType": "Enum",
+            "enumValues": [
+              {
+                "value": "active",
+                "label": "Active"
+              },
+              {
+                "value": "in_negotiation",
+                "label": "In negotiation"
+              },
+              {
+                "value": "not_yet_active",
+                "label": "Not yet active"
+              },
+              {
+                "value": "rejected",
+                "label": "Rejected"
+              },
+              {
+                "value": "expired",
+                "label": "Expired"
+              }
+            ],
+            "comparators": ["==", "!="]
+          },
+          {
+            "name":"licenseType",
+            "label": "License type",
+            "filterPath":"type.value",
+            "valueType": "String",
+            "comparators": ["==", "!="]
+          },
+          {
+            "name":"startDate",
+            "label": "Start date",
+            "filterPath":"startDate",
+            "valueType": "Date",
+            "comparators": ["==", "!=", ">=", "<=", "isSet", "isNotSet"]
+          },
+          {
+            "name":"endDate",
+            "label": "End date",
+            "filterPath":"endDate",
+            "valueType": "Date",
+            "comparators": ["==", "!=", ">=", "<=", "isSet", "isNotSet"]
+          },
+          {
+            "name":"openEnded",
+            "label": "Open ended?",
+            "filterPath":"endDateSemantics.value",
+            "valueType": "Enum",
+            "enumValues": [
+              {
+                "value": "open_ended",
+                "label": "Open ended"
+              }
+            ],
+            "comparators": ["==", "!="]
+          },
+          {
+            "name":"internalContact",
+            "label": "Internal contact(s)",
+            "filterPath":"contacts.user",
+            "valueType": "UUID",
+            "resource": "user",
+            "comparators": ["=="]
+          },
+          {
+            "name":"tags",
+            "label": "Tags",
+            "filterPath":"tags.value",
+            "valueType": "String",
+            "comparators": ["==", "=~"]
+          },
+          {
+            "name": "lastUpdated",
+            "label": "Last updated",
+            "filterPath":"lastUpdated",
+            "valueType": "Date",
+            "comparators": [">=", "<="]
+          },
+          {
+            "name":"orgs",
+            "label": "Organizations",
+            "filterPath":"orgs.org.orgs",
+            "valueType": "UUID",
+            "resource": "organization",
+            "comparators": ["==", "!="]
+          },
+          {
+            "name":"hasOrgs",
+            "label": "Has organizations",
+            "filterPath":"orgs",
+            "valueType": "Array",
+            "comparators": ["isEmpty", "isNotEmpty"]
+          },
+          {
+            "name":"orgs.role",
+            "label": "Organization role",
+            "filterPath":"orgs.roles.role.label",
+            "valueType": "String",
+            "comparators": ["==", "!="]
+          }
+        ]
+      },
+      "sort": {
+        "columns": [
+          {
+            "name":"id",
+            "label": "Id",
+            "sortPath":"id",
+            "sortTypes": ["asc", "desc"]
+          },
+          {
+            "name":"licenseName",
+            "label": "Name",
+            "sortPath":"name",
+            "sortTypes": ["asc", "desc"]
+          },
+          {
+            "name":"licenseStatus",
+            "label": "Status",
+            "sortPath":"status.label",
+            "sortTypes": ["asc", "desc"]
+          },
+          {
+            "name":"licenseType",
+            "label": "Type",
+            "sortPath":"type.label",
+            "sortTypes": ["asc", "desc"]
+          },
+          {
+            "name":"startDate",
+            "label": "Start date",
+            "sortPath":"startDate",
+            "sortTypes": ["asc", "desc"]
+          },
+          {
+            "name":"endDate",
+            "label": "End date",
+            "sortPath":"endDate",
+            "sortTypes": ["asc", "desc"]
+          },
+          {
+            "name":"lastUpdated",
+            "label": "Last updated",
+            "sortPath":"lastUpdated",
+            "sortTypes": ["asc", "desc"]
+          }
+        ]
+      },
+      "configurableProperties": {
+        "urlLink": {
+          "configurable": true,
+          "defValue": "/licenses"
+        },
+        "numberOfRows": {
+          "configurable": true,
+          "defValue": 10
+        }
+      }
+    }
+  }
+  
