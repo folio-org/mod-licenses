@@ -9,10 +9,12 @@ import org.olf.licenses.License
 import org.olf.licenses.LicenseAmendment
 import com.k_int.web.toolkit.refdata.RefdataValue
 import com.k_int.web.toolkit.settings.AppSetting
+import groovy.util.logging.Slf4j
 
 /**
  * This service works at the module level, it's often called without a tenant context.
  */
+@Slf4j
 @Transactional
 public class LicenseHousekeepingService {
 
@@ -91,10 +93,9 @@ public class LicenseHousekeepingService {
     log.debug("triggerOrgsCleanup removed ${orgCountBeforeCleanup - orgCountAfterCleanup} Org records")
   }
 
-  // @Subscriber('okapi:tenant_enabled')
   @Subscriber('okapi:dataload:reference')
   public void onLoadReference (final String tenantId, String value, final boolean existing_tenant, final boolean upgrading, final String toVersion, final String fromVersion) {
-    log.debug("LicenseHousekeepingService::onLoadReference(${tenantId},${value},${existing_tenant},${upgrading},${toVersion},${fromVersion})");
+    log.info("LicenseHousekeepingService::onLoadReference(${tenantId},${value},${existing_tenant},${upgrading},${toVersion},${fromVersion})");
     final String tenant_schema_id = OkapiTenantResolver.getTenantSchemaName(tenantId)
     try {
       Tenants.withId(tenant_schema_id) {
