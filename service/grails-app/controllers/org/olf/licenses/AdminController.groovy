@@ -7,6 +7,7 @@ import grails.converters.JSON
 class AdminController {
 
   def licenseHousekeepingService
+  def fileUploadService
 
   public AdminController() {
   }
@@ -18,4 +19,16 @@ class AdminController {
     result.status = 'OK'
     render result as JSON
   }
+
+  /**
+   * Trigger migration of uploaded LOB objects from PostgresDB to configured S3/MinIO
+   */
+  public triggerDocMigration() {
+    def result = [:]
+    log.debug("AdminController::triggerDocMigration");
+    fileUploadService.migrateAtMost(0,'LOB','S3'); // n, FROM, TO
+    result.status = 'OK'
+    render result as JSON
+  }
+
 }

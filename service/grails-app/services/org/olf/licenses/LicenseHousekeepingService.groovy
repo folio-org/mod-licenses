@@ -1,5 +1,10 @@
 package org.olf.licenses
 
+<<<<<<< HEAD
+=======
+import com.k_int.okapi.OkapiTenantResolver
+
+>>>>>>> master
 import grails.events.annotation.Subscriber
 import grails.gorm.multitenancy.Tenants
 import grails.gorm.transactions.Transactional
@@ -102,7 +107,7 @@ public class LicenseHousekeepingService {
           log.debug("Check app settings for file storage are in place");
 
           // Bootstrap refdata - controlled vocabulary of storage engines
-          RefdataValue.lookupOrCreate('FileStorageEngines', 'DB');
+          RefdataValue.lookupOrCreate('FileStorageEngines', 'LOB');
           RefdataValue.lookupOrCreate('FileStorageEngines', 'S3');
 
           def default_aws_region = grailsApplication.config.kiwt?.filestore?.aws_region
@@ -113,7 +118,7 @@ public class LicenseHousekeepingService {
 
           // Bootstrap any app settings we may need
           [
-            [ 'fileStorage', 'storageEngine', 'String', 'FileStorageEngines', 'DB' ],
+            [ 'fileStorage', 'storageEngine', 'String', 'FileStorageEngines', 'LOB' ],
             [ 'fileStorage', 'S3Endpoint',    'String', null,                 default_aws_url ?: 'http://s3_endpoint_host.domain:9000' ],
             [ 'fileStorage', 'S3AccessKey',   'String', null,                 default_aws_access_key_id ?: 'ACCESS_KEY' ],
             [ 'fileStorage', 'S3SecretKey',   'String', null,                 default_aws_secret ?: 'SECRET_KEY' ],

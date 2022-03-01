@@ -182,6 +182,26 @@
           "methods": ["GET"],
           "pathPattern": "/licenses/admin/*",
           "permissionsRequired": ["licenses.admin.action"]
+        },
+        {
+          "methods": [ "GET" ],
+          "pathPattern": "/licenses/settings*",
+          "permissionsRequired": [ "licenses.settings.get" ]
+        },
+        {
+          "methods": [ "POST" ],
+          "pathPattern": "/licenses/settings*",
+          "permissionsRequired": [ "licenses.settings.post" ]
+        },
+        {
+          "methods": [ "PUT" ],
+          "pathPattern": "/licenses/settings*",
+          "permissionsRequired": [ "licenses.settings.put" ]
+        },
+        {
+          "methods": [ "DELETE" ],
+          "pathPattern": "/licenses/settings*",
+          "permissionsRequired": [ "licenses.settings.delete" ]
         }
       ]
     },
@@ -506,6 +526,67 @@
       "permissionName": "licenses.admin.action",
       "displayName": "Admin endpoint perform action",
       "description": "Performs action from admin endpoint"
+    },
+    {
+      "permissionName": "licenses.settings.get",
+      "displayName": "settings get",
+      "description": "get settings",
+      "visible": false
+    }, 
+    {
+      "permissionName": "licenses.settings.collection.get",
+      "displayName": "settings collection get",
+      "description": "get collection of settings",
+      "visible": false
+    },
+    {
+      "permissionName": "licenses.settings.post",
+      "displayName": "settings post",
+      "description": "post settings",
+      "visible": false
+    }, 
+    {
+      "permissionName": "licenses.settings.put",
+      "displayName": "settings put",
+      "description": "put settings",
+      "visible": false
+    }, 
+    {
+      "permissionName": "licenses.settings.delete",
+      "displayName": "settings delete",
+      "description": "delete settings",
+      "visible": false
+    },
+    {
+      "permissionName": "licenses.settings.read",
+      "displayName": "settings read",
+      "description": "read settings",
+      "visible": false,
+      "subPermissions": [
+        "licenses.settings.get",
+        "licenses.settings.collection.get"
+      ]
+    },
+    {
+      "permissionName": "licenses.settings.write",
+      "displayName": "settings write",
+      "description": "write settings",
+      "visible": false,
+      "subPermissions": [
+        "licenses.settings.read",
+        "licenses.settings.post",
+        "licenses.settings.put"
+      ]
+    },
+    {
+      "permissionName": "licenses.settings.manage",
+      "displayName": "settings manage",
+      "description": "manage settings",
+      "visible": false,
+      "subPermissions": [
+        "licenses.settings.write",
+        "licenses.settings.delete"
+      ]
     }
   ],
   "launchDescriptor": {

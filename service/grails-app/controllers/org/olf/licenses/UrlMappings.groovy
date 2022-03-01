@@ -65,6 +65,8 @@ class UrlMappings {
 
     "/licenses/admin/$action"(controller:'admin')
 
+    "/licenses/settings/appSettings" (resources: 'setting');
+
     "/dashboard/definitions" (controller: 'dashboardDefinitions', action: 'getDefinitions' ,method: 'GET')
 
     "500"(view: '/error')

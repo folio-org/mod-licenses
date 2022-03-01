@@ -10,7 +10,7 @@
       "resource": "license",
       "results": {
         "columns": [
-          { 
+          {
             "name":"licenseName",
             "label": "License name",
             "accessPath":"name",
@@ -199,10 +199,10 @@
           {
             "name":"orgs",
             "label": "Organizations",
-            "filterPath":"orgs.org.orgs",
+            "filterPath":"orgs.org.orgsUuid",
             "valueType": "UUID",
             "resource": "organization",
-            "comparators": ["==", "!="]
+            "comparators": ["=="]
           },
           {
             "name":"hasOrgs",
@@ -278,4 +278,3 @@
       }
     }
   }
-  
