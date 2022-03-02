@@ -2,6 +2,7 @@ package org.olf.licenses
 
 import grails.gorm.multitenancy.CurrentTenant
 import grails.converters.JSON
+import grails.gorm.transactions.Transactional
 
 @CurrentTenant
 class AdminController {
@@ -23,6 +24,7 @@ class AdminController {
   /**
    * Trigger migration of uploaded LOB objects from PostgresDB to configured S3/MinIO
    */
+  @Transactional
   public triggerDocMigration() {
     def result = [:]
     log.debug("AdminController::triggerDocMigration");
