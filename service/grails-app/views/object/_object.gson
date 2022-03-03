@@ -8,7 +8,7 @@ import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
 @Field Object object
 object = GrailsHibernateUtil.unwrapIfProxy(object)
 
-System.out.println("_object template called with type ${object.class}, value: ${object}")
+// System.out.println("_object template called with type ${object.class}, value: ${object}")
 
 /**
  * Fallback template for all things not explicitly templated.
