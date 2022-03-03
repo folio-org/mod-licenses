@@ -43,8 +43,14 @@ class FileUploadController extends OkapiTenantAwareController<FileUpload> {
   
   @Transactional(readOnly=true)
   def downloadFile() {
-    FileUpload fileUpload = FileUpload.read(params.fileUploadId)
-    
-    render file: fileUpload.fileObject.fileContents.binaryStream, contentType: fileUpload.fileContentType
-  }
+    FileUpload.withTransaction {
+      FileUpload fileUpload = FileUpload.read(params.fileUploadId)
+
+      // Do the right thing depending upon the fileObject type - currently S3 or LOB
+      InputStream is = fileUploadService.getInputStreamFor(fileUpload.fileObject);
+
+      // render file: fileUpload.fileObject.fileContents.binaryStream, contentType: fileUpload.fileContentType
+      render file: is, contentType: fileUpload.fileContentType
+    }
+
 }
