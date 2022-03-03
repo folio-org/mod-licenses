@@ -121,7 +121,7 @@ public class LicenseHousekeepingService {
             [ 'fileStorage', 'S3SecretKey',   'String', null,                 default_aws_secret ?: 'SECRET_KEY' ],
             [ 'fileStorage', 'S3BucketName',  'String', null,                 default_aws_bucket ?: "${tenantId}-shared" ],
             [ 'fileStorage', 'S3BucketRegion','String', null,                 default_aws_region ?: "us-east-1" ],
-            [ 'fileStorage', 'S3ObjectPrefix','String', null,                 "/${tenantId}/agreements/" ],
+            [ 'fileStorage', 'S3ObjectPrefix','String', null,                 "/${tenantId}/licenses/" ],
           ].each { st_row ->
             log.debug("Check app setting ${st_row}");
 
