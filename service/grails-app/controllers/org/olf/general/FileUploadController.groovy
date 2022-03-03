@@ -52,5 +52,5 @@ class FileUploadController extends OkapiTenantAwareController<FileUpload> {
       // render file: fileUpload.fileObject.fileContents.binaryStream, contentType: fileUpload.fileContentType
       render file: is, contentType: fileUpload.fileContentType
     }
-
+  }
 }
