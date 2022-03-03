@@ -16,6 +16,8 @@ class DocumentAttachment extends SingleFileAttachment implements MultiTenant<Doc
   Date dateCreated
   Date lastUpdated
 
+  static copyByCloning = ['fileUpload']
+
   //	@Defaults(['License', 'Misc', 'Consortium Negotiation Document'])
   @Defaults(['Consortium authorization statement', 'Product data sheet', 'Vendor terms and conditions'])
   RefdataValue atType
