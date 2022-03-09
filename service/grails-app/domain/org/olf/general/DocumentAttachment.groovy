@@ -16,7 +16,21 @@ class DocumentAttachment extends SingleFileAttachment implements MultiTenant<Doc
   Date dateCreated
   Date lastUpdated
 
-  static copyByCloning = ['fileUpload']
+  // static copyByCloning = ['fileUpload']
+  static cloneStaticValues = [
+    fileUpload: {
+      final def toComponent = delegate
+      final def fromComponent = owner
+
+      FileUpload fu = fromComponent.fileUpload?.clone()
+      if (fu) {
+        fu.owner = toComponent
+      }
+      return fu
+    }
+  ]
+
+
 
   //	@Defaults(['License', 'Misc', 'Consortium Negotiation Document'])
   @Defaults(['Consortium authorization statement', 'Product data sheet', 'Vendor terms and conditions'])
