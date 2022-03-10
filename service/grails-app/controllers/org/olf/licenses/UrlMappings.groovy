@@ -47,6 +47,7 @@ class UrlMappings {
           perPage = { params.perPage ?: 100 }
 //          sort = [ 'primary;desc', 'weight;asc', 'id;asc']
         }
+        "/contexts" (controller: 'customPropertyDefinition', action: "fetchContexts", method: 'GET')
       }
     }
 
