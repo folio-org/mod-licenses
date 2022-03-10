@@ -4,8 +4,8 @@ import com.k_int.web.toolkit.domain.traits.Clonable
 import com.k_int.web.toolkit.files.SingleFileAttachment
 import com.k_int.web.toolkit.refdata.Defaults
 import com.k_int.web.toolkit.refdata.RefdataValue
-
 import grails.gorm.MultiTenant
+import com.k_int.web.toolkit.files.FileUpload;
 
 class DocumentAttachment extends SingleFileAttachment implements MultiTenant<DocumentAttachment>, Clonable<DocumentAttachment> {
 
