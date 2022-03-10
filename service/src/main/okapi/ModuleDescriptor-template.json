@@ -162,7 +162,11 @@
           "pathPattern": "/licenses/custprops/{id}",
           "permissionsRequired": [ "licenses.custprops.item.delete" ]
         },
-
+        {
+          "methods": ["GET"],
+          "pathPattern": "/licenses/custprops/contexts",
+          "permissionsRequired": [ "licenses.custprops.collection.get" ]
+        },
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/licenseLinks",

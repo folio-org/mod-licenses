@@ -1,4 +1,11 @@
-## 4.1.0 (In progress)
+## 4.2.0 In progress
+
+## 4.1.0 2022-03-03
+  * ERM-2037 Remove 'is not' option from Organization filter in Licenses simple search
+  * ERM-1975 Script to insert and update /licenses/refdata entries
+  * ERM-1945 Add AppSettings panel to Licenses
+  * ERM-1943 Abstract and subclass existing toolkit FileObject (for Licenses)
+  * ERM-1745 Add Organisations to Licenses simple search widget definition
 
 ## 4.0.0 2021-10-01
  * ERM-1849 Error on adding amendment to a license
