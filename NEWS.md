@@ -1,3 +1,6 @@
+## 4.1.1 2022-03-14
+  * ERM-2042 Duplicating agreement/license inc. documents moves files from original to new agreement/license
+
 ## 4.1.0 2022-03-03
   * ERM-2037 Remove 'is not' option from Organization filter in Licenses simple search
   * ERM-1975 Script to insert and update /licenses/refdata entries
