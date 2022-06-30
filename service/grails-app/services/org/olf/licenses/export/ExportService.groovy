@@ -145,6 +145,13 @@ public class ExportService {
       
     } else if (!(value instanceof Collection)) {
       return "${value}"
+    } else if (value instanceof Collection) {
+      // Deal with multiValued custom properties by exporting a string of the form 'In progress;Active;Closed'
+      def output = ''
+      value.eachWithIndex {it, index ->
+        output += "${index != 0 ? ';' : ''}${handleValue(it)}"
+      }
+      return output;
     }
     
     // Default to empty string.
