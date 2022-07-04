@@ -1,3 +1,6 @@
+## 4.2.1 2022-07-04
+  * ERM-2226 Multi-pick list term values do not export with license
+
 ## 4.2.0 2022-06-29
   * ERM-2218 Removing values from multi-valued custom property in UI does not update the values
   * ERM-2201 Error on attempting to render agreement with a supplementary property
