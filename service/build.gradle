@@ -1,3 +1,8 @@
+configurations.all {
+  // Check for updates every build
+  resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 buildscript {
   repositories {
     mavenCentral()
@@ -41,7 +46,7 @@ apply plugin: 'com.github.erdi.webdriver-binaries'
 apply plugin: 'com.bmuschko.docker-remote-api'
 
 repositories {
-  // mavenLocal()
+  mavenLocal()
   // jcenter()
   mavenCentral()
   maven { url 'https://repo.grails.org/grails/core' }
@@ -128,7 +133,7 @@ dependencies {
   compile "org.hibernate:hibernate-core:5.4.19.Final"             // Update to latest 5.4
   compile "org.hibernate:hibernate-java8:5.4.19.Final"
   runtime "com.zaxxer:HikariCP:3.4.5"                             // Replaces Tomcat JDBC pool
-  runtime "org.postgresql:postgresql:42.2.14"
+  runtime "org.postgresql:postgresql:42.5.0"
 
   compile ('org.grails.plugins:database-migration:3.1.0') {       // Required by Grails Okapi
     exclude group: 'org.liquibase', module: 'liquibase-core'
@@ -136,17 +141,17 @@ dependencies {
   compile 'org.liquibase:liquibase-core:3.9.0'
   // compile 'org.liquibase:liquibase-core:3.10.1'                // Liquibase changed searchpath handling. Downgrading for now.
 
-  compile 'com.opencsv:opencsv:5.2'
+  compile 'com.opencsv:opencsv:5.7.1'
   compile 'commons-io:commons-io:2.6'
 
   compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'     // TODO: Migrate away from this resource.
   compile 'com.k_int.grails:web-toolkit-ce:6.3.0-rc.4'
-  compile 'com.k_int.okapi:grails-okapi:4.1.2'
+  compile 'com.k_int.okapi:grails-okapi:5.0.1-SNAPSHOT'
 
   // Minio for file storage to S3
-  compile "io.minio:minio:8.3.3"
-  compile 'com.squareup.okhttp3:okhttp:4.8.1'
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.3.70'
+  compile "io.minio:minio:8.5.1"
+  compile 'com.squareup.okhttp3:okhttp:4.10.0'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
 }
 
 bootRun {
