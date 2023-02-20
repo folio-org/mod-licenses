@@ -1,4 +1,6 @@
-## 4.3.0 In progress
+## 4.3.0 2023-02-20
+  * ERM-2433 Upgrade postgresql, opencsv, minio, okhttp, kotlin
+  * ERM-2226 Multi-pick list term values do not export with license
 
 ## 4.2.0 2022-06-29
   * ERM-2218 Removing values from multi-valued custom property in UI does not update the values
