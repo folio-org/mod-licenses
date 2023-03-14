@@ -1,3 +1,6 @@
+## 4.3.1 2023-03-14
+  * ERM-2462 Hibernate JPA Criteria SQL Injection (CVE-2020-25638)
+
 ## 4.3.0 2023-02-20
   * ERM-2433 Upgrade postgresql, opencsv, minio, okhttp, kotlin
   * ERM-2226 Multi-pick list term values do not export with license
