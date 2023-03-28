@@ -1,4 +1,5 @@
 ## 4.4.0 In progress
+  * ERM-2885 Reduce number of internal contact role defaults in Licenses
 
 ## 4.3.0 2023-02-20
   * ERM-2433 Upgrade postgresql, opencsv, minio, okhttp, kotlin

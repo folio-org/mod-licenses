@@ -6,12 +6,12 @@ import com.k_int.web.toolkit.refdata.RefdataValue
 import grails.gorm.MultiTenant
 
 public class InternalContact implements MultiTenant<InternalContact>, Clonable<InternalContact>{
-  
+
   String id
   String user
-  @Defaults(['Authorised signatory', 'ERM Librarian', 'License owner', 'Negotiator', 'Subject specialist']) // Defaults to create for this property.
+  @Defaults(['Subject specialist']) // Defaults to create for this property.
   RefdataValue role
-  
+
   static belongsTo = [
     owner: LicenseCore
   ]
@@ -30,8 +30,8 @@ public class InternalContact implements MultiTenant<InternalContact>, Clonable<I
         user(nullable:true, blank:false);
         role(nullable:true, blank:false);
   }
-  
-  
+
+
   @Override
   public InternalContact clone () {
     Clonable.super.clone()
