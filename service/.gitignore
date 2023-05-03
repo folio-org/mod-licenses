@@ -10,5 +10,3 @@ out/
 .project
 .settings
 .classpath
-/bin/
-/_settings.gradle

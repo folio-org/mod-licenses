@@ -159,6 +159,7 @@ hibernate:
     use_query_cache: false
 
   allow_update_outside_transaction: true #TODO: We should remove this in the near future and fix all dependants to wrap transactions.
+  enable_lazy_load_no_trans: true
 
 management:
   endpoints:
@@ -233,6 +234,7 @@ environments:
 
   development:
     logging:
+      config: classpath:logback-development.xml
       level:
         web: DEBUG
     # This is only used when the there is no request from okapi coming to the module or a none-okapi request.
