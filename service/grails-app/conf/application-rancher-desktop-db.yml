@@ -34,12 +34,14 @@ dataSource:
       defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 server:
   port: 8081
+
 okapi: 
   service:
     host: localhost
     port: 30100
 logging:
   config: classpath:logback-development.xml
+
 hibernate:
   enable_lazy_load_no_trans: true
 
