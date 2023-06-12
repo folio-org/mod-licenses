@@ -53,12 +53,6 @@ pipeline {
       }
     }
 
-    stage('API lint') {
-      steps {
-        runApiLint('RAML', 'ramls', '', false)
-      }
-    }
-
     stage('Gradle Build') {
       steps {
         dir(env.BUILD_DIR) {
@@ -111,21 +105,6 @@ pipeline {
           """
         }
         postModuleDescriptor(env.MD)
-      }
-    }
-
-    stage('API schema lint') {
-      steps {
-        runApiSchemaLint('ramls', '')
-      }
-    }
-
-    stage('Generate API docs') {
-      when {
-        branch 'master'
-      }
-      steps {
-        runApiDoc('RAML', 'ramls', '')
       }
     }
 
