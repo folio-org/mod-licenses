@@ -18,6 +18,7 @@ databaseChangeLog = {
   include file: 'update-mod-license-4-0.groovy'
   include file: 'update-mod-license-4-1.groovy'
   include file: 'setup-app-settings.groovy'
+  include file: 'wtk/hidden-appsetting.feat.groovy'
   include file: 'update-mod-license-4-2.groovy'
   include file: 'wtk/multi-value-custprops.feat.groovy'
 }
