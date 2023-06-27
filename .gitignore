@@ -34,3 +34,5 @@
 .*
 !.gitignore
 !.github
+
+ConsoleOutput.txt
