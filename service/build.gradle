@@ -1,15 +1,15 @@
-/* configurations.all {
-  // Check for updates every build
-  resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-} */
+//configurations.all {
+//  // Check for updates every build
+//  resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+//}
 
 buildscript {
   repositories {
     //mavenLocal()
-		mavenCentral()
+	  mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" }
-		maven { url "https://repo.grails.org/grails/core" }
-		maven { url "https://repo.grails.org/grails/plugins" }
+	  maven { url "https://repo.grails.org/grails/core" }
+	  maven { url "https://repo.grails.org/grails/plugins" }
   }
   dependencies {
     classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
@@ -59,7 +59,7 @@ bootJar {
 }
 
 repositories {
-	//mavenLocal()
+//	mavenLocal()
 	mavenCentral()
 	maven { url "https://repo.grails.org/grails/core" }
 	maven { url "https://repo.grails.org/grails/plugins" }
@@ -122,8 +122,8 @@ dependencies {
   /*  ---- Manually installed dependencies ---- */
   implementation 'org.grails.plugins:spring-security-core:5.2.1'
 	
-	implementation 'com.k_int.grails:web-toolkit-ce:8.1.0-rc.1'
-	implementation 'com.k_int.okapi:grails-okapi:6.0.0-rc.2'
+	implementation 'com.k_int.grails:web-toolkit-ce:8.1.0-rc.4'
+	implementation 'com.k_int.okapi:grails-okapi:6.0.0-rc.4'
 
 
 	implementation 'io.github.http-builder-ng:http-builder-ng-core:1.0.4'
@@ -132,7 +132,10 @@ dependencies {
 	implementation "org.hibernate:hibernate-java8:5.4.28.Final"
 	runtimeOnly "com.zaxxer:HikariCP:3.4.5"                             // Replaces Tomcat JDBC pool
 	runtimeOnly "org.postgresql:postgresql:42.5.3"
-	implementation ('org.grails.plugins:database-migration:4.2.0')
+	implementation ('org.grails.plugins:database-migration:4.2.0') {
+		exclude group: 'org.liquibase', module: 'liquibase-core'
+	}
+	implementation 'org.liquibase:liquibase-core:4.17.2'
 
   implementation 'com.opencsv:opencsv:5.7.1'
 	implementation 'commons-io:commons-io:2.6'
@@ -260,7 +263,7 @@ tasks.withType(GroovyCompile) {
 }
 
 tasks.withType(Test) {
-	useJUnitPlatform()
+  useJUnitPlatform()
   systemProperty "geb.env", System.getProperty('geb.env')
   systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
   systemProperty "webdriver.chrome.driver", System.getProperty('webdriver.chrome.driver')
@@ -313,44 +316,40 @@ task buildImage(type: DockerBuildImage, dependsOn: createDockerfile) {
 }
 
 eclipse {
-	autoBuildTasks ([
-		':processResources'
-	])
-	synchronizationTasks ([
-		':processResources'
-	])
+  autoBuildTasks ([':processResources'])
+  synchronizationTasks ([':processResources'])
 
-	classpath {
-		defaultOutputDir = new File(project.buildDir.canonicalPath, 'main')
-		file {
+  classpath {
+    defaultOutputDir = new File(project.buildDir.canonicalPath, 'main')
+    file {
 
-			whenMerged { classpath ->
+      whenMerged { classpath ->
 
-				Set<String> resources = sourceSets.main?.resources?.srcDirs?.collect { it.canonicalPath }
+        Set<String> resources = sourceSets.main?.resources?.srcDirs?.collect { it.canonicalPath }
 
-				entries.collect().each {
+        entries.collect().each {
 
-					if (it.path =='grails-app/conf' && it.output?.toLowerCase().endsWith('test')) {
-						classpath.entries.remove( it )
-						println "Removed ${it}"
-						return
-					}
+          if (it.path =='grails-app/conf' && it.output?.toLowerCase().endsWith('test')) {
+            classpath.entries.remove( it )
+            println "Removed ${it}"
+            return
+          }
 
-					if (it.hasProperty('output') && it.output.startsWith('bin/')) {
-						it.output = 'build/' + it.output.substring(4)
-					}
+          if (it.hasProperty('output') && it.output.startsWith('bin/')) {
+            it.output = 'build/' + it.output.substring(4)
+          }
 
-					// Eclude the output of the resources added to the source sets for grails.
-					// Instead we add the results of the 'processResources' tasks to the classpath later.
-					if (it.hasProperty('dir') && resources.find { res -> it.dir?.canonicalPath?.startsWith(res) } ) {
-						it.exported = false
-						it.excludes << '**/*'
-					}
-				}
-				def lib = new org.gradle.plugins.ide.eclipse.model.Library(fileReference(file("${tasks.processResources.destinationDir}")))
-				println "Adding: ${lib}"
-				entries << lib
-			}
-		}
-	}
+          // Eclude the output of the resources added to the source sets for grails.
+          // Instead we add the results of the 'processResources' tasks to the classpath later.
+          if (it.hasProperty('dir') && resources.find { res -> it.dir?.canonicalPath?.startsWith(res) } ) {
+            it.exported = false
+            it.excludes << '**/*'
+          }
+        }
+        def lib = new org.gradle.plugins.ide.eclipse.model.Library(fileReference(file("${tasks.processResources.destinationDir}")))
+        println "Adding: ${lib}"
+        entries << lib
+      }
+    }
+  }
 }
