@@ -7,10 +7,10 @@ import groovy.transform.*
 
 inherits template: '/licenseCore/licenseCore'
 
-def should_include = [
-  'owner'
-]
-
 // The majority of this template is inherited from the parent template. Just add the extensions.
-json g.render(licenseAmendment, [includes: should_include]) {
+json {
+  owner {
+    name licenseAmendment.owner.name
+    id licenseAmendment.owner.id
+  }
 }
