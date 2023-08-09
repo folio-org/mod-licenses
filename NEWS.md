@@ -1,5 +1,7 @@
 ## 4.4.0 In progress
   * ERM-2885 Reduce number of internal contact role defaults in Licenses
+  * ERM-2966 Error when match and filter contain the same path root
+    * update to 'com.k_int.grails:web-toolkit-ce:8.1.0'
 
 ## 4.3.0 2023-02-20
   * ERM-2433 Upgrade postgresql, opencsv, minio, okhttp, kotlin
@@ -88,10 +90,10 @@
  * ERM-591 Filters across custom properties do not work
 
 ## 2.0.1 2020-01-19
- * ERM-675 mod-license upgrade from Q3.2 to Q4 fails 
+ * ERM-675 mod-license upgrade from Q3.2 to Q4 fails
 
 ## 2.0.0 2019-12-04
- * ERM-638 Use JVM features to manage container memory 
+ * ERM-638 Use JVM features to manage container memory
  * ERM-538 Support health check endpoint (for example /admin/health provided by RMB)
  * ERM-505 Move test data so it's only active for the diku tenant only
  * ERM-477 License and agreement APIs are not protected by FOLIO permissions
@@ -102,7 +104,7 @@
  * ERM-419 Duplicate refdata entries in folio builds
  * ERM-417 /licenses/custprops cannot be sorted via the "sort" query param
  * ERM-362 Issue with calling install?purge=true option multiple times
- * ERM-297 File attachment over 10MB causes out of memory errors 
+ * ERM-297 File attachment over 10MB causes out of memory errors
 
 ## 1.11.0 2019-09-11
  * ERM-279 Provide integration tests for license creation covering start date, end date, status, type and end date semantics
@@ -112,7 +114,7 @@
    * ERM-366 Integration tests for license type
    * ERM-365 Integration tests for license status
    * ERM-364 Integration tests for license start-date
-   * ERM-363 Integration tests for license end-date 
+   * ERM-363 Integration tests for license end-date
 
 ## 1.10.0 2019-08-21
  * Re-release of 1.9.0 with updated module version
