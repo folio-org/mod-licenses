@@ -9,8 +9,10 @@ inherits template: '/licenseCore/licenseCore'
 
 // The majority of this template is inherited from the parent template. Just add the extensions.
 json {
-  owner {
-    name licenseAmendment.owner.name
-    id licenseAmendment.owner.id
+  if (controllerName == 'licenseAmendment') {
+    owner {
+      name licenseAmendment.owner.name
+      id licenseAmendment.owner.id
+    }
   }
 }
