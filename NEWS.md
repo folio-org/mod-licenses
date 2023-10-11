@@ -1,7 +1,18 @@
-## 4.4.0 In progress
-  * ERM-2885 Reduce number of internal contact role defaults in Licenses
+## 5.0.0 2023-10-11
+  * ERM-3020 IsNotSet not working for custom properties
+    * update to 'com.k_int.grails:web-toolkit-ce:8.1.1'
+  * ERM-2993 Add amendments search in licenses app
   * ERM-2966 Error when match and filter contain the same path root
     * update to 'com.k_int.grails:web-toolkit-ce:8.1.0'
+  * ERM-2961 Extend length of document URL to 2048 chars 
+  * ERM-2940 spring-webmvc 5.3.25 security bypass vulnerability
+  * ERM-2921 File Storage option missing in License application
+  * ERM-2885 Reduce number of internal contact role defaults in Licenses
+  * ERM-2642: Hibernate JPA Criteria SQL Injection (CVE-2020-25638)
+    * update to 'org.hibernate:hibernate-core:5.4.28.Final'
+    * update to 'org.hibernate:hibernate-java8:5.4.28.Final'
+  * ERM-2641 Upgrade to Grails 5 (including Hibernate 5.6.x) for Poppy
+  * ERM-2625 Add view only permissions for License settings
 
 ## 4.3.0 2023-02-20
   * ERM-2433 Upgrade postgresql, opencsv, minio, okhttp, kotlin
