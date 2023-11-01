@@ -1,3 +1,7 @@
+## 5.0.1 2023-11-01
+  * ERM-3061: On setting document filter spaces are stripped from filter value
+    * Bumped kint-web-toolkit version  to 8.1.4
+
 ## 5.0.0 2023-10-11
   * ERM-3020 IsNotSet not working for custom properties
     * update to 'com.k_int.grails:web-toolkit-ce:8.1.1'
