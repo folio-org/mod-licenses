@@ -129,28 +129,6 @@ databaseChangeLog = {
 		}
 	}
 
-	changeSet(author: "Jack_Golding (manual)", id: "20231123-0012") {
-		preConditions (onFail: 'MARK_RAN', onError: 'WARN') {
-			not {
-				indexExists(tableName: 'subscription_agreement_org', columnNames: 'sao_owner_fk')
-			}
-		}
-		createIndex(indexName: "subscription_agreement_org_owner_idx", tableName: "subscription_agreement_org") {
-			column(name: "sao_owner_fk")
-		}
-	}
-
-	changeSet(author: "Jack_Golding (manual)", id: "20231123-0013") {
-		preConditions (onFail: 'MARK_RAN', onError: 'WARN') {
-			not {
-				indexExists(tableName: 'subscription_agreement_org', columnNames: 'sao_org_fk')
-			}
-		}
-		createIndex(indexName: "subscription_agreement_org_org_idx", tableName: "subscription_agreement_org") {
-			column(name: "sao_org_fk")
-		}
-	}
-
 	changeSet(author: "Jack_Golding (manual)", id: "20231123-0014") {
 		preConditions (onFail: 'MARK_RAN', onError: 'WARN') {
 			not {
