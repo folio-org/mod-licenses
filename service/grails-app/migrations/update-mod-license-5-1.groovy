@@ -1,4 +1,12 @@
 databaseChangeLog = {
+  changeSet(author: "julianladisch (manual)", id: "2023-12-04T18:12:00") {
+		grailsChange {
+			change {
+				sql.execute('CREATE EXTENSION IF NOT EXISTS btree_gin WITH SCHEMA public;');
+			}
+		}
+	}
+
   changeSet(author: "Jack_Golding (manual)", id: "20231123-001") {
 		preConditions (onFail: 'MARK_RAN', onError: 'WARN') {
 			not {
