@@ -1,4 +1,8 @@
-## 5.1.0 In progress
+## 6.0.0 2024-03-22
+  * ERM-3111 Upgrade Grails from 5 to 6
+  * ERM-3073 Identify and implement indexes that should be added
+    * All searchable elements have been assigned a GIN index
+    * All foreign keys have been indexed
 
 ## 5.0.0 2023-10-11
   * ERM-3020 IsNotSet not working for custom properties
