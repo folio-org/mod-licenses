@@ -1,3 +1,5 @@
+## 6.1.0 In progress
+
 ## 6.0.0 2024-03-22
   * ERM-3111 Upgrade Grails from 5 to 6
   * ERM-3073 Identify and implement indexes that should be added
