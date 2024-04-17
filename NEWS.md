@@ -1,3 +1,7 @@
+## 6.0.1 2024-04-17
+  * ERM-3190 DB Connections are not being released
+  * ERM-3175 Review outdated/vulnerable dependencies in mod-licenses
+
 ## 6.0.0 2024-03-22
   * ERM-3111 Upgrade Grails from 5 to 6
   * ERM-3073 Identify and implement indexes that should be added
