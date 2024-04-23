@@ -30,7 +30,7 @@ class ExportController extends OkapiTenantAwareController<License> {
         exportObj.include = json.include
         exportObj.terms = json.terms
 
-        log.debug("ExportController::index - Received export data: ${exportObj}")
+        log.debug("ExportController::index")
 
         // Set the file disposition.
         OutputStreamWriter osWriter = null
