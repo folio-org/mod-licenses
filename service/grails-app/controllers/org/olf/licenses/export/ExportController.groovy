@@ -22,13 +22,15 @@ class ExportController extends OkapiTenantAwareController<License> {
     }
 
     def index() {
-        def json = request.JSON // Automatically parsed as a Map
+        def objToBind = getObjectToBind()
+
         ExportControlObject exportObj = new ExportControlObject()
 
-        // Manually bind data
-        exportObj.ids = json.ids
-        exportObj.include = json.include
-        exportObj.terms = json.terms
+        exportObj.ids = objToBind?.ids ?: []
+        exportObj.include = objToBind?.include ?: [:]
+        exportObj.terms = objToBind?.terms ?: [:]
+
+        bindData exportObj, objToBind
 
         log.debug("ExportController::index")
 
