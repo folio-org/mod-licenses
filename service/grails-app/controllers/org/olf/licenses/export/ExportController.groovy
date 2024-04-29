@@ -26,6 +26,11 @@ class ExportController extends OkapiTenantAwareController<License> {
 
         ExportControlObject exportObj = new ExportControlObject()
 
+        /**
+         * we want to bind this directly with bindData,
+         * but the exportObj stayed empty, so these next 3 lines were necessary
+         * we should investigate and refactor this later
+         */
         exportObj.ids = objToBind?.ids ?: []
         exportObj.include = objToBind?.include ?: [:]
         exportObj.terms = objToBind?.terms ?: [:]
