@@ -1,5 +1,8 @@
 ## 6.1.0 In progress
 
+## 6.0.2 2024-05-02
+  * ERM-3208 Export license creates empty file
+
 ## 6.0.1 2024-04-17
   * ERM-3190 DB Connections are not being released
   * ERM-3175 Review outdated/vulnerable dependencies in mod-licenses
