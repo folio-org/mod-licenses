@@ -17,10 +17,7 @@
         },{
           "methods": ["GET"],
           "pathPattern": "/licenses/licenses/{id}/linkedAgreements",
-          "permissionsRequired": [
-            "licenses.licenses.item.linkedAgreements.get",
-            "licenses.agreements.linkedLicenses.get"
-          ],
+          "permissionsRequired": [ "licenses.licenses.item.linkedAgreements.get" ],
           "modulePermissions": [
              "erm.agreements.item.get",
              "erm.agreements.linkedLicenses.get"
@@ -266,11 +263,6 @@
       "description": "Get an license's linked agreement records"
     },
     {
-      "permissionName": "licenses.agreements.linkedLicenses.get",
-      "displayName": "Licenses agreements linked license get",
-      "description": "Get the linked licenses for an agreement record"
-    },
-    {
       "permissionName": "licenses.compareTerms",
       "displayName": "Licenses compare terms",
       "description": "Compare license terms"
@@ -281,7 +273,6 @@
         "licenses.licenses.collection.get",
         "licenses.licenses.item.get",
         "licenses.licenses.item.linkedAgreements.get",
-        "licenses.agreements.linkedLicenses.get",
         "licenses.compareTerms"
       ]
     },
@@ -341,10 +332,7 @@
     {
       "permissionName": "licenses.files.item.download",
       "displayName": "Licenses files item download",
-      "description": "Download a raw files record",
-      "subPermissions": [
-        "licenses.files.view"
-      ]
+      "description": "Download a raw files record"
     },
     {
       "permissionName": "licenses.files.item.post",
@@ -473,11 +461,6 @@
         "licenses.licenseLinks.collection.get",
         "licenses.licenseLinks.item.get"
       ]
-    },
-    {
-      "permissionName": "licenses.licenseLinks.item.get",
-      "displayName": "Licenses license links item get",
-      "description": "Get a license link record"
     },
     {
       "permissionName": "licenses.custprops.collection.get",
