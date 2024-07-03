@@ -80,10 +80,7 @@
         },{
           "methods": ["GET"],
           "pathPattern": "/licenses/files/{id}/raw",
-          "permissionsRequired": [
-            "licenses.files.item.raw",
-            "licenses.files.view"
-          ]
+          "permissionsRequired": [ "licenses.files.item.download" ]
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/files",
@@ -342,18 +339,9 @@
       ]
     },
     {
-      "permissionName": "licenses.files.item.raw",
-      "displayName": "Licenses files item download",
-      "description": "Download a raw files record"
-    },
-    {
       "permissionName": "licenses.files.item.download",
       "displayName": "Licenses files item download",
-      "description": "Download a raw files record",
-      "subPermissions": [
-        "licenses.files.view",
-        "licenses.files.item.raw"
-      ]
+      "description": "Download a raw files record"
     },
     {
       "permissionName": "licenses.files.item.post",
