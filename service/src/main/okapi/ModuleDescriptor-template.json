@@ -341,10 +341,7 @@
     {
       "permissionName": "licenses.files.item.download",
       "displayName": "Licenses files item download",
-      "description": "Download a raw files record",
-      "subPermissions": [
-        "licenses.files.view"
-      ]
+      "description": "Download a raw files record"
     },
     {
       "permissionName": "licenses.files.item.post",
@@ -473,11 +470,6 @@
         "licenses.licenseLinks.collection.get",
         "licenses.licenseLinks.item.get"
       ]
-    },
-    {
-      "permissionName": "licenses.licenseLinks.item.get",
-      "displayName": "Licenses license links item get",
-      "description": "Get a license link record"
     },
     {
       "permissionName": "licenses.custprops.collection.get",
