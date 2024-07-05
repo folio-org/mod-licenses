@@ -1,3 +1,7 @@
+## 6.0.3 2024-07-05
+  * ERM-3290 Fix permission on /licenses/licenses/{id}/linkedAgreements
+  * ERM-3285 Fix permission on /licenses/files/{id}/raw in mod-licenses
+
 ## 6.0.2 2024-05-02
   * ERM-3208 Export license creates empty file
 
