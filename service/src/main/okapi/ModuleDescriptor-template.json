@@ -203,7 +203,13 @@
           "methods": [ "DELETE" ],
           "pathPattern": "/licenses/settings*",
           "permissionsRequired": [ "licenses.settings.delete" ]
+        },
+        {
+          "methods": [ "GET" ],
+          "pathPattern": "/licenses/swagger*",
+          "permissionsRequired": [ ]
         }
+
       ]
     },
     {

@@ -153,6 +153,15 @@ dependencies {
   implementation 'commons-io:commons-io:2.7'
 	implementation('io.github.virtualdogbert:logback-groovy-config:1.14.1')
   compileOnly 'ch.qos.logback:logback-classic:1.4.7'
+
+  // For swagger
+  implementation("io.swagger:swagger-annotations:1.6.14") {
+    exclude group: "javax.validation", module: "validation-api"
+  }
+  implementation("io.swagger:swagger-models:1.6.14") {
+    exclude group: "javax.validation", module: "validation-api"
+  }
+
   // Is on runtime classpath via spring-boot-starter
   runtimeOnly 'ch.qos.logback:logback-classic:1.2.13'
 

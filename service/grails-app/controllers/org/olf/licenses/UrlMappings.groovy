@@ -65,6 +65,22 @@ class UrlMappings {
 
     "/licenses/settings/appSettings" (resources: 'setting');
 
+    "/licenses/swagger/api"(controller: 'swaggerUI', action:'api')
+
+    // "/licenses/swaggerUI"(uri: '/static/swaggerUI/index.html')
+
+
+    // group "/licenses/swagger", {
+    //   "/swagger-ui.css"(uri: '/static/swaggerUI/5.17.14/swagger-ui.css')
+    //   "/swagger-ui-standalone-preset.js"(uri: '/static/swaggerUI/5.17.14/swagger-ui-standalone-preset.js')
+    //   "/swagger-initializer.js"(uri: '/static/swaggerUI/5.17.14/swagger-initializer.js')
+    //   "/index.css"(uri: '/static/swaggerUI/5.17.14/index.css')
+    //   "/swagger-ui-bundle.js"(uri: '/static/swaggerUI/5.17.14/swagger-ui-bundle.js')
+    //   "/favicon-32x32.png"(uri: '/static/swaggerUI/5.17.14/favicon-32x32.png')
+    //   "/favicon-16x16.png"(uri: '/static/swaggerUI/5.17.14/favicon-16x16.png')
+    // }
+
+
     "/dashboard/definitions" (controller: 'dashboardDefinitions', action: 'getDefinitions' ,method: 'GET')
 
     "500"(view: '/error')
