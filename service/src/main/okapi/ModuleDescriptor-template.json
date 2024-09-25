@@ -5,204 +5,403 @@
     {
       "id": "licenses",
       "version": "${info.app.minorVersion}",
-      "handlers" : [
+      "handlers": [
         {
-          "methods": ["GET"],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/licenses",
-          "permissionsRequired": [ "licenses.licenses.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.licenses.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/licenses/{id}",
-          "permissionsRequired": [ "licenses.licenses.item.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.licenses.item.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/licenses/{id}/linkedAgreements",
-          "permissionsRequired": [ "licenses.licenses.item.linkedAgreements.get" ],
+          "permissionsRequired": [
+            "licenses.licenses.item.linkedAgreements.get"
+          ],
           "modulePermissions": [
             "erm.agreements.item.get",
             "erm.agreements.linkedLicenses.get"
           ]
-        },{
-          "methods": ["POST"],
+        },
+        {
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/licenses",
-          "permissionsRequired": [ "licenses.licenses.item.post" ]
-        },{
-          "methods": ["PUT"],
+          "permissionsRequired": [
+            "licenses.licenses.item.post"
+          ]
+        },
+        {
+          "methods": [
+            "PUT"
+          ],
           "pathPattern": "/licenses/licenses/{id}",
-          "permissionsRequired": [ "licenses.licenses.item.put" ]
-        },{
-          "methods": ["POST"],
+          "permissionsRequired": [
+            "licenses.licenses.item.put"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/licenses/{id}/clone",
-          "permissionsRequired": [ "licenses.licenses.clone.execute" ]
-        },{
-          "methods": ["DELETE"],
+          "permissionsRequired": [
+            "licenses.licenses.clone.execute"
+          ]
+        },
+        {
+          "methods": [
+            "DELETE"
+          ],
           "pathPattern": "/licenses/licenses/{id}",
-          "permissionsRequired": [ "licenses.licenses.item.delete" ],
-          "modulePermissions": [ "erm.agreements.linkedLicenses.get" ]
+          "permissionsRequired": [
+            "licenses.licenses.item.delete"
+          ],
+          "modulePermissions": [
+            "erm.agreements.linkedLicenses.get"
+          ]
         },
         {
-          "methods": ["GET"],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/amendments",
-          "permissionsRequired": [ "licenses.amendments.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.amendments.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/amendments/{id}",
-          "permissionsRequired": [ "licenses.amendments.item.get" ]
-        },{
-          "methods": ["POST"],
+          "permissionsRequired": [
+            "licenses.amendments.item.get"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/amendments",
-          "permissionsRequired": [ "licenses.amendments.item.post" ]
-        },{
-          "methods": ["PUT"],
+          "permissionsRequired": [
+            "licenses.amendments.item.post"
+          ]
+        },
+        {
+          "methods": [
+            "PUT"
+          ],
           "pathPattern": "/licenses/amendments/{id}",
-          "permissionsRequired": [ "licenses.amendments.item.put" ]
-        },{
-          "methods": ["POST"],
+          "permissionsRequired": [
+            "licenses.amendments.item.put"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/amendments/{id}/clone",
-          "permissionsRequired": [ "licenses.amendments.clone.execute" ]
-        },{
-          "methods": ["DELETE"],
+          "permissionsRequired": [
+            "licenses.amendments.clone.execute"
+          ]
+        },
+        {
+          "methods": [
+            "DELETE"
+          ],
           "pathPattern": "/licenses/amendments/{id}",
-          "permissionsRequired": [ "licenses.amendments.item.delete" ],
-          "modulePermissions": [ "erm.agreements.linkedLicenses.get" ]
+          "permissionsRequired": [
+            "licenses.amendments.item.delete"
+          ],
+          "modulePermissions": [
+            "erm.agreements.linkedLicenses.get"
+          ]
         },
         {
-          "methods": ["GET"],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/files",
-          "permissionsRequired": [ "licenses.files.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.files.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/files/{id}",
-          "permissionsRequired": [ "licenses.files.item.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.files.item.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/files/{id}/raw",
-          "permissionsRequired": [ "licenses.files.item.download" ]
-        },{
-          "methods": ["POST"],
+          "permissionsRequired": [
+            "licenses.files.item.download"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/files",
-          "permissionsRequired": [ "licenses.files.item.post" ]
-        },{
-          "methods": ["PUT"],
-          "pathPattern": "/licenses/files/{id}",
-          "permissionsRequired": [ "licenses.files.item.put" ]
-        },{
-          "methods": ["DELETE"],
-          "pathPattern": "/licenses/files/{id}",
-          "permissionsRequired": [ "licenses.files.item.delete" ]
+          "permissionsRequired": [
+            "licenses.files.item.post"
+          ]
         },
-
         {
-          "methods": ["GET"],
+          "methods": [
+            "PUT"
+          ],
+          "pathPattern": "/licenses/files/{id}",
+          "permissionsRequired": [
+            "licenses.files.item.put"
+          ]
+        },
+        {
+          "methods": [
+            "DELETE"
+          ],
+          "pathPattern": "/licenses/files/{id}",
+          "permissionsRequired": [
+            "licenses.files.item.delete"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/contacts",
-          "permissionsRequired": [ "licenses.contacts.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.contacts.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/contacts/{id}",
-          "permissionsRequired": [ "licenses.contacts.item.get" ]
+          "permissionsRequired": [
+            "licenses.contacts.item.get"
+          ]
         },
-
         {
-          "methods": ["GET"],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/org",
-          "permissionsRequired": [ "licenses.orgs.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.orgs.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/org/{id}",
-          "permissionsRequired": [ "licenses.orgs.item.get" ]
+          "permissionsRequired": [
+            "licenses.orgs.item.get"
+          ]
         },
-
         {
-          "methods": ["GET"],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/refdata",
-          "permissionsRequired": [ "licenses.refdata-category.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.refdata-category.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/refdata/{domain}/{property}",
-          "permissionsRequired": [ "licenses.refdata-value.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.refdata-value.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/refdata/{id}",
-          "permissionsRequired": [ "licenses.refdata-category.item.get" ]
-        },{
-          "methods": ["POST"],
+          "permissionsRequired": [
+            "licenses.refdata-category.item.get"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/refdata",
-          "permissionsRequired": [ "licenses.refdata-category.item.post" ]
-        },{
-          "methods": ["PUT"],
-          "pathPattern": "/licenses/refdata/{id}",
-          "permissionsRequired": [ "licenses.refdata-category.item.put" ]
-        },{
-          "methods": ["DELETE"],
-          "pathPattern": "/licenses/refdata/{id}",
-          "permissionsRequired": [ "licenses.refdata-category.item.delete" ]
-        },
-
-        {
-          "methods": ["GET"],
-          "pathPattern": "/licenses/custprops",
-          "permissionsRequired": [ "licenses.custprops.collection.get" ]
-        },{
-          "methods": ["GET"],
-          "pathPattern": "/licenses/custprops/{id}",
-          "permissionsRequired": [ "licenses.custprops.item.get" ]
-        },{
-          "methods": ["POST"],
-          "pathPattern": "/licenses/custprops",
-          "permissionsRequired": [ "licenses.custprops.item.post" ]
-        },{
-          "methods": ["PUT"],
-          "pathPattern": "/licenses/custprops/{id}",
-          "permissionsRequired": [ "licenses.custprops.item.put" ]
-        },{
-          "methods": ["DELETE"],
-          "pathPattern": "/licenses/custprops/{id}",
-          "permissionsRequired": [ "licenses.custprops.item.delete" ]
+          "permissionsRequired": [
+            "licenses.refdata-category.item.post"
+          ]
         },
         {
-          "methods": ["GET"],
+          "methods": [
+            "PUT"
+          ],
+          "pathPattern": "/licenses/refdata/{id}",
+          "permissionsRequired": [
+            "licenses.refdata-category.item.put"
+          ]
+        },
+        {
+          "methods": [
+            "DELETE"
+          ],
+          "pathPattern": "/licenses/refdata/{id}",
+          "permissionsRequired": [
+            "licenses.refdata-category.item.delete"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/custprops",
+          "permissionsRequired": [
+            "licenses.custprops.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/custprops/{id}",
+          "permissionsRequired": [
+            "licenses.custprops.item.get"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
+          "pathPattern": "/licenses/custprops",
+          "permissionsRequired": [
+            "licenses.custprops.item.post"
+          ]
+        },
+        {
+          "methods": [
+            "PUT"
+          ],
+          "pathPattern": "/licenses/custprops/{id}",
+          "permissionsRequired": [
+            "licenses.custprops.item.put"
+          ]
+        },
+        {
+          "methods": [
+            "DELETE"
+          ],
+          "pathPattern": "/licenses/custprops/{id}",
+          "permissionsRequired": [
+            "licenses.custprops.item.delete"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/custprops/contexts",
-          "permissionsRequired": [ "licenses.custprops.contexts.get" ]
+          "permissionsRequired": [
+            "licenses.custprops.contexts.get"
+          ]
         },
         {
-          "methods": ["GET"],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/licenseLinks",
-          "permissionsRequired": [ "licenses.licenseLinks.collection.get" ]
-        },{
-          "methods": ["GET"],
+          "permissionsRequired": [
+            "licenses.licenseLinks.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/licenseLinks/{id}",
-          "permissionsRequired": [ "licenses.licenseLinks.item.get" ]
+          "permissionsRequired": [
+            "licenses.licenseLinks.item.get"
+          ]
         },
-
         {
-          "methods": ["POST"],
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/licenses/compareTerms",
-          "permissionsRequired": [ "licenses.compareTerms" ]
+          "permissionsRequired": [
+            "licenses.compareTerms"
+          ]
         },
         {
-          "methods": ["GET"],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/admin/*",
-          "permissionsRequired": ["licenses.admin.action"]
+          "permissionsRequired": [
+            "licenses.admin.action.execute"
+          ]
         },
         {
-          "methods": [ "GET" ],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/settings*",
-          "permissionsRequired": [ "licenses.settings.get" ]
+          "permissionsRequired": [
+            "licenses.settings.get"
+          ]
         },
         {
-          "methods": [ "POST" ],
+          "methods": [
+            "POST"
+          ],
           "pathPattern": "/licenses/settings*",
-          "permissionsRequired": [ "licenses.settings.post" ]
+          "permissionsRequired": [
+            "licenses.settings.post"
+          ]
         },
         {
-          "methods": [ "PUT" ],
+          "methods": [
+            "PUT"
+          ],
           "pathPattern": "/licenses/settings*",
-          "permissionsRequired": [ "licenses.settings.put" ]
+          "permissionsRequired": [
+            "licenses.settings.put"
+          ]
         },
         {
-          "methods": [ "DELETE" ],
+          "methods": [
+            "DELETE"
+          ],
           "pathPattern": "/licenses/settings*",
-          "permissionsRequired": [ "licenses.settings.delete" ]
+          "permissionsRequired": [
+            "licenses.settings.delete"
+          ]
         }
       ]
     },
@@ -212,22 +411,31 @@
       "version": "1.0",
       "handlers": [
         {
-          "methods": [ "GET" ],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/dashboard/definitions",
           "permissionsRequired": []
         }
       ]
     },
     {
-      "id" : "_tenant",
-      "version" : "1.2",
-      "interfaceType" : "system",
-      "handlers" : [ {
-          "methods" : [ "POST", "DELETE" ],
-          "pathPattern" : "/_/tenant"
-        }, {
-          "methods" : [ "POST" ],
-          "pathPattern" : "/_/tenant/disable"
+      "id": "_tenant",
+      "version": "1.2",
+      "interfaceType": "system",
+      "handlers": [
+        {
+          "methods": [
+            "POST",
+            "DELETE"
+          ],
+          "pathPattern": "/_/tenant"
+        },
+        {
+          "methods": [
+            "POST"
+          ],
+          "pathPattern": "/_/tenant/disable"
         }
       ]
     },
@@ -237,8 +445,10 @@
       "interfaceType": "system",
       "handlers": [
         {
-          "permissionsRequired" : [],
-          "methods": [ "GET" ],
+          "permissionsRequired": [],
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/admin/triggerHousekeeping",
           "unit": "hour",
           "delay": "24"
@@ -558,7 +768,7 @@
       ]
     },
     {
-      "permissionName": "licenses.admin.action",
+      "permissionName": "licenses.admin.action.execute",
       "displayName": "Admin endpoint perform action",
       "description": "Performs action from admin endpoint"
     },
@@ -567,7 +777,7 @@
       "displayName": "settings get",
       "description": "get settings",
       "visible": false
-    }, 
+    },
     {
       "permissionName": "licenses.settings.collection.get",
       "displayName": "settings collection get",
@@ -579,13 +789,13 @@
       "displayName": "settings post",
       "description": "post settings",
       "visible": false
-    }, 
+    },
     {
       "permissionName": "licenses.settings.put",
       "displayName": "settings put",
       "description": "put settings",
       "visible": false
-    }, 
+    },
     {
       "permissionName": "licenses.settings.delete",
       "displayName": "settings delete",
@@ -630,19 +840,44 @@
       "HostConfig": {
         "Memory": 805306368,
         "PortBindings": {
-          "8080/tcp":  [{ "HostPort": "%p" }]
+          "8080/tcp": [
+            {
+              "HostPort": "%p"
+            }
+          ]
         }
       }
     },
-    "dockerPull" : false,
+    "dockerPull": false,
     "env": [
-      { "name": "JAVA_OPTIONS", "value": "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=50.0 -XX:+PrintFlagsFinal" },
-      { "name": "DB_HOST", "value": "postgres" },
-      { "name": "DB_PORT", "value": "5432" },
-      { "name": "DB_USERNAME", "value": "folio_admin" },
-      { "name": "DB_PASSWORD", "value": "folio_admin" },
-      { "name": "DB_DATABASE", "value": "okapi_modules" },
-      { "name": "DB_MAXPOOLSIZE", "value": "50" }
+      {
+        "name": "JAVA_OPTIONS",
+        "value": "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=50.0 -XX:+PrintFlagsFinal"
+      },
+      {
+        "name": "DB_HOST",
+        "value": "postgres"
+      },
+      {
+        "name": "DB_PORT",
+        "value": "5432"
+      },
+      {
+        "name": "DB_USERNAME",
+        "value": "folio_admin"
+      },
+      {
+        "name": "DB_PASSWORD",
+        "value": "folio_admin"
+      },
+      {
+        "name": "DB_DATABASE",
+        "value": "okapi_modules"
+      },
+      {
+        "name": "DB_MAXPOOLSIZE",
+        "value": "50"
+      }
     ]
   }
 }
