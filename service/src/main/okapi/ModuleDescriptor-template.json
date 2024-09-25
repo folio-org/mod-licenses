@@ -162,7 +162,7 @@
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/custprops/contexts",
-          "permissionsRequired": [ "licenses.custprops.collection.get" ]
+          "permissionsRequired": [ "licenses.custprops.contexts.get" ]
         },
         {
           "methods": ["GET"],
@@ -510,6 +510,11 @@
       "description": "Get a collection of custom property records"
     },
     {
+      "permissionName": "licenses.custprops.contexts.get",
+      "displayName": "Licenses custom properties contexts get",
+      "description": "Get all contexts for licenses custom properties"
+    },
+    {
       "permissionName": "licenses.custprops.item.get",
       "displayName": "Licenses custom properties item get",
       "description": "Get a custom property record"
@@ -518,6 +523,7 @@
       "permissionName": "licenses.custprops.view",
       "subPermissions": [
         "licenses.custprops.collection.get",
+        "licenses.custprops.contexts.get",
         "licenses.custprops.item.get"
       ]
     },
