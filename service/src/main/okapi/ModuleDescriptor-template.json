@@ -115,27 +115,27 @@
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/refdata",
-          "permissionsRequired": [ "licenses.refdata.collection.get" ]
+          "permissionsRequired": [ "licenses.refdata-category.collection.get" ]
         },{
           "methods": ["GET"],
           "pathPattern": "/licenses/refdata/{domain}/{property}",
-          "permissionsRequired": [ "licenses.refdata.collection.get" ]
+          "permissionsRequired": [ "licenses.refdata-value.collection.get" ]
         },{
           "methods": ["GET"],
           "pathPattern": "/licenses/refdata/{id}",
-          "permissionsRequired": [ "licenses.refdata.item.get" ]
+          "permissionsRequired": [ "licenses.refdata-category.item.get" ]
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/refdata",
-          "permissionsRequired": [ "licenses.refdata.item.post" ]
+          "permissionsRequired": [ "licenses.refdata-category.item.post" ]
         },{
           "methods": ["PUT"],
           "pathPattern": "/licenses/refdata/{id}",
-          "permissionsRequired": [ "licenses.refdata.item.put" ]
+          "permissionsRequired": [ "licenses.refdata-category.item.put" ]
         },{
           "methods": ["DELETE"],
           "pathPattern": "/licenses/refdata/{id}",
-          "permissionsRequired": [ "licenses.refdata.item.delete" ]
+          "permissionsRequired": [ "licenses.refdata-category.item.delete" ]
         },
 
         {
@@ -435,50 +435,56 @@
       ]
     },
     {
-      "permissionName": "licenses.refdata.collection.get",
-      "displayName": "Licenses refdata collection get",
-      "description": "Get a collection of refdata records"
+      "permissionName": "licenses.refdata-category.collection.get",
+      "displayName": "Licenses refdata category collection get",
+      "description": "Get a collection of refdata category records"
     },
     {
-      "permissionName": "licenses.refdata.item.get",
-      "displayName": "Licenses refdata item get",
-      "description": "Get a refdata record"
+      "permissionName": "licenses.refdata-value.collection.get",
+      "displayName": "Licenses refdata value collection get",
+      "description": "Get a collection of refdata value records"
+    },
+    {
+      "permissionName": "licenses.refdata-category.item.get",
+      "displayName": "Licenses refdata category item get",
+      "description": "Get a refdata category record"
     },
     {
       "permissionName": "licenses.refdata.view",
       "subPermissions": [
-        "licenses.refdata.collection.get",
-        "licenses.refdata.item.get"
+        "licenses.refdata-category.collection.get",
+        "licenses.refdata-value.collection.get",
+        "licenses.refdata-category.item.get"
       ]
     },
     {
-      "permissionName": "licenses.refdata.item.post",
-      "displayName": "Licenses refdata item post",
-      "description": "Post a refdata record"
+      "permissionName": "licenses.refdata-category.item.post",
+      "displayName": "Licenses refdata category item post",
+      "description": "Post a refdata category record"
     },
     {
-      "permissionName": "licenses.refdata.item.put",
-      "displayName": "Licenses refdata item put",
-      "description": "Put a refdata record"
+      "permissionName": "licenses.refdata-category.item.put",
+      "displayName": "Licenses refdata category item put",
+      "description": "Put a refdata category record"
     },
     {
       "permissionName": "licenses.refdata.edit",
       "subPermissions": [
         "licenses.refdata.view",
-        "licenses.refdata.item.post",
-        "licenses.refdata.item.put"
+        "licenses.refdata-category.item.post",
+        "licenses.refdata-category.item.put"
       ]
     },
     {
-      "permissionName": "licenses.refdata.item.delete",
-      "displayName": "Licenses refdata item delete",
-      "description": "Delete a refdata record"
+      "permissionName": "licenses.refdata-category.item.delete",
+      "displayName": "Licenses refdata category item delete",
+      "description": "Delete a refdata category record"
     },
     {
       "permissionName": "licenses.refdata.manage",
       "subPermissions": [
         "licenses.refdata.edit",
-        "licenses.refdata.item.delete"
+        "licenses.refdata-category.item.delete"
       ]
     },
     {
