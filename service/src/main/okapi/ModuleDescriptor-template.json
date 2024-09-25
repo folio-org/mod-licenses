@@ -19,9 +19,9 @@
           "pathPattern": "/licenses/licenses/{id}/linkedAgreements",
           "permissionsRequired": [ "licenses.licenses.item.linkedAgreements.get" ],
           "modulePermissions": [
-             "erm.agreements.item.get",
-             "erm.agreements.linkedLicenses.get"
-           ]
+            "erm.agreements.item.get",
+            "erm.agreements.linkedLicenses.get"
+          ]
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/licenses",
@@ -43,19 +43,19 @@
         {
           "methods": ["GET"],
           "pathPattern": "/licenses/amendments",
-          "permissionsRequired": [ "licenses.licenses.collection.get" ]
+          "permissionsRequired": [ "licenses.amendments.collection.get" ]
         },{
           "methods": ["GET"],
           "pathPattern": "/licenses/amendments/{id}",
-          "permissionsRequired": [ "licenses.licenses.item.get" ]
+          "permissionsRequired": [ "licenses.amendments.item.get" ]
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/amendments",
-          "permissionsRequired": [ "licenses.licenses.item.post" ]
+          "permissionsRequired": [ "licenses.amendments.item.post" ]
         },{
           "methods": ["PUT"],
           "pathPattern": "/licenses/amendments/{id}",
-          "permissionsRequired": [ "licenses.licenses.item.put" ]
+          "permissionsRequired": [ "licenses.amendments.item.put" ]
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/amendments/{id}/clone",
@@ -63,7 +63,7 @@
         },{
           "methods": ["DELETE"],
           "pathPattern": "/licenses/amendments/{id}",
-          "permissionsRequired": [ "licenses.licenses.item.delete" ],
+          "permissionsRequired": [ "licenses.amendments.item.delete" ],
           "modulePermissions": [ "erm.agreements.linkedLicenses.get" ]
         },
         {
@@ -226,8 +226,8 @@
           "methods" : [ "POST", "DELETE" ],
           "pathPattern" : "/_/tenant"
         }, {
-         "methods" : [ "POST" ],
-         "pathPattern" : "/_/tenant/disable"
+          "methods" : [ "POST" ],
+          "pathPattern" : "/_/tenant/disable"
         }
       ]
     },
@@ -253,9 +253,19 @@
       "description": "Get a collection of license records"
     },
     {
+      "permissionName": "licenses.amendments.collection.get",
+      "displayName": "Amendments collection get",
+      "description": "Get a collection of amendment records"
+    },
+    {
       "permissionName": "licenses.licenses.item.get",
       "displayName": "Licenses item get",
       "description": "Get an license record"
+    },
+    {
+      "permissionName": "licenses.amendments.item.get",
+      "displayName": "Amendment item get",
+      "description": "Get an amendment record"
     },
     {
       "permissionName": "licenses.licenses.item.linkedAgreements.get",
@@ -271,7 +281,9 @@
       "permissionName": "licenses.licenses.view",
       "subPermissions": [
         "licenses.licenses.collection.get",
+        "licenses.amendments.collection.get",
         "licenses.licenses.item.get",
+        "licenses.amendments.item.get",
         "licenses.licenses.item.linkedAgreements.get",
         "licenses.compareTerms"
       ]
@@ -282,9 +294,19 @@
       "description": "Post an license record"
     },
     {
+      "permissionName": "licenses.amendments.item.post",
+      "displayName": "Amendment item post",
+      "description": "Post an amendment record"
+    },
+    {
       "permissionName": "licenses.licenses.item.put",
       "displayName": "Licenses item put",
       "description": "Put an license record"
+    },
+    {
+      "permissionName": "licenses.amendments.item.put",
+      "displayName": "Amendment item put",
+      "description": "Put an amendment record"
     },
     {
       "permissionName": "licenses.licenses.clone.execute",
@@ -301,7 +323,9 @@
       "subPermissions": [
         "licenses.licenses.view",
         "licenses.licenses.item.post",
+        "licenses.amendments.item.post",
         "licenses.licenses.item.put",
+        "licenses.amendments.item.put",
         "licenses.licenses.clone.execute",
         "licenses.amendments.clone.execute"
       ]
@@ -312,10 +336,16 @@
       "description": "Delete an license record"
     },
     {
+      "permissionName": "licenses.amendments.item.delete",
+      "displayName": "Amendments item delete",
+      "description": "Delete an amendment record"
+    },
+    {
       "permissionName": "licenses.licenses.manage",
       "subPermissions": [
         "licenses.licenses.edit",
-        "licenses.licenses.item.delete"
+        "licenses.licenses.item.delete",
+        "licenses.amendments.item.delete"
       ]
     },
     {
