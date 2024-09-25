@@ -355,7 +355,7 @@
           ],
           "pathPattern": "/licenses/licenses/compareTerms",
           "permissionsRequired": [
-            "licenses.compareTerms"
+            "licenses.custprops.compare.execute"
           ]
         },
         {
@@ -483,7 +483,7 @@
       "description": "Get an license's linked agreement records"
     },
     {
-      "permissionName": "licenses.compareTerms",
+      "permissionName": "licenses.custprops.compare.execute",
       "displayName": "Licenses compare terms",
       "description": "Compare license terms"
     },
@@ -495,7 +495,7 @@
         "licenses.licenses.item.get",
         "licenses.amendments.item.get",
         "licenses.licenses.item.linkedAgreements.get",
-        "licenses.compareTerms"
+        "licenses.custprops.compare.execute"
       ]
     },
     {
