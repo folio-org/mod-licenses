@@ -33,7 +33,7 @@
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/licenses/{id}/clone",
-          "permissionsRequired": [ "licenses.licenses.item.clone" ]
+          "permissionsRequired": [ "licenses.licenses.clone.execute" ]
         },{
           "methods": ["DELETE"],
           "pathPattern": "/licenses/licenses/{id}",
@@ -59,7 +59,7 @@
         },{
           "methods": ["POST"],
           "pathPattern": "/licenses/amendments/{id}/clone",
-          "permissionsRequired": [ "licenses.licenses.item.clone" ]
+          "permissionsRequired": [ "licenses.amendments.clone.execute" ]
         },{
           "methods": ["DELETE"],
           "pathPattern": "/licenses/amendments/{id}",
@@ -287,9 +287,14 @@
       "description": "Put an license record"
     },
     {
-      "permissionName": "licenses.licenses.item.clone",
+      "permissionName": "licenses.licenses.clone.execute",
       "displayName": "Licenses item clone",
       "description": "Clone an license record"
+    },
+    {
+      "permissionName": "licenses.amendments.clone.execute",
+      "displayName": "Amendment item clone",
+      "description": "Clone an amendment record"
     },
     {
       "permissionName": "licenses.licenses.edit",
@@ -297,7 +302,8 @@
         "licenses.licenses.view",
         "licenses.licenses.item.post",
         "licenses.licenses.item.put",
-        "licenses.licenses.item.clone"
+        "licenses.licenses.clone.execute",
+        "licenses.amendments.clone.execute"
       ]
     },
     {
