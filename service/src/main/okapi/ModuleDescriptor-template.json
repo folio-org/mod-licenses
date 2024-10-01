@@ -229,7 +229,7 @@
           ],
           "pathPattern": "/licenses/refdata",
           "permissionsRequired": [
-            "licenses.refdata-category.collection.get"
+            "licenses.refdata.category.collection.get"
           ]
         },
         {
@@ -238,7 +238,7 @@
           ],
           "pathPattern": "/licenses/refdata/{domain}/{property}",
           "permissionsRequired": [
-            "licenses.refdata-value.collection.get"
+            "licenses.refdata.value.collection.get"
           ]
         },
         {
@@ -247,7 +247,7 @@
           ],
           "pathPattern": "/licenses/refdata/{id}",
           "permissionsRequired": [
-            "licenses.refdata-category.item.get"
+            "licenses.refdata.category.item.get"
           ]
         },
         {
@@ -256,7 +256,7 @@
           ],
           "pathPattern": "/licenses/refdata",
           "permissionsRequired": [
-            "licenses.refdata-category.item.post"
+            "licenses.refdata.category.item.post"
           ]
         },
         {
@@ -265,7 +265,7 @@
           ],
           "pathPattern": "/licenses/refdata/{id}",
           "permissionsRequired": [
-            "licenses.refdata-category.item.put"
+            "licenses.refdata.category.item.put"
           ]
         },
         {
@@ -274,7 +274,7 @@
           ],
           "pathPattern": "/licenses/refdata/{id}",
           "permissionsRequired": [
-            "licenses.refdata-category.item.delete"
+            "licenses.refdata.category.item.delete"
           ]
         },
         {
@@ -328,7 +328,7 @@
           ],
           "pathPattern": "/licenses/custprops/contexts",
           "permissionsRequired": [
-            "licenses.custprops.contexts.get"
+            "licenses.custprops.contexts.collection.get"
           ]
         },
         {
@@ -485,7 +485,10 @@
     {
       "permissionName": "licenses.custprops.compare.execute",
       "displayName": "Licenses compare terms",
-      "description": "Compare license terms"
+      "description": "Compare license terms",
+      "replaces": [
+        "licenses.compareTerms"
+      ]
     },
     {
       "permissionName": "licenses.licenses.view",
@@ -521,12 +524,18 @@
     {
       "permissionName": "licenses.licenses.clone.execute",
       "displayName": "Licenses item clone",
-      "description": "Clone an license record"
+      "description": "Clone an license record",
+      "replaces": [
+        "licenses.licenses.item.clone"
+      ]
     },
     {
       "permissionName": "licenses.amendments.clone.execute",
       "displayName": "Amendment item clone",
-      "description": "Clone an amendment record"
+      "description": "Clone an amendment record",
+      "replaces": [
+        "licenses.licenses.item.clone"
+      ]
     },
     {
       "permissionName": "licenses.licenses.edit",
@@ -645,56 +654,74 @@
       ]
     },
     {
-      "permissionName": "licenses.refdata-category.collection.get",
+      "permissionName": "licenses.refdata.category.collection.get",
       "displayName": "Licenses refdata category collection get",
-      "description": "Get a collection of refdata category records"
+      "description": "Get a collection of refdata category records",
+      "replaces": [
+        "licenses.refdata.collection.get"
+      ]
     },
     {
-      "permissionName": "licenses.refdata-value.collection.get",
+      "permissionName": "licenses.refdata.value.collection.get",
       "displayName": "Licenses refdata value collection get",
-      "description": "Get a collection of refdata value records"
+      "description": "Get a collection of refdata value records",
+      "replaces": [
+        "licenses.refdata.collection.get"
+      ]
     },
     {
-      "permissionName": "licenses.refdata-category.item.get",
+      "permissionName": "licenses.refdata.category.item.get",
       "displayName": "Licenses refdata category item get",
-      "description": "Get a refdata category record"
+      "description": "Get a refdata category record",
+      "replaces": [
+        "licenses.refdata.item.get"
+      ]
     },
     {
       "permissionName": "licenses.refdata.view",
       "subPermissions": [
-        "licenses.refdata-category.collection.get",
-        "licenses.refdata-value.collection.get",
-        "licenses.refdata-category.item.get"
+        "licenses.refdata.category.collection.get",
+        "licenses.refdata.value.collection.get",
+        "licenses.refdata.category.item.get"
       ]
     },
     {
-      "permissionName": "licenses.refdata-category.item.post",
+      "permissionName": "licenses.refdata.category.item.post",
       "displayName": "Licenses refdata category item post",
-      "description": "Post a refdata category record"
+      "description": "Post a refdata category record",
+      "replaces": [
+        "licenses.refdata.item.post"
+      ]
     },
     {
-      "permissionName": "licenses.refdata-category.item.put",
+      "permissionName": "licenses.refdata.category.item.put",
       "displayName": "Licenses refdata category item put",
-      "description": "Put a refdata category record"
+      "description": "Put a refdata category record",
+      "replaces": [
+        "licenses.refdata.item.put"
+      ]
     },
     {
       "permissionName": "licenses.refdata.edit",
       "subPermissions": [
         "licenses.refdata.view",
-        "licenses.refdata-category.item.post",
-        "licenses.refdata-category.item.put"
+        "licenses.refdata.category.item.post",
+        "licenses.refdata.category.item.put"
       ]
     },
     {
-      "permissionName": "licenses.refdata-category.item.delete",
+      "permissionName": "licenses.refdata.category.item.delete",
       "displayName": "Licenses refdata category item delete",
-      "description": "Delete a refdata category record"
+      "description": "Delete a refdata category record",
+      "replaces": [
+        "licenses.refdata.item.delete"
+      ]
     },
     {
       "permissionName": "licenses.refdata.manage",
       "subPermissions": [
         "licenses.refdata.edit",
-        "licenses.refdata-category.item.delete"
+        "licenses.refdata.category.item.delete"
       ]
     },
     {
@@ -720,7 +747,7 @@
       "description": "Get a collection of custom property records"
     },
     {
-      "permissionName": "licenses.custprops.contexts.get",
+      "permissionName": "licenses.custprops.contexts.collection.get",
       "displayName": "Licenses custom properties contexts get",
       "description": "Get all contexts for licenses custom properties"
     },
@@ -733,7 +760,7 @@
       "permissionName": "licenses.custprops.view",
       "subPermissions": [
         "licenses.custprops.collection.get",
-        "licenses.custprops.contexts.get",
+        "licenses.custprops.contexts.collection.get",
         "licenses.custprops.item.get"
       ]
     },
@@ -770,7 +797,10 @@
     {
       "permissionName": "licenses.admin.action.execute",
       "displayName": "Admin endpoint perform action",
-      "description": "Performs action from admin endpoint"
+      "description": "Performs action from admin endpoint",
+      "replaces": [
+        "licenses.admin.action"
+      ]
     },
     {
       "permissionName": "licenses.settings.get",
