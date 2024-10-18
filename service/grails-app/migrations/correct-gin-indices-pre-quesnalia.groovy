@@ -21,7 +21,7 @@ databaseChangeLog = {
 		// Gin indexes need to be done via scripting.
 		grailsChange {
 			change {
-				def cmd = "CREATE INDEX alternate_name_name_idx ON ${database.defaultSchemaName}.alternate_name USING gin (an_name, gin_trgm_ops);".toString()
+				def cmd = "CREATE INDEX alternate_name_name_idx ON ${database.defaultSchemaName}.alternate_name USING gin (an_name gin_trgm_ops);".toString()
 				sql.execute(cmd);
 			}
 		}
@@ -35,7 +35,7 @@ databaseChangeLog = {
 		}
 		grailsChange {
 			change {
-				def cmd = "CREATE INDEX license_name_idx ON ${database.defaultSchemaName}.license USING gin (lic_name, gin_trgm_ops);".toString()
+				def cmd = "CREATE INDEX license_name_idx ON ${database.defaultSchemaName}.license USING gin (lic_name gin_trgm_ops);".toString()
 				sql.execute(cmd);
 			}
 		}
@@ -49,7 +49,7 @@ databaseChangeLog = {
 		}
 		grailsChange {
 			change {
-				def cmd = "CREATE INDEX license_description_idx ON ${database.defaultSchemaName}.license USING gin (lic_description, gin_trgm_ops);".toString()
+				def cmd = "CREATE INDEX license_description_idx ON ${database.defaultSchemaName}.license USING gin (lic_description gin_trgm_ops);".toString()
 				sql.execute(cmd);
 			}
 		}
