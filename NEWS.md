@@ -1,3 +1,6 @@
+## 6.0.4 2024-10-18
+  * ERM-3387 Description can be too long for index, causing mod-licenses error when updating from 5.0.x to later versions or failure on saving licenses with a long description
+
 ## 6.0.3 2024-07-05
   * ERM-3290 Fix permission on /licenses/licenses/{id}/linkedAgreements
   * ERM-3285 Fix permission on /licenses/files/{id}/raw in mod-licenses
