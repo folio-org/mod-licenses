@@ -1,3 +1,5 @@
+## 6.2.0 IN PROGRESS
+
 ## 6.1.0 2024-10-30
   * ERM-3369 Update module license, guidance and dependencies for mod-licenses
   * ERM-3089 missing content-type header in /licenses/licenses/${uuid}/linkedAgreements response
