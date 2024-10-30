@@ -1,4 +1,7 @@
-## 6.1.0 In progress
+## 6.1.0 2024-10-30
+  * ERM-3369 Update module license, guidance and dependencies for mod-licenses
+  * ERM-3089 missing content-type header in /licenses/licenses/${uuid}/linkedAgreements response
+  * Fix and automatically validate module descriptor (Eureka)
 
 ## 6.0.4 2024-10-18
   * ERM-3387 Description can be too long for index, causing mod-licenses error when updating from 5.0.x to later versions or failure on saving licenses with a long description
