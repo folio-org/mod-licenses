@@ -44,7 +44,8 @@
           ],
           "modulePermissions": [
             "erm.agreements.item.get",
-            "erm.agreements.linkedLicenses.get"
+            "erm.linkedLicenses.collection.get",
+            "erm.agreements.linkedLicenses.collection.get"
           ]
         },
         {
@@ -83,7 +84,8 @@
             "licenses.licenses.item.delete"
           ],
           "modulePermissions": [
-            "erm.agreements.linkedLicenses.get"
+            "erm.linkedLicenses.collection.get",
+            "erm.agreements.linkedLicenses.collection.get"
           ]
         },
         {
@@ -140,7 +142,8 @@
             "licenses.amendments.item.delete"
           ],
           "modulePermissions": [
-            "erm.agreements.linkedLicenses.get"
+            "erm.linkedLicenses.collection.get",
+            "erm.agreements.linkedLicenses.collection.get"
           ]
         },
         {
