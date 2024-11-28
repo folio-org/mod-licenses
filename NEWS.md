@@ -1,3 +1,7 @@
+## 6.1.1 2024-11-28
+  * ERM-3441 Licenses cannot retrieve linked agreements due to permissions error
+  * ERM-3420 Missing interface dependencies in module descriptor in mod-licenses
+
 ## 6.1.0 2024-10-30
   * ERM-3369 Update module license, guidance and dependencies for mod-licenses
   * ERM-3089 missing content-type header in /licenses/licenses/${uuid}/linkedAgreements response
