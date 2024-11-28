@@ -1,6 +1,16 @@
 {
   "id": "${info.app.name}-${info.app.version}",
   "name": "${info.app.name}",
+  "optional": [
+    {
+      "id": "erm",
+      "version": "7.0"
+    },
+    {
+      "id": "organizations.organizations",
+      "version": "1.0"
+    }
+  ],
   "provides": [
     {
       "id": "licenses",
@@ -34,7 +44,8 @@
           ],
           "modulePermissions": [
             "erm.agreements.item.get",
-            "erm.agreements.linkedLicenses.get"
+            "erm.linkedLicenses.collection.get",
+            "erm.agreements.linkedLicenses.collection.get"
           ]
         },
         {
@@ -73,7 +84,8 @@
             "licenses.licenses.item.delete"
           ],
           "modulePermissions": [
-            "erm.agreements.linkedLicenses.get"
+            "erm.linkedLicenses.collection.get",
+            "erm.agreements.linkedLicenses.collection.get"
           ]
         },
         {
@@ -130,7 +142,8 @@
             "licenses.amendments.item.delete"
           ],
           "modulePermissions": [
-            "erm.agreements.linkedLicenses.get"
+            "erm.linkedLicenses.collection.get",
+            "erm.agreements.linkedLicenses.collection.get"
           ]
         },
         {
