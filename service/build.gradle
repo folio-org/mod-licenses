@@ -142,6 +142,11 @@ dependencies {
 	implementation 'io.github.virtualdogbert:logback-groovy-config:1.14.1' // Grails 5 and up no longer supports groovy files for logback config
 	compileOnly 'ch.qos.logback:logback-classic:1.4.7'
 
+  // Minio for file storage to S3 (reflects mod-agreements)
+  implementation "io.minio:minio:8.5.1"
+  implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
+
 	/*  ---- Manually installed testing dependencies ---- */
 	implementation "org.grails:grails-gorm-testing-support:2.6.1"
 	implementation "org.grails:grails-web-testing-support:2.6.1"
