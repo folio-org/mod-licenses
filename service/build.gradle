@@ -156,6 +156,11 @@ dependencies {
   // Is on runtime classpath via spring-boot-starter
   runtimeOnly 'ch.qos.logback:logback-classic:1.2.13'
 
+  // Minio for file storage to S3 (reflects mod-agreements)
+  implementation "io.minio:minio:8.5.1"
+  implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
+
 	/*  ---- Manually installed testing dependencies ---- */
 	implementation "org.grails:grails-gorm-testing-support:2.6.1"
 	implementation "org.grails:grails-web-testing-support:2.6.1"
