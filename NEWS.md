@@ -1,3 +1,6 @@
+## 6.1.2 2024-12-03
+  * ERM-3458 Add minio dependency in mod-licenses
+
 ## 6.1.1 2024-11-28
   * ERM-3441 Licenses cannot retrieve linked agreements due to permissions error
   * ERM-3420 Missing interface dependencies in module descriptor in mod-licenses
