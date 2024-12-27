@@ -1,3 +1,6 @@
+## 5.0.4 2024-12-27
+  * ERM-3458 Add minio dependency in mod-licenses
+
 ## 5.0.3 2024-05-03
   * ERM-3138 Poppy: grails 5.3.6 fixing databinding DoS (CVE-2023-46131)
 
