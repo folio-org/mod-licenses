@@ -1,3 +1,6 @@
+## 6.0.5 2024-12-27
+  * ERM-3458 Add minio dependency in mod-licenses
+
 ## 6.0.4 2024-10-18
   * ERM-3387 Description can be too long for index, causing mod-licenses error when updating from 5.0.x to later versions or failure on saving licenses with a long description
 
