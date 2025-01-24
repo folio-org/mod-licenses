@@ -1,6 +1,12 @@
 {
   "id": "${info.app.name}-${info.app.version}",
   "name": "${info.app.name}",
+  "requires": [
+    {
+      "id": "okapi",
+      "version": "1.9"
+    }
+  ],
   "optional": [
     {
       "id": "erm",
