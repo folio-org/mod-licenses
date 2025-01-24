@@ -1,3 +1,6 @@
+## 6.1.3 2024-01-24
+  * ERM-3571 Add missing required interfaces to Module Descriptor
+
 ## 6.1.2 2024-12-03
   * ERM-3458 Add minio dependency in mod-licenses
 
