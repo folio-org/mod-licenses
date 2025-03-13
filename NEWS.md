@@ -1,4 +1,4 @@
-## 6.2.0 IN PROGRESS
+## 6.2.0 2025-03-13
   * ERM-3470 S3 environment variable settings
     * Added new environment variable GLOBAL_S3_SECRET_KEY
     * Deprecated environment variable AWS_SECRET_ACCESS_KEY
