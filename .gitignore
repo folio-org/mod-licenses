@@ -35,4 +35,6 @@
 !.gitignore
 !.github
 
+*.iml
+
 ConsoleOutput.txt
