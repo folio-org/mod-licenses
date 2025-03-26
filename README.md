@@ -46,6 +46,14 @@ The /licenses resource allows module clients to Create, Retrieve, Update and Del
 The module has important dependences on reference data. initial installations and module upgrades should specify loadReference=true. The module
 may not work as expected if this is omitted.
 
+### Environment variables
+This is a NON-EXHAUSTIVE list of environment variables which tweak behaviour in this module
+
+| Variable                   | Description                                                                                                                                                                                                                                                          | Options                                                    | Default                       |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|-------------------------------|
+| GLOBAL_S3_SECRET_KEY       | Allows the setting of a global S3 secret key fallback. First module checks older S3SecretKey AppSetting. If not present then it falls back to this value.                                                                                                            | S3 secret                                                  |                               |
+
+
 ## ModuleDescriptor
 
 https://github.com/folio-org/mod-licenses/blob/master/service/src/main/okapi/ModuleDescriptor-template.json
