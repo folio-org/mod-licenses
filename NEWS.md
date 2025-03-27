@@ -1,4 +1,6 @@
-## 6.3.0 IN PROGRESS
+## 6.2.1 2025-03-27
+  * ERM-3662 Patch mod-agreements/licenses/serials/service-interaction/oa for instability during update
+  * Updated README to include env vars table
 
 ## 6.2.0 2025-03-13
   * ERM-3470 S3 environment variable settings
