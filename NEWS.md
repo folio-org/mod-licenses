@@ -1,3 +1,6 @@
+## 6.0.6 2025-04-01
+  * ERM-3667 Prevent instability of grails modules during updates: Quesnelia
+
 ## 6.0.5 2024-12-27
   * ERM-3458 Add minio dependency in mod-licenses
 
