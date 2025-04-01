@@ -1,4 +1,16 @@
-## 6.2.0 IN PROGRESS
+## 6.3.0 IN PROGRESS
+
+## 6.2.1 2025-03-27
+  * ERM-3662 Patch mod-agreements/licenses/serials/service-interaction/oa for instability during update
+  * Updated README to include env vars table
+
+## 6.2.0 2025-03-13
+  * ERM-3470 S3 environment variable settings
+    * Added new environment variable GLOBAL_S3_SECRET_KEY
+    * Deprecated environment variable AWS_SECRET_ACCESS_KEY
+
+## 6.1.3 2024-01-24
+  * ERM-3571 Add missing required interfaces to Module Descriptor
 
 ## 6.1.2 2024-12-03
   * ERM-3458 Add minio dependency in mod-licenses
