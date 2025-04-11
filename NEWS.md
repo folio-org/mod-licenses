@@ -1,6 +1,7 @@
-## 6.2.1 2025-03-27
-  * ERM-3662 Patch mod-agreements/licenses/serials/service-interaction/oa for instability during update
-  * Updated README to include env vars table
+## 6.2.2 2025-04-11
+  * ERM-3688 minio 8.5.17, kafka-clients 3.7.2, jackson 2.18.3 fixing vulns
+  * ERM-3685 Upgrade undertow from 2.2.28.Final to 2.2.37.Final fixing vulns
+  * ERM-3658 S3 secret key in Agreements and licenses app settings is pre-populated incorrectly
 
 ## 6.2.1 2025-03-27
   * ERM-3662 Patch mod-agreements/licenses/serials/service-interaction/oa for instability during update
