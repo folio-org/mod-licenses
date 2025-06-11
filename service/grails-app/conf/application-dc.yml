@@ -26,7 +26,8 @@ okapi:
 logging:
   config: classpath:logback-development.xml
 
-
+endpoints:
+  include-stack-trace: true
 
 #    register: true
 #    deploy: true
