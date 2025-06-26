@@ -112,10 +112,11 @@ dependencies {
   implementation("org.grails.plugins:async")
   implementation("org.grails.plugins:events")
   implementation("org.grails.plugins:hibernate5")
-  implementation("org.grails.plugins:spring-security-core:6.1.1") // NOT IN LINE WITH GRAILS PATCH VERSION
-  // 5.8.9 affected by https://security.snyk.io/vuln/SNYK-JAVA-ORGSPRINGFRAMEWORKSECURITY-6457293
-  implementation("org.springframework.security:spring-security-core:5.8.11")
-  
+  implementation("org.grails.plugins:spring-security-core:6.1.2") // NOT IN LINE WITH GRAILS PATCH VERSION
+  // Necessary as spring-security-core/spring-security-web 5.7.11 is pulled in otherwise
+  implementation("org.springframework.security:spring-security-core:5.8.16")
+  implementation("org.springframework.security:spring-security-web:5.8.16")
+
   implementation("org.grails.plugins:views-json")
   implementation("org.grails.plugins:views-json-templates")
   implementation("org.hibernate:hibernate-core:5.6.15.Final")
@@ -166,7 +167,7 @@ dependencies {
 	implementation 'org.liquibase:liquibase-core:4.19.0'
 
   implementation 'com.opencsv:opencsv:5.7.1'
-  implementation 'commons-io:commons-io:2.7'
+  implementation 'commons-io:commons-io:2.14.0'
 	implementation('io.github.virtualdogbert:logback-groovy-config:1.14.1')
   compileOnly 'ch.qos.logback:logback-classic:1.4.7'
   // Is on runtime classpath via spring-boot-starter
@@ -174,7 +175,7 @@ dependencies {
 
   // Minio for file storage to S3 (reflects mod-agreements)
   implementation "io.minio:minio:8.5.17"
-  implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+  implementation 'com.squareup.okhttp3:okhttp:4.12.0'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
 
 	/*  ---- Manually installed testing dependencies ---- */
