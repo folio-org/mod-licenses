@@ -174,9 +174,6 @@ okapi:
     register: false
     deploy: false
 
-endpoints:
-  include-stack-trace: false
-
 webtoolkit:
   converters:
     numbers:
