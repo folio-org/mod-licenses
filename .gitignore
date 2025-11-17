@@ -38,3 +38,6 @@
 *.iml
 
 ConsoleOutput.txt
+
+.idea
+*/.idea
