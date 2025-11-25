@@ -110,7 +110,7 @@ dependencies {
   implementation("org.grails.plugins:async")
   implementation("org.grails.plugins:events")
   implementation("org.grails.plugins:hibernate5")
-  implementation("org.grails.plugins:spring-security-core:6.1.2") // NOT IN LINE WITH GRAILS PATCH VERSION
+  implementation("org.grails.plugins:spring-security-core:6.1.1") // NOT IN LINE WITH GRAILS PATCH VERSION
   // Necessary as spring-security-core/spring-security-web 5.7.11 is pulled in otherwise
   implementation("org.springframework.security:spring-security-core:5.8.16")
   implementation("org.springframework.security:spring-security-web:5.8.16")
