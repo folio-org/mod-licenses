@@ -121,8 +121,8 @@ In Trillium (v6.3.0), the aim is both to fix these bugs, and hopefully thus free
 run with _significantly_ fewer connections, and potentially set up a way for the configured pool size to be mathematically
 split between system and module, so as to avoid the doubling of the pool.
 
-The recommendation for the versions containing the fix is to run with a minimum of 15 connections per instance
-(Which will be doubled to 30 to account for the system schema).
+The recommendation for the versions containing the fix is to run with a minimum of 10 connections per instance
+(Which will be doubled to 20 to account for the system schema).
 
 ## ModuleDescriptor
 
