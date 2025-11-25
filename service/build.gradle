@@ -157,7 +157,7 @@ dependencies {
   runtimeOnly 'ch.qos.logback:logback-classic:1.2.13'
 
   // Minio for file storage to S3 (reflects mod-agreements)
-  implementation "io.minio:minio:8.5.1"
+  implementation "io.minio:minio:8.6.0"
   implementation 'com.squareup.okhttp3:okhttp:4.10.0'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
 
