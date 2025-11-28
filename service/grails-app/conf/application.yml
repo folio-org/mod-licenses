@@ -71,7 +71,7 @@ grails:
 # Datasource used by default.
 dataSource:
   pooled: true
-  jmxExport: false
+  jmxExport: "${db.jmxExport}"
   dbCreate: none
   schemaHandler: com.k_int.okapi.OkapiSchemaHandler
   username: "${db.username:folio_admin}"
@@ -81,9 +81,9 @@ dataSource:
   url: "jdbc:postgresql://${db.host:localhost}:${db.port:5432}/${db.database:okapi_modules}"
 
   properties:
-    jmxEnabled: false
+    jmxEnabled: ${db.jmxEnabled:false}
     maximumPoolSize: ${db.maxpoolsize:10}
-    transactionIsolation: TRANSACTION_READ_COMMITTED
+    transactionIsolation: ${db.transactionIsolation:TRANSACTION_READ_COMMITTED}
 
 grails:
   controllers:
@@ -167,6 +167,12 @@ management:
      defaults:
         enabled: false
 
+db:
+  maxpoolsize: 10
+  transactionIsolation: TRANSACTION_READ_COMMITTED
+  jmxEnabled: false
+  jmxExport: false
+
 okapi:
   schema:
     appName: 'mod-licenses'
@@ -178,6 +184,8 @@ webtoolkit:
   converters:
     numbers:
       fixedLocale: true # Can be a boolean for default locale or an IETF BCP 47 language string
+endpoints:
+  include-stack-trace: false
 
 # Environment specific overrides.
 environments:
