@@ -67,7 +67,6 @@ class UrlMappings {
 
     "/dashboard/definitions" (controller: 'dashboardDefinitions', action: 'getDefinitions' ,method: 'GET')
 
-    "500"(view: '/error')
     "404"(view: '/notFound')
   }
 }
