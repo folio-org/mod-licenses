@@ -1,3 +1,8 @@
+## 6.1.5 2025-12-16
+  * ERM-3851 Long standing connection issues bug
+  * ERM-3857 Upgrade minio version to 8.6.0 or upwards for mod-agreements and mod-licenses
+  * ERM-3741 Implement ENDPOINTS_INCLUDE_STACK_TRACE env variable for mod-licenses
+
 ## 6.1.4 2025-04-03
   * ERM-3666 Prevent instability of grails modules during updates: Ramsons
 
