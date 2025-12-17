@@ -34,28 +34,34 @@ class LicenseController extends AccessPolicyAwareController<License> {
       // Just follow the super implementation
       return super.show()
     }
-    
-    // Otherwise let's mutate the original license and only supply the applicable terms.
-    License license = params.id ? License.read(params.id) : null
-    
-    if (license) {
-      // Lookup the active status first.
-      RefdataValue active = LicenseAmendment.lookupStatus('active')
-      
-      // We found a license. Lets append the active amendments by startdate
-      List<LicenseAmendment> applicableAmendments = LicenseAmendment.createCriteria().list {
-        'in' 'id', am
-        eq 'owner', license
-        eq 'status', active
-        order 'startDate', 'asc'
+
+    if (canUserRead()) {
+
+      // Otherwise let's mutate the original license and only supply the applicable terms.
+      License license = params.id ? License.read(params.id) : null
+
+      if (license) {
+        // Lookup the active status first.
+        RefdataValue active = LicenseAmendment.lookupStatus('active')
+
+        // We found a license. Lets append the active amendments by startdate
+        List<LicenseAmendment> applicableAmendments = LicenseAmendment.createCriteria().list {
+          'in' 'id', am
+          eq 'owner', license
+          eq 'status', active
+          order 'startDate', 'asc'
+        }
+
+        if (applicableAmendments) {
+          license += applicableAmendments.sum()
+        }
       }
-      
-      if (applicableAmendments) {
-        license += applicableAmendments.sum()
-      }
+
+      respond license
+      return
     }
-    
-    respond license
+
+    respond ([ message: "PolicyRestriction.READ check failed in access control" ], status: FORBIDDEN )
   }
   
   
@@ -113,6 +119,14 @@ class LicenseController extends AccessPolicyAwareController<License> {
   @Transactional
   def delete() {
     License license = queryForResource(params.id)
+
+    if (!canUserDelete()) {
+      // Overwrite the default behaviour
+      request.withFormat {
+        '*' { respond([message: "PolicyRestriction.DELETE check failed in access control"], status: FORBIDDEN) }
+      }
+      return
+    }
     
     // Not found.
     if (license == null) {
@@ -130,8 +144,7 @@ class LicenseController extends AccessPolicyAwareController<License> {
     }
     
     // Finally delete the license if we get this far and respond.
-    deleteResource license
-    render status: NO_CONTENT
+    super.delete()
   }
 }
 
