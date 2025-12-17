@@ -2,7 +2,8 @@ package org.olf.licenses
 
 import static org.springframework.http.HttpStatus.*
 
-import com.k_int.okapi.OkapiTenantAwareController
+import com.k_int.accesscontrol.grails.AccessPolicyAwareController
+
 import com.k_int.web.toolkit.refdata.RefdataValue
 
 import grails.gorm.multitenancy.CurrentTenant
@@ -16,7 +17,7 @@ import org.grails.web.json.JSONObject
  * SAs have start dates, end dates and renewal dates. This controller exposes functions for interacting with the list of SAs
  */
 @CurrentTenant
-class LicenseController extends OkapiTenantAwareController<License> {
+class LicenseController extends AccessPolicyAwareController<License> {
 
   LicenseService licenseService
   
