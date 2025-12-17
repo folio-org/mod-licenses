@@ -1,8 +1,21 @@
 package org.olf.licenses
 
+import com.k_int.accesscontrol.grails.AccessControlUrlMapping
+
 class UrlMappings {
 
   static mappings = {
+    Closure buildAccessControlRoutes = AccessControlUrlMapping.buildRoutes(
+      "/licenses",
+      [
+        [path: '/licenses', controller: 'license'],
+        [path: '/amendments', controller: 'licenseAmendment']
+      ]
+    )
+    buildAccessControlRoutes.delegate = delegate // Ensure we call the helper closure from the UrlMapping context
+    buildAccessControlRoutes.call()
+
+
 
     "/"(controller: 'application', action:'index')
     "/licenses/licenses"(resources:'license') {
