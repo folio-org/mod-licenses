@@ -1,5 +1,6 @@
 package org.olf.licenses
 
+import com.k_int.accesscontrol.core.policycontrolled.PolicyControlled
 import com.k_int.web.toolkit.custprops.CustomProperties
 import com.k_int.web.toolkit.custprops.types.CustomPropertyContainer
 import com.k_int.web.toolkit.domain.traits.Clonable
@@ -10,6 +11,11 @@ import org.olf.general.DocumentAttachment
 import com.k_int.web.toolkit.refdata.RefdataValue;
 import com.k_int.web.toolkit.refdata.Defaults;
 
+@PolicyControlled(
+  resourceIdColumn = "lic_id", // For grails modules we use SQL Column name for resourceId
+  resourceIdField = "id",
+  resourceTableName = 'license'
+)
 class License extends LicenseCore implements CustomProperties, MultiTenant<License>, Clonable<License> {
 
   @Defaults(['Local', 'Consortial', 'National', 'Alliance' ])

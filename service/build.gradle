@@ -141,6 +141,9 @@ dependencies {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
 
+  /* TODO Temporary imports for accesscontrol work -- RELEASE SHOULD NOT BE SNAPSHOT */
+  implementation('com.k_int.accesscontrol:access-control-grails:1.0.0-SNAPSHOT')
+
 	implementation 'io.github.http-builder-ng:http-builder-ng-core:1.0.4'
 	implementation 'org.codehaus.janino:janino:3.1.9'
 
