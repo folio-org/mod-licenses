@@ -23,4 +23,5 @@ databaseChangeLog = {
   include file: 'wtk/multi-value-custprops.feat.groovy'
   include file: 'correct-gin-indices-pre-quesnalia.groovy'
   include file: 'update-mod-license-5-1.groovy'
+  include file: 'rbac/access-policy-domain.groovy'
 }
