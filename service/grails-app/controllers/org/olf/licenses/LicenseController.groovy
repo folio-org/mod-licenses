@@ -31,7 +31,7 @@ class LicenseController extends AccessPolicyAwareController<License> {
     // Applicable amendments might be present.
     final List<Serializable> am = params.list('applyAmendment')
     if (!am) {
-      // Just follow the super implementation
+      // Just follow the super implementation (This will do canUserRead)
       return super.show()
     }
 
