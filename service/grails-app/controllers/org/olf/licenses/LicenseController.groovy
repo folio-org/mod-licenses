@@ -2,7 +2,8 @@ package org.olf.licenses
 
 import static org.springframework.http.HttpStatus.*
 
-import com.k_int.okapi.OkapiTenantAwareController
+import com.k_int.accesscontrol.grails.AccessPolicyAwareController
+
 import com.k_int.web.toolkit.refdata.RefdataValue
 
 import grails.gorm.multitenancy.CurrentTenant
@@ -16,7 +17,7 @@ import org.grails.web.json.JSONObject
  * SAs have start dates, end dates and renewal dates. This controller exposes functions for interacting with the list of SAs
  */
 @CurrentTenant
-class LicenseController extends OkapiTenantAwareController<License> {
+class LicenseController extends AccessPolicyAwareController<License> {
 
   LicenseService licenseService
   
@@ -30,31 +31,37 @@ class LicenseController extends OkapiTenantAwareController<License> {
     // Applicable amendments might be present.
     final List<Serializable> am = params.list('applyAmendment')
     if (!am) {
-      // Just follow the super implementation
+      // Just follow the super implementation (This will do canUserRead)
       return super.show()
     }
-    
-    // Otherwise let's mutate the original license and only supply the applicable terms.
-    License license = params.id ? License.read(params.id) : null
-    
-    if (license) {
-      // Lookup the active status first.
-      RefdataValue active = LicenseAmendment.lookupStatus('active')
-      
-      // We found a license. Lets append the active amendments by startdate
-      List<LicenseAmendment> applicableAmendments = LicenseAmendment.createCriteria().list {
-        'in' 'id', am
-        eq 'owner', license
-        eq 'status', active
-        order 'startDate', 'asc'
+
+    if (canUserRead()) {
+
+      // Otherwise let's mutate the original license and only supply the applicable terms.
+      License license = params.id ? License.read(params.id) : null
+
+      if (license) {
+        // Lookup the active status first.
+        RefdataValue active = LicenseAmendment.lookupStatus('active')
+
+        // We found a license. Lets append the active amendments by startdate
+        List<LicenseAmendment> applicableAmendments = LicenseAmendment.createCriteria().list {
+          'in' 'id', am
+          eq 'owner', license
+          eq 'status', active
+          order 'startDate', 'asc'
+        }
+
+        if (applicableAmendments) {
+          license += applicableAmendments.sum()
+        }
       }
-      
-      if (applicableAmendments) {
-        license += applicableAmendments.sum()
-      }
+
+      respond license
+      return
     }
-    
-    respond license
+
+    respond ([ message: "PolicyRestriction.READ check failed in access control" ], status: FORBIDDEN )
   }
   
   
@@ -112,6 +119,14 @@ class LicenseController extends OkapiTenantAwareController<License> {
   @Transactional
   def delete() {
     License license = queryForResource(params.id)
+
+    if (!canUserDelete()) {
+      // Overwrite the default behaviour
+      request.withFormat {
+        '*' { respond([message: "PolicyRestriction.DELETE check failed in access control"], status: FORBIDDEN) }
+      }
+      return
+    }
     
     // Not found.
     if (license == null) {
@@ -129,8 +144,7 @@ class LicenseController extends OkapiTenantAwareController<License> {
     }
     
     // Finally delete the license if we get this far and respond.
-    deleteResource license
-    render status: NO_CONTENT
+    super.delete()
   }
 }
 
