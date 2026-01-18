@@ -1,5 +1,7 @@
 package org.olf.licenses
 
+import com.k_int.accesscontrol.core.PolicyRestriction
+import com.k_int.accesscontrol.core.policycontrolled.PolicyControlled
 import com.k_int.web.toolkit.custprops.CustomProperties
 import com.k_int.web.toolkit.custprops.types.CustomPropertyContainer
 import com.k_int.web.toolkit.domain.traits.Clonable
@@ -10,6 +12,16 @@ import org.olf.general.DocumentAttachment
 import com.k_int.web.toolkit.refdata.RefdataValue;
 import com.k_int.web.toolkit.refdata.Defaults;
 
+@PolicyControlled(
+  ownerColumn = 'am_owning_license_fk',
+  ownerField = 'owner',
+  ownerClass = License.class,
+  resourceTableName = 'license',
+  resourceIdColumn = "lic_id", // For grails modules we use SQL Column name for resourceId
+  resourceIdField = "id",
+  createRestrictionMapping = PolicyRestriction.UPDATE,
+  deleteRestrictionMapping = PolicyRestriction.UPDATE
+)
 class LicenseAmendment extends LicenseCore implements CustomProperties,MultiTenant<LicenseAmendment>, Clonable<LicenseAmendment>  {  
   License owner
 

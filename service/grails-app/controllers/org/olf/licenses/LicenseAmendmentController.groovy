@@ -1,8 +1,9 @@
 package org.olf.licenses
 
+import com.k_int.accesscontrol.grails.AccessPolicyAwareController
+
 import static org.springframework.http.HttpStatus.*
 
-import com.k_int.okapi.OkapiTenantAwareController
 import com.k_int.web.toolkit.refdata.RefdataValue
 
 import grails.gorm.multitenancy.CurrentTenant
@@ -10,7 +11,7 @@ import grails.gorm.transactions.Transactional
 import org.grails.web.json.JSONObject
 
 @CurrentTenant
-class LicenseAmendmentController extends OkapiTenantAwareController<LicenseAmendment> {
+class LicenseAmendmentController extends AccessPolicyAwareController<LicenseAmendment> {
   LicenseAmendmentController() {
     super(LicenseAmendment)
   }
