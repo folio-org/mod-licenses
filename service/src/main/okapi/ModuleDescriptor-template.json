@@ -632,6 +632,26 @@
       "description": "Claim a License record with AccessPolicies"
     },
     {
+      "permissionName": "licenses.amendments.item.accesscontrol.get",
+      "displayName": "Amendments item access control get",
+      "description": "Obtain access control information for a Amendment record"
+    },
+    {
+      "permissionName": "licenses.amendments.collection.accesscontrol.get",
+      "displayName": "Amendments collection access control get",
+      "description": "Obtain access control information for a collection of Amendment records"
+    },
+    {
+      "permissionName": "licenses.amendments.item.policies.get",
+      "displayName": "Amendments item policies get",
+      "description": "Get the policies for a Amendment record"
+    },
+    {
+      "permissionName": "licenses.amendments.item.accesscontrol.post",
+      "displayName": "Amendments item access control get",
+      "description": "Claim a Amendment record with AccessPolicies"
+    },
+    {
       "permissionName": "licenses.licenses.view",
       "subPermissions": [
         "licenses.licenses.collection.get",
