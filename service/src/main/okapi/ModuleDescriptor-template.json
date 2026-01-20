@@ -92,6 +92,42 @@
           "methods": [
             "GET"
           ],
+          "pathPattern": "/licenses/licenses/{id}/can*",
+          "permissionsRequired": [
+            "licenses.licenses.item.accesscontrol.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/licenses/can*",
+          "permissionsRequired": [
+            "licenses.licenses.collection.accesscontrol.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/licenses/{id}/policies",
+          "permissionsRequired": [
+            "licenses.licenses.item.policies.get"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
+          "pathPattern": "/licenses/licenses/{id}/claim",
+          "permissionsRequired": [
+            "licenses.licenses.item.accesscontrol.post"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
           "pathPattern": "/licenses/amendments",
           "permissionsRequired": [
             "licenses.amendments.collection.get"
@@ -144,6 +180,42 @@
           "modulePermissions": [
             "erm.linkedLicenses.collection.get",
             "erm.agreements.linkedLicenses.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/amendments/{id}/can*",
+          "permissionsRequired": [
+            "licenses.amendments.item.accesscontrol.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/amendments/can*",
+          "permissionsRequired": [
+            "licenses.amendments.collection.accesscontrol.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/amendments/{id}/policies",
+          "permissionsRequired": [
+            "licenses.amendments.item.policies.get"
+          ]
+        },
+        {
+          "methods": [
+            "POST"
+          ],
+          "pathPattern": "/licenses/amendments/{id}/claim",
+          "permissionsRequired": [
+            "licenses.amendments.item.accesscontrol.post"
           ]
         },
         {
@@ -415,6 +487,42 @@
           "permissionsRequired": [
             "licenses.settings.delete"
           ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/accessControl",
+          "permissionsRequired": [
+            "licenses.accesspolicies.collection.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/accessControl/{id}",
+          "permissionsRequired": [
+            "licenses.accesspolicies.item.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/accessControl/*Policies",
+          "permissionsRequired": [
+            "licenses.accesspolicies.policies.get"
+          ]
+        },
+        {
+          "methods": [
+            "GET"
+          ],
+          "pathPattern": "/licenses/accessControl/enabledEngines",
+          "permissionsRequired": [
+            "licenses.accesspolicies.enabledengines.get"
+          ]
         }
       ]
     },
@@ -504,6 +612,46 @@
       ]
     },
     {
+      "permissionName": "licenses.licenses.item.accesscontrol.get",
+      "displayName": "Licenses item access control get",
+      "description": "Obtain access control information for a License record"
+    },
+    {
+      "permissionName": "licenses.licenses.collection.accesscontrol.get",
+      "displayName": "Licenses collection access control get",
+      "description": "Obtain access control information for a collection of License records"
+    },
+    {
+      "permissionName": "licenses.licenses.item.policies.get",
+      "displayName": "Licenses item policies get",
+      "description": "Get the policies for a License record"
+    },
+    {
+      "permissionName": "licenses.licenses.item.accesscontrol.post",
+      "displayName": "Licenses item access control get",
+      "description": "Claim a License record with AccessPolicies"
+    },
+    {
+      "permissionName": "licenses.amendments.item.accesscontrol.get",
+      "displayName": "Amendments item access control get",
+      "description": "Obtain access control information for a Amendment record"
+    },
+    {
+      "permissionName": "licenses.amendments.collection.accesscontrol.get",
+      "displayName": "Amendments collection access control get",
+      "description": "Obtain access control information for a collection of Amendment records"
+    },
+    {
+      "permissionName": "licenses.amendments.item.policies.get",
+      "displayName": "Amendments item policies get",
+      "description": "Get the policies for a Amendment record"
+    },
+    {
+      "permissionName": "licenses.amendments.item.accesscontrol.post",
+      "displayName": "Amendments item access control get",
+      "description": "Claim a Amendment record with AccessPolicies"
+    },
+    {
       "permissionName": "licenses.licenses.view",
       "subPermissions": [
         "licenses.licenses.collection.get",
@@ -511,7 +659,11 @@
         "licenses.licenses.item.get",
         "licenses.amendments.item.get",
         "licenses.licenses.item.linkedAgreements.get",
-        "licenses.custprops.compare.execute"
+        "licenses.custprops.compare.execute",
+        "licenses.licenses.item.accesscontrol.get",
+        "licenses.amendments.item.accesscontrol.get",
+        "licenses.licenses.collection.accesscontrol.get",
+        "licenses.amendments.collection.accesscontrol.get"
       ]
     },
     {
@@ -559,7 +711,9 @@
         "licenses.licenses.item.put",
         "licenses.amendments.item.put",
         "licenses.licenses.clone.execute",
-        "licenses.amendments.clone.execute"
+        "licenses.amendments.clone.execute",
+        "licenses.licenses.item.accesscontrol.post",
+        "licenses.amendments.item.accesscontrol.post"
       ]
     },
     {
@@ -873,7 +1027,39 @@
       "visible": false,
       "subPermissions": [
         "licenses.settings.write",
-        "licenses.settings.delete"
+        "c.settings.delete"
+      ]
+    },
+    {
+      "permissionName": "licenses.accesspolicies.collection.get",
+      "displayName": "Licenses: Access policies collection get",
+      "description": "GET a collection of AccessPolicy records in the Licenses app"
+    },
+    {
+      "permissionName": "licenses.accesspolicies.item.get",
+      "displayName": "Licenses: Access policies item get",
+      "description": "GET an AccessPolicy record in the Licenses app"
+    },
+    {
+      "permissionName": "licenses.accesspolicies.policies.get",
+      "displayName": "Licenses: Access policies policies get",
+      "description": "GET AccessPolicy policy options by restriction in the Licenses app"
+    },
+    {
+      "permissionName": "licenses.accesspolicies.enabledengines.get",
+      "displayName": "Licenses: Access policies enabled engines get",
+      "description": "GET the enabled engines for the policy engine in the Licenses app"
+    },
+    {
+      "permissionName": "licenses.accesspolicies.view",
+      "displayName": "Licenses: Access policies view",
+      "description": "GET all information from AccessPolicy endpoints in the Licenses app",
+      "visible": false,
+      "subPermissions": [
+        "licenses.accesspolicies.collection.get",
+        "licenses.accesspolicies.item.get",
+        "licenses.accesspolicies.policies.get",
+        "licenses.accesspolicies.enabledengines.get"
       ]
     }
   ],
