@@ -116,6 +116,8 @@ dependencies {
   // Necessary as spring-security-core/spring-security-web 5.7.11 is pulled in otherwise
   implementation("org.springframework.security:spring-security-core:5.8.16")
   implementation("org.springframework.security:spring-security-web:5.8.16")
+  // Upgrade org.springframework:spring-expression from 5.3.31 to 5.3.39 fixing https://spring.io/security/cve-2024-38808
+  implementation("org.springframework:spring-expression:5.3.39")
 
   implementation("org.grails.plugins:views-json")
   implementation("org.grails.plugins:views-json-templates")
