@@ -663,7 +663,9 @@
         "licenses.licenses.item.accesscontrol.get",
         "licenses.amendments.item.accesscontrol.get",
         "licenses.licenses.collection.accesscontrol.get",
-        "licenses.amendments.collection.accesscontrol.get"
+        "licenses.amendments.collection.accesscontrol.get",
+        "licenses.licenses.item.policies.get",
+        "licenses.amendments.item.policies.get"
       ]
     },
     {
