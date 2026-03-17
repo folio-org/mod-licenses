@@ -1,5 +1,6 @@
 package org.olf.licenses
 
+import com.k_int.accesscontrol.core.PolicyRestriction
 import com.k_int.accesscontrol.grails.AccessPolicyAwareController
 
 import static org.springframework.http.HttpStatus.*
@@ -73,9 +74,8 @@ class LicenseAmendmentController extends AccessPolicyAwareController<LicenseAmen
       respond instance, [status: OK]
       return
     }
-    
+
       respond ([statusCode: 404])
-      return
     }
 
     // Access denied handling (same as Agreements)
