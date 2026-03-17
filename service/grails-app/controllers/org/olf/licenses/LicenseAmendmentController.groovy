@@ -25,9 +25,19 @@ class LicenseAmendmentController extends AccessPolicyAwareController<LicenseAmen
     amendmentDateInfo: ['endDateSemantics', 'startDate', 'endDate']
 //    supplementaryDocs: ['supplementaryDocs']
   ]
-  
+
   @Transactional
   def doClone () {
+    // Ensure access control applies to correct resource
+    params.setProperty('id', params.get('licenseAmendmentId'))
+
+    def cloneAccess = canAccess(EnumSet.of(
+      PolicyRestriction.READ,
+      PolicyRestriction.CREATE
+    ))
+
+    if (cloneAccess.values().every()) {
+
     final Set<String> props = []
     final String amendmentId = params.get("licenseAmendmentId")
     if (amendmentId) {
@@ -50,11 +60,11 @@ class LicenseAmendmentController extends AccessPolicyAwareController<LicenseAmen
           }
         }
       }
-      
-      log.debug "Attempting to clone amendment ${amendmentId} using props ${props}"
-      LicenseAmendment instance = queryForResource(amendmentId).clone(props)
-      
-      instance.save()
+
+        log.debug "Attempting to clone amendment ${amendmentId} using props ${props}"
+        LicenseAmendment instance = queryForResource(amendmentId).clone(props)
+
+        instance.save()
       if (instance.hasErrors()) {
         transactionStatus.setRollbackOnly()
         respond instance.errors, view:'edit' // STATUS CODE 422 automatically when errors rendered.
@@ -64,8 +74,20 @@ class LicenseAmendmentController extends AccessPolicyAwareController<LicenseAmen
       return
     }
     
-    respond ([statusCode: 404])
-  }
-  
+      respond ([statusCode: 404])
+      return
+    }
 
+    // Access denied handling (same as Agreements)
+    List<PolicyRestriction> failedChecks = cloneAccess
+      .entrySet()
+      .stream()
+      .filter(entry -> !entry.getValue())
+      .map(Map.Entry::getKey)
+      .toList() as List<PolicyRestriction>
+
+    String message = "${failedChecks.collect { "PolicyRestriction.${it}" }.join(', ')} check(s) failed in access control"
+
+    respond ([ message: message ], status: FORBIDDEN )
+  }
 }
