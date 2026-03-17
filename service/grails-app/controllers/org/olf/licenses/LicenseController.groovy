@@ -75,34 +75,43 @@ class LicenseController extends AccessPolicyAwareController<License> {
 //    supplementaryDocs: ['supplementaryDocs']
   ]
   
-  @Transactional
-  def doClone () {
+@Transactional
+def doClone () {
+
+  // Ensure access control checks use the correct resource ID
+  params.setProperty('id', params.get('licenseId'))
+
+  def cloneAccess = canAccess(EnumSet.of(
+    PolicyRestriction.READ,
+    PolicyRestriction.CREATE
+  ))
+
+  if (cloneAccess.values().every()) {
+
     final Set<String> props = []
     final String licenseId = params.get("licenseId")
     if (licenseId) {
-      
-      // Grab the JSON body.
+ // Grab the JSON body.
       JSONObject body = request.JSON
-      
-      // Build up a list of properties from the incoming json object.
+
       for (Map.Entry<String, Boolean> entry : body.entrySet()) {
-        
+
         if (entry.value == true) {
-        
+
           final String fieldOrGroup = entry.key
           if (CLONE_GROUPING.containsKey(fieldOrGroup)) {
             // Add the group instead.
-            props.addAll( CLONE_GROUPING[fieldOrGroup] )
+            props.addAll(CLONE_GROUPING[fieldOrGroup])
           } else {
             // Assume single field.
             props << fieldOrGroup
           }
         }
       }
-      
+
       log.debug "Attempting to clone license ${licenseId} using props ${props}"
       License instance = queryForResource(licenseId).clone(props)
-      
+
       instance.save()
       if (instance.hasErrors()) {
         transactionStatus.setRollbackOnly()
@@ -112,9 +121,23 @@ class LicenseController extends AccessPolicyAwareController<License> {
       respond instance, [status: OK]
       return
     }
-    
+
     respond ([statusCode: 404])
+    return
   }
+
+  // Handle failed access checks (same pattern as Agreements)
+  List<PolicyRestriction> failedChecks = cloneAccess
+    .entrySet()
+    .stream()
+    .filter(entry -> !entry.getValue())
+    .map(Map.Entry::getKey)
+    .toList() as List<PolicyRestriction>
+
+  String message = "${failedChecks.collect { "PolicyRestriction.${it}" }.join(', ')} check(s) failed in access control"
+
+  respond ([ message: message ], status: FORBIDDEN )
+}
   
   @Transactional
   def delete() {
