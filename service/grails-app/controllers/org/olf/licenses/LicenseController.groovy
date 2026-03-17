@@ -2,6 +2,7 @@ package org.olf.licenses
 
 import static org.springframework.http.HttpStatus.*
 
+import com.k_int.accesscontrol.core.PolicyRestriction
 import com.k_int.accesscontrol.grails.AccessPolicyAwareController
 
 import com.k_int.web.toolkit.refdata.RefdataValue
