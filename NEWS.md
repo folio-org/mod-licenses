@@ -1,3 +1,5 @@
+## 6.4.0 IN PROGRESS
+
 ## 6.3.0 2026-04-16
   * ERM-3960: It should not be possible to clone an amendment that you cannot view due to access control
   * ERM-3958: It should not be possible to clone a license that you cannot view due to access control
