@@ -1,4 +1,15 @@
-## 6.3.0 IN PROGRESS
+## 6.3.0 2026-04-16
+  * ERM-3960: It should not be possible to clone an amendment that you cannot view due to access control
+  * ERM-3958: It should not be possible to clone a license that you cannot view due to access control
+  * ERM-3951: Upgrade undertow-core to 2.2.39
+  * ERM-3950: Permission licenses.licenses.item.policies.get not included in license view permission
+  * ERM-3908: Implement access control library in mod-licenses
+  * ERM-3857: Upgrade minio version to 8.6.0 or upwards for mod-agreements and mod-licenses
+  * ERM-3851: Long standing connection issues bug
+  * ERM-3741: Implement ENDPOINTS_INCLUDE_STACK_TRACE env variable for mod-licenses
+  * ERM-3466: PUT/POST requests to /licenses/custprops are intolerant of invalid data in "type" field
+  * ERM-3306: Dependency upgrades
+  * ERM-3292: Stack traces should not be included in API responses
 
 ## 6.2.3 2025-11-28
   * ERM-3857 Upgrade minio version to 8.6.0 or upwards for mod-agreements and mod-licenses
