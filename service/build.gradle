@@ -213,7 +213,7 @@ bootRun {
     '-Dspring.output.ansi.enabled=always',
     '-noverify',
     '-XX:TieredStopAtLevel=1',
-    '-Xmx1374m',
+    '-Xmx1024m',
     // Prevent the JVM from dropping stacktraces on frequently-thrown exceptions.
     '-XX:-OmitStackTraceInFastThrow')
         sourceResources sourceSets.main
