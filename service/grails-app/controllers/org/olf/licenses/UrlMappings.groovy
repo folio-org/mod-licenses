@@ -12,10 +12,6 @@ class UrlMappings {
         [path: '/amendments', controller: 'licenseAmendment']
       ]
     )
-    buildAccessControlRoutes.delegate = delegate // Ensure we call the helper closure from the UrlMapping context
-    buildAccessControlRoutes.call()
-
-
 
     "/"(controller: 'application', action:'index')
     "/licenses/licenses"(resources:'license') {
@@ -81,5 +77,16 @@ class UrlMappings {
     "/dashboard/definitions" (controller: 'dashboardDefinitions', action: 'getDefinitions' ,method: 'GET')
 
     "404"(view: '/notFound')
+
+    // Register access control routes last so that any failure here does not
+    // abort registration of the routes above (Grails evaluates the mappings
+    // closure top-to-bottom; an exception before all routes are declared leaves
+    // those routes un-registered).
+    buildAccessControlRoutes.delegate = delegate
+    try {
+      buildAccessControlRoutes.call()
+    } catch (e) {
+      log.error("Failed to register access control routes: ${e.message}", e)
+    }
   }
 }
