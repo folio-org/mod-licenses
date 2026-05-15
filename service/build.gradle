@@ -1,18 +1,18 @@
 configurations.all {
   resolutionStrategy {
-    force 'org.glassfish:jakarta.el:3.0.4'
+    force "org.glassfish:jakarta.el:$glassfishJakartaElVersion"
 
     // Check for updates every build -- Useful for developing the plugins
-    cacheChangingModulesFor 0, 'seconds'
+    // cacheChangingModulesFor 0, 'seconds'
 
     eachDependency { DependencyResolveDetails details ->
       if (details.requested.group == 'org.glassfish' && details.requested.name == 'javax.el') {
-        details.useTarget('org.glassfish:jakarta.el:3.0.4')
+        details.useTarget("org.glassfish:jakarta.el:$glassfishJakartaElVersion")
         details.because('Security fix for ERM-4022')
       }
 
       if (details.requested.group == 'javax.el' && details.requested.name == 'javax.el-api') {
-        details.useTarget('jakarta.el:jakarta.el-api:3.0.3')
+        details.useTarget("jakarta.el:jakarta.el-api:$glassfishJakartaElApiVersion")
         details.because('Security fix for ERM-4022')
       }
     }
@@ -152,8 +152,8 @@ dependencies {
   //testImplementation("io.micronaut:micronaut-http-client")
 
   /*  ---- Manually installed dependencies ---- */
-	implementation 'com.k_int.grails:web-toolkit-ce:10.6.1'
-  implementation('com.k_int.okapi:grails-okapi:8.1.0') {
+  implementation "com.k_int.grails:web-toolkit-ce:$webToolkitVersion"
+  implementation("com.k_int.okapi:grails-okapi:$grailsOkapiVersion") {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
 
