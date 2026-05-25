@@ -64,72 +64,52 @@ public class ExportService {
   private void writeHeader (final ICSVWriter csvWriter, final ExportControlObject exportData) {
 
     List<String> result = []
-    for ( Map.Entry<String, Boolean> property : exportData.include ) {
-      if (property.key != 'customProperties' && property.value == true) {
-        result << property.key
-      }
-    }
-    if (exportData.include?.customProperties) {
-      for (Map.Entry<String, Boolean> custProp : exportData.include.customProperties as Map) {
-        if (custProp.value == true) {
-          // Output the property parts.
-          for (String propPart : ExportControlObject.CUST_PROP_PART_ORDER) {
-            
-            if ( exportData.terms?.get(propPart) == true ) {
-            
-              if (propPart == 'value') {
-                result << custProp.key
-              } else {            
-                result << ("${custProp.key}:${propPart}" as String)
-              }
-            }
-          }
+    result.addAll(exportData.orderedRootKeys)
+
+    List<String> termParts = exportData.orderedTermParts
+    for (String custPropKey : exportData.orderedCustomPropertyKeys) {
+      for (String propPart : termParts) {
+        if (propPart == 'value') {
+          result << custPropKey
+        } else {
+          result << ("${custPropKey}:${propPart}" as String)
         }
       }
     }
-    
+
     csvWriter.writeNext(result as String[])
   }
-  
+
   private void writeLicenseAsCSV (final ICSVWriter csvWriter, final License license, final ExportControlObject exportData) {
     List<String> result = []
-    for (final Map.Entry<String, ?> property : exportData.include) {
-      if (property.key != 'customProperties' && property.value == true) {
-        result << rootProperty ( license, property.key )
-      }
+    for (String propertyName : exportData.orderedRootKeys) {
+      result << rootProperty(license, propertyName)
     }
-    
-    if (exportData.include?.customProperties) {
-      // Also output the terms.
-      for (Map.Entry<String, Boolean> custProp : exportData.include.customProperties as Map) {
-        if (custProp.value == true) {
-          // Output the property.
-          result.addAll( customProperty( license, custProp.key, exportData ) )
-        }
-      }
+
+    List<String> termParts = exportData.orderedTermParts
+    for (String custPropKey : exportData.orderedCustomPropertyKeys) {
+      result.addAll(customProperty(license, custPropKey, termParts))
     }
-    
+
     csvWriter.writeNext(result as String[])
   }
-  
+
   private String rootProperty(final License license, final String propertyName) {
     handleValue (license[propertyName])
   }
-  
-  private List<String> customProperty(final License license, final String propertyName, final ExportControlObject exportData) {
-    
+
+  private List<String> customProperty(final License license, final String propertyName, final List<String> termParts) {
+
     // Find the first instance.
     CustomProperty prop = license.customProperties?.value?.find( { CustomProperty cp -> cp.definition.name == propertyName} )
-    
-    // Output the property parts.
+
+    // Output the property parts in the same order used by writeHeader so
+    // headers and row values stay aligned column-for-column.
     List<String> result = []
-    for (String propPart : ExportControlObject.CUST_PROP_PART_ORDER) {
-      
-      if ( exportData.terms?.get(propPart) == true ) {
-        result << handleValue ( prop?.getAt(propPart))
-      }
+    for (String propPart : termParts) {
+      result << handleValue ( prop?.getAt(propPart))
     }
-    
+
     result
   }
   
