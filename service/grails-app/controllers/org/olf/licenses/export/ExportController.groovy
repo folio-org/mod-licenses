@@ -5,6 +5,7 @@ import com.k_int.okapi.OkapiTenantAwareController
 import com.opencsv.CSVWriterBuilder
 import com.opencsv.ICSVWriter
 import grails.gorm.multitenancy.CurrentTenant
+import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
 
 /**
@@ -22,20 +23,15 @@ class ExportController extends OkapiTenantAwareController<License> {
     }
 
     def index() {
-        def objToBind = getObjectToBind()
+        // Parse with JsonSlurper to preserve client key order — Grails' default
+        // request.JSON is a HashMap-backed JSONObject that reorders keys.
+        Map objToBind = parseJsonBody()
 
         ExportControlObject exportObj = new ExportControlObject()
 
-        /**
-         * we want to bind this directly with bindData,
-         * but the exportObj stayed empty, so these next 3 lines were necessary
-         * we should investigate and refactor this later
-         */
         exportObj.ids = objToBind?.ids ?: []
         exportObj.include = objToBind?.include ?: [:]
         exportObj.terms = objToBind?.terms ?: [:]
-
-        bindData exportObj, objToBind
 
         log.debug("ExportController::index")
 
@@ -65,5 +61,12 @@ class ExportController extends OkapiTenantAwareController<License> {
                 log.error("Failed to close the OutputStreamWriter: ${e.message}", e)
             }
         }
+    }
+
+    private Map parseJsonBody() {
+        String body = request.reader.text
+        if (!body) return [:]
+        def parsed = new JsonSlurper().parseText(body)
+        parsed instanceof Map ? (Map) parsed : [:]
     }
 }
