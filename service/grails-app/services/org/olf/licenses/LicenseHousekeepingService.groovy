@@ -123,7 +123,10 @@ public class LicenseHousekeepingService {
             [ 'fileStorage', 'S3BucketRegion','String', null,                 default_aws_region ?: "us-east-1" ],
             [ 'fileStorage', 'S3ObjectPrefix','String', null,                 "/${tenantId}/licenses/" ],
           ].each { st_row ->
-            log.debug("Check app setting ${st_row}");
+            // ERM-3619: redact sensitive values (S3 secret key, access key) from debug output
+            def sensitiveKeys = ['S3SecretKey', 'S3AccessKey']
+            def displayValue = sensitiveKeys.contains(st_row[1]) ? '[REDACTED]' : st_row[4]
+            log.debug("Check app setting ${st_row[0]}.${st_row[1]} = ${displayValue}");
 
             AppSetting new_as = AppSetting.findBySectionAndKey(st_row[0], st_row[1]) ?: new AppSetting(
                                               section:st_row[0],
