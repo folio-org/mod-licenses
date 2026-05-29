@@ -1,4 +1,9 @@
-## 6.4.0 IN PROGRESS
+## 6.3.1 2026-05-28
+  * ERM-4022: Security fix May 2026
+  * ERM-3985: Check for any uses of actions v4 across repositories
+  * ERM-3984: Support S3 access with implicit AWS role authorization in Grails modules
+  * ERM-3984: Increase webToolkitVersion
+  * ERM-3619: Sensitive data in logs cleanup
 
 ## 6.3.0 2026-04-16
   * ERM-3960: It should not be possible to clone an amendment that you cannot view due to access control
