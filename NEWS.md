@@ -1,3 +1,6 @@
+## 6.3.2 2026-06-04
+  * ERM-4093: Licenses: Bump access-control-grails version to handle jackson vulnerability
+
 ## 6.3.1 2026-05-28
   * ERM-4022: Security fix May 2026
   * ERM-3985: Check for any uses of actions v4 across repositories
