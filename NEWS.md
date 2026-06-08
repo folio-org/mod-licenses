@@ -1,3 +1,6 @@
+## 6.2.7 2026-06-08
+  * ERM-4055 Backport Security fix May 2026 to Sunflower
+
 ## 6.2.6 2026-06-08
   * ERM-4055 Backport Security fix May 2026 to Sunflower
   * Add implicit AWS role authorisation to mod-agreements and mod-licenses - Sunflower CSP
