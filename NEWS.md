@@ -1,3 +1,7 @@
+## 6.2.6 2026-06-08
+  * ERM-4055 Backport Security fix May 2026 to Sunflower
+  * Add implicit AWS role authorisation to mod-agreements and mod-licenses - Sunflower CSP
+
 ## 6.2.5 2026-04-24
   * ERM-3951 Upgrade undertow-core to 2.2.29 fixing OOM CVE-2024-4027
   * ERM-3733 Backport version bumps to Sunflower: mod-licenses: spring-web 5.3.39, spring-webmvc 5.3.39 fixing vulns
