@@ -1,0 +1,7 @@
+in: path
+name: amendmentId
+description: UUID for an amendment
+required: true
+schema:
+  type: string
+  format: uuid

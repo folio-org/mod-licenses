@@ -1,0 +1,21 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  owner:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+    readOnly: true
+    description: License that owns the contact
+  user:
+    type: string
+    format: uuid
+  role:
+    description: The contact's role in relation to the license
+    oneOf:
+      - type: string
+      - $ref: ./RefData.yaml

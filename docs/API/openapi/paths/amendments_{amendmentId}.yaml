@@ -1,0 +1,75 @@
+get:
+  summary: Get a specified amendment record
+  operationId: getAmendment
+  parameters:
+    - $ref: ../components/parameters/amendmentId.yaml
+    - $ref: ../components/parameters/x-okapi-tenant.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/LicenseAmendment.yaml
+    '400':
+      description: Bad request error
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HttpError.yaml
+    '500':
+      description: Internal server error
+put:
+  summary: Update amendment record
+  operationId: putAmendment
+  parameters:
+    - $ref: ../components/parameters/amendmentId.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/LicenseAmendment.yaml
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/LicenseAmendment.yaml
+    '400':
+      description: Bad request error
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HttpError.yaml
+    '500':
+      description: Internal server error
+delete:
+  summary: Delete a specified amendment record
+  operationId: deleteAmendment
+  parameters:
+    - $ref: ../components/parameters/amendmentId.yaml
+  responses:
+    '204':
+      description: No content
+    '400':
+      description: Bad request error
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HttpError.yaml
+    '500':
+      description: Internal server error

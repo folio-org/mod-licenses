@@ -1,0 +1,73 @@
+type: object
+required:
+  - name
+properties:
+  id:
+    type: string
+    format: uuid
+    readOnly: true
+    description: Unique identifier
+  name:
+    type: string
+    description: The name of the license or amendment
+  description:
+    type: string
+    description: A description of the license or amendment
+  status:
+    description: The status (e.g. In negotiation, Not yet active, Active, Rejected, Expired)
+    oneOf:
+      - type: string
+      - $ref: ./RefData.yaml
+  startDate:
+    type: string
+    format: date
+    description: The date on which the license or amendment becomes active
+  endDate:
+    type: string
+    format: date
+    description: The date on which the license or amendment expires
+  endDateSemantics:
+    description: How the end date should be interpreted (e.g. Explicit, Open ended, Implicit)
+    oneOf:
+      - type: string
+      - $ref: ./RefData.yaml
+  openEnded:
+    type: boolean
+    description: Derived flag indicating whether the license or amendment is open-ended
+  dateCreated:
+    type: string
+    format: date-time
+    readOnly: true
+    description: The date and time the record was created
+  lastUpdated:
+    type: string
+    format: date-time
+    readOnly: true
+    description: The date and time the record was last updated
+  tags:
+    type: array
+    description: Tags applied to the license or amendment
+    items:
+      $ref: ./Tag.yaml
+  docs:
+    type: array
+    description: Documents attached to the license or amendment
+    items:
+      $ref: ./DocumentAttachment.yaml
+  supplementaryDocs:
+    type: array
+    description: Supplementary documents attached to the license or amendment
+    items:
+      $ref: ./DocumentAttachment.yaml
+  contacts:
+    type: array
+    description: Internal contacts associated with the license or amendment
+    items:
+      $ref: ./InternalContact.yaml
+  customProperties:
+    type: object
+    description: Custom properties (license terms) — keys are property names, values are arrays of property value instances
+    additionalProperties:
+      type: array
+      items:
+        $ref: ./CustomPropertyValue.yaml

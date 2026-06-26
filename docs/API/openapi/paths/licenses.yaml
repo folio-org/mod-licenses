@@ -1,0 +1,45 @@
+description:  Supports search and creation of Licenses
+parameters:
+  - $ref: ../components/parameters/x-okapi-tenant.yaml
+get:
+  summary: Get a set of license records.
+  operationId: getLicenses
+  parameters: 
+    $ref: ../components/parameters/queryParameters.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/LicenseResults.yaml
+              - $ref: ../components/schemas/LicenseResultsArray.yaml
+    '400':
+      description: Bad request error
+    '403':
+      description: Forbidden
+    '500':
+      description: Internal server error
+post:
+  summary: Create license record
+  operationId: postLicense
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/License.yaml
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/License.yaml
+    '400':
+      description: Bad request error
+    '403':
+      description: Forbidden
+    '500':
+      description: Internal server error
