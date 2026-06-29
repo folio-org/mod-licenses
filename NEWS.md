@@ -1,3 +1,6 @@
+## 6.3.3 2026-06-29
+  * ERM-4108: Security fixes for Grails modules in Trillium
+
 ## 6.3.2 2026-06-04
   * ERM-4093: Licenses: Bump access-control-grails version to handle jackson vulnerability
 
