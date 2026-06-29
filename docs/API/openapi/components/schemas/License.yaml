@@ -1,0 +1,27 @@
+allOf:
+  - $ref: ./LicenseCore.yaml
+  - type: object
+    properties:
+      type:
+        description: The license type (e.g. Local, Consortial, National, Alliance)
+        oneOf:
+          - type: string
+          - $ref: ./RefData.yaml
+      localReference:
+        type: string
+        description: A local reference identifier for the license
+      alternateNames:
+        type: array
+        description: Alternative names for the license
+        items:
+          $ref: ./AlternateName.yaml
+      orgs:
+        type: array
+        description: Organisations associated with the license
+        items:
+          $ref: ./LicenseOrg.yaml
+      amendments:
+        type: array
+        description: Amendments to the license, sorted by start date descending
+        items:
+          $ref: ./LicenseAmendment.yaml

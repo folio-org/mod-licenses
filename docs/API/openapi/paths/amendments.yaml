@@ -1,0 +1,45 @@
+description: Supports search and creation of Amendments
+parameters:
+  - $ref: ../components/parameters/x-okapi-tenant.yaml
+get:
+  summary: Get a set of amendment records.
+  operationId: getAmendments
+  parameters:
+    $ref: ../components/parameters/queryParameters.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/AmendmentResults.yaml
+              - $ref: ../components/schemas/AmendmentResultsArray.yaml
+    '400':
+      description: Bad request error
+    '403':
+      description: Forbidden
+    '500':
+      description: Internal server error
+post:
+  summary: Create amendment record
+  operationId: postAmendment
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/LicenseAmendment.yaml
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/LicenseAmendment.yaml
+    '400':
+      description: Bad request error
+    '403':
+      description: Forbidden
+    '500':
+      description: Internal server error

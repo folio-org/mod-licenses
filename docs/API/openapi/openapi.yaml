@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  version: 7.3.0
+  title: Folio Licenses
+  description: API for the Folio library services platform mod-licenses app
+  contact: 
+    name: Knowledge Integration
+    url: https://www.k-int.com
+servers:
+  - url: 'https://folio-snapshot-okapi.dev.folio.org'
+  - url: 'https://folio-snapshot-2-okapi.dev.folio.org'
+  - url: 'https://folio-etesting-snapshot-kong.ci.folio.org'
+paths:
+  # ===== Licenses paths =====
+   /licenses/licenses:
+     $ref: paths/licenses.yaml
+   /licenses/licenses/{licenseId}:
+     $ref: paths/licenses_{licenseId}.yaml
+  # ===== Amendment paths =====
+   /licenses/amendments:
+    $ref: paths/amendments.yaml
+   /licenses/amendments/{amendmentId}:
+    $ref: paths/amendments_{amendmentId}.yaml
+
+components:
+  securitySchemes:
+      okapiToken:
+        type: apiKey
+        in: header
+        name: x-okapi-token
+      accessToken:
+        type: apiKey
+        in: cookie
+        name: folioAccessToken
+security:
+  - accessToken: []
+  - okapiToken: []

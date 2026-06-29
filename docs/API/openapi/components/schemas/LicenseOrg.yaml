@@ -1,0 +1,46 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    readOnly: true
+  owner:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+    readOnly: true
+    description: License that owns the organisation
+  org:
+    $ref: ./Organisation.yaml
+  primaryOrg:
+    type: boolean
+    description: Whether this is the primary organisation for the license
+    default: false
+  note:
+    type: string
+    description: A note about this organisation's relationship to the license
+  roles:
+    type: array
+    description: The roles this organisation plays in relation to the license
+    items:
+      type: object
+      required:
+        - id
+        - role
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        owner:
+          $ref: ./LicenseOrg.yaml
+          readOnly: true
+        role:
+          description: The role (e.g. Licensor)
+          oneOf:
+            - type: string
+            - $ref: ./RefData.yaml
+        note:
+          type: string

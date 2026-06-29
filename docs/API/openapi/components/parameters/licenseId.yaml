@@ -1,0 +1,7 @@
+in: path
+name: licenseId
+description: UUID for a license
+required: true
+schema:
+  type: string
+  format: uuid
