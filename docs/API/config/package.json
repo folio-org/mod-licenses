@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "redocly preview --product redoc",
-    "build": "redocly bundle ./openapi/openapi.yaml -o ../licenses.yaml",
+    "build": "redocly bundle ./openapi/openapi.yaml -o ../yamls/licenses.yaml",
     "test": "redocly lint"
   }
 }
