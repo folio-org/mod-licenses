@@ -1,0 +1,715 @@
+openapi: 3.1.0
+info:
+  version: 7.3.0
+  title: Folio Licenses
+  description: API for the Folio library services platform mod-licenses app
+  contact:
+    name: Knowledge Integration
+    url: https://www.k-int.com
+servers:
+  - url: https://folio-snapshot-okapi.dev.folio.org
+  - url: https://folio-snapshot-2-okapi.dev.folio.org
+  - url: https://folio-etesting-snapshot-kong.ci.folio.org
+security:
+  - accessToken: []
+  - okapiToken: []
+paths:
+  /licenses/licenses:
+    description: Supports search and creation of Licenses
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      summary: Get a set of license records.
+      operationId: getLicenses
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/LicenseResults'
+                  - $ref: '#/components/schemas/LicenseResultsArray'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+    post:
+      summary: Create license record
+      operationId: postLicense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+  /licenses/licenses/{licenseId}:
+    get:
+      summary: Get a specified license record
+      operationId: getLicense
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '500':
+          description: Internal server error
+    put:
+      summary: Update license record
+      operationId: putLicense
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a specified license record
+      operationId: deleteLicense
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '500':
+          description: Internal server error
+  /licenses/amendments:
+    description: Supports search and creation of Amendments
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      summary: Get a set of amendment records.
+      operationId: getAmendments
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AmendmentResults'
+                  - $ref: '#/components/schemas/AmendmentResultsArray'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+    post:
+      summary: Create amendment record
+      operationId: postAmendment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LicenseAmendment'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseAmendment'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+  /licenses/amendments/{amendmentId}:
+    get:
+      summary: Get a specified amendment record
+      operationId: getAmendment
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseAmendment'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '500':
+          description: Internal server error
+    put:
+      summary: Update amendment record
+      operationId: putAmendment
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LicenseAmendment'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseAmendment'
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a specified amendment record
+      operationId: deleteAmendment
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad request error
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpError'
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+    okapiToken:
+      type: apiKey
+      in: header
+      name: x-okapi-token
+    accessToken:
+      type: apiKey
+      in: cookie
+      name: folioAccessToken
+  parameters:
+    x-okapi-tenant:
+      in: header
+      name: x-okapi-tenant
+      required: true
+      schema:
+        type: string
+    filters:
+      in: query
+      name: filters
+      required: false
+      schema:
+        type: string
+    match:
+      in: query
+      name: match
+      required: false
+      schema:
+        type: string
+    term:
+      in: query
+      name: term
+      required: false
+      schema:
+        type: string
+    sort:
+      in: query
+      name: sort
+      required: false
+      schema:
+        type: string
+    stats:
+      in: query
+      name: stats
+      required: false
+      schema:
+        type: boolean
+    perPage:
+      in: query
+      name: perPage
+      required: false
+      schema:
+        type: integer
+    offset:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+    page:
+      in: query
+      name: page
+      required: false
+      schema:
+        type: integer
+    licenseId:
+      in: path
+      name: licenseId
+      description: UUID for a license
+      required: true
+      schema:
+        type: string
+        format: uuid
+    amendmentId:
+      in: path
+      name: amendmentId
+      description: UUID for an amendment
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    ResultsMeta:
+      type: object
+      properties:
+        meta:
+          type: object
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+        totalRecords:
+          type: integer
+    RefData:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        value:
+          type: string
+        owner:
+          $ref: '#/components/schemas/RefDataCategory'
+    RefDataCategory:
+      type: object
+      required:
+        - id
+      properties:
+        desc:
+          type: string
+        id:
+          type: string
+        internal:
+          type: boolean
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefData'
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value:
+          type: string
+        normValue:
+          type: string
+    DocumentAttachment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        note:
+          type: string
+        url:
+          type: string
+          format: uri
+        dateCreated:
+          type: string
+          format: date-time
+          readOnly: true
+        lastUpdated:
+          type: string
+          format: date-time
+          readOnly: true
+    InternalContact:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        owner:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+          readOnly: true
+          description: License that owns the contact
+        user:
+          type: string
+          format: uuid
+        role:
+          description: The contact's role in relation to the license
+          oneOf:
+            - type: string
+            - $ref: '#/components/schemas/RefData'
+    CustomPropertyDefinition:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        label:
+          type: string
+        description:
+          type: string
+        primary:
+          type: boolean
+        defaultInternal:
+          type: boolean
+        retired:
+          type: boolean
+        weight:
+          type: integer
+        type:
+          type: string
+          description: Java class name indicating the property type (e.g. CustomPropertyInteger, CustomPropertyText, CustomPropertyRefdata)
+        category:
+          $ref: '#/components/schemas/RefDataCategory'
+    CustomPropertyValue:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        internal:
+          type: boolean
+        note:
+          type: string
+        publicNote:
+          type: string
+        value:
+          oneOf:
+            - type: string
+            - type: integer
+            - $ref: '#/components/schemas/RefData'
+        type:
+          $ref: '#/components/schemas/CustomPropertyDefinition'
+    LicenseCore:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier
+        name:
+          type: string
+          description: The name of the license or amendment
+        description:
+          type: string
+          description: A description of the license or amendment
+        status:
+          description: The status (e.g. In negotiation, Not yet active, Active, Rejected, Expired)
+          oneOf:
+            - type: string
+            - $ref: '#/components/schemas/RefData'
+        startDate:
+          type: string
+          format: date
+          description: The date on which the license or amendment becomes active
+        endDate:
+          type: string
+          format: date
+          description: The date on which the license or amendment expires
+        endDateSemantics:
+          description: How the end date should be interpreted (e.g. Explicit, Open ended, Implicit)
+          oneOf:
+            - type: string
+            - $ref: '#/components/schemas/RefData'
+        openEnded:
+          type: boolean
+          description: Derived flag indicating whether the license or amendment is open-ended
+        dateCreated:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date and time the record was created
+        lastUpdated:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date and time the record was last updated
+        tags:
+          type: array
+          description: Tags applied to the license or amendment
+          items:
+            $ref: '#/components/schemas/Tag'
+        docs:
+          type: array
+          description: Documents attached to the license or amendment
+          items:
+            $ref: '#/components/schemas/DocumentAttachment'
+        supplementaryDocs:
+          type: array
+          description: Supplementary documents attached to the license or amendment
+          items:
+            $ref: '#/components/schemas/DocumentAttachment'
+        contacts:
+          type: array
+          description: Internal contacts associated with the license or amendment
+          items:
+            $ref: '#/components/schemas/InternalContact'
+        customProperties:
+          type: object
+          description: Custom properties (license terms) — keys are property names, values are arrays of property value instances
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/CustomPropertyValue'
+    AlternateName:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        owner:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+          readOnly: true
+          description: License that owns the alternate name
+    Organisation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        orgsUuid:
+          type: string
+          format: uuid
+        orgsUuid_object:
+          type: object
+    LicenseOrg:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        owner:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+          readOnly: true
+          description: License that owns the organisation
+        org:
+          $ref: '#/components/schemas/Organisation'
+        primaryOrg:
+          type: boolean
+          description: Whether this is the primary organisation for the license
+          default: false
+        note:
+          type: string
+          description: A note about this organisation's relationship to the license
+        roles:
+          type: array
+          description: The roles this organisation plays in relation to the license
+          items:
+            type: object
+            required:
+              - id
+              - role
+            properties:
+              id:
+                type: string
+                format: uuid
+                readOnly: true
+              owner:
+                $ref: '#/components/schemas/LicenseOrg'
+                readOnly: true
+              role:
+                description: The role (e.g. Licensor)
+                oneOf:
+                  - type: string
+                  - $ref: '#/components/schemas/RefData'
+              note:
+                type: string
+    LicenseAmendment:
+      allOf:
+        - $ref: '#/components/schemas/LicenseCore'
+    License:
+      allOf:
+        - $ref: '#/components/schemas/LicenseCore'
+        - type: object
+          properties:
+            type:
+              description: The license type (e.g. Local, Consortial, National, Alliance)
+              oneOf:
+                - type: string
+                - $ref: '#/components/schemas/RefData'
+            localReference:
+              type: string
+              description: A local reference identifier for the license
+            alternateNames:
+              type: array
+              description: Alternative names for the license
+              items:
+                $ref: '#/components/schemas/AlternateName'
+            orgs:
+              type: array
+              description: Organisations associated with the license
+              items:
+                $ref: '#/components/schemas/LicenseOrg'
+            amendments:
+              type: array
+              description: Amendments to the license, sorted by start date descending
+              items:
+                $ref: '#/components/schemas/LicenseAmendment'
+    LicenseResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/License'
+    LicenseResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/LicenseResultsArray'
+    HttpError:
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          type: integer
+    AmendmentResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/LicenseAmendment'
+    AmendmentResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/AmendmentResultsArray'
