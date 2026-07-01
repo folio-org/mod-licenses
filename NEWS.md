@@ -1,3 +1,6 @@
+## 6.2.8 2026-07-01
+  * ERM-4109: Security fixes for Grails modules in Sunflower
+
 ## 6.2.7 2026-06-08
   * ERM-4055 Backport Security fix May 2026 to Sunflower
 
