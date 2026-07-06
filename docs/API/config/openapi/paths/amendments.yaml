@@ -1,11 +1,13 @@
 description: Supports search and creation of Amendments
 parameters:
-  - $ref: ../components/parameters/x-okapi-tenant.yaml
+  - $ref: ../common/parameters/x-okapi-tenant.yaml
 get:
+  tags:
+    - Amendments
   summary: Get a set of amendment records.
   operationId: getAmendments
   parameters:
-    $ref: ../components/parameters/queryParameters.yaml
+    $ref: ../common/parameters/queryParameters.yaml
   responses:
     '200':
       description: OK
@@ -17,11 +19,19 @@ get:
               - $ref: ../components/schemas/AmendmentResultsArray.yaml
     '400':
       description: Bad request error
+    '401':
+      description: Unauthorized
     '403':
       description: Forbidden
     '500':
       description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
 post:
+  tags:
+    - Amendments
   summary: Create amendment record
   operationId: postAmendment
   requestBody:
@@ -39,7 +49,19 @@ post:
             $ref: ../components/schemas/LicenseAmendment.yaml
     '400':
       description: Bad request error
+    '401':
+      description: Unauthorized
     '403':
       description: Forbidden
+    '422':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/ValidationErrorResponse.yaml
     '500':
       description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
