@@ -1,0 +1,93 @@
+parameters:
+  - $ref: ../common/parameters/x-okapi-tenant.yaml
+  - $ref: ../common/parameters/refdataCategoryId.yaml
+get:
+  tags:
+    - Reference Data
+  summary: Get a specified reference data category record
+  operationId: getRefdataCategory
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/RefDataCategory.yaml
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
+put:
+  tags:
+    - Reference Data
+  summary: Update reference data category record
+  operationId: putRefdataCategory
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/RefDataCategory.yaml
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/RefDataCategory.yaml
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '422':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/ValidationErrorResponse.yaml
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
+delete:
+  tags:
+    - Reference Data
+  summary: >-
+    Delete a specified reference data category record. Categories marked
+    internal cannot be deleted and will return a 405.
+  operationId: deleteRefdataCategory
+  responses:
+    '204':
+      description: No content
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '405':
+      description: Method not allowed - this reference data category is internal and cannot be deleted
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
