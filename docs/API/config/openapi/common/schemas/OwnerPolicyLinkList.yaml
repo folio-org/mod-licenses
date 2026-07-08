@@ -1,0 +1,15 @@
+type: object
+properties:
+  ownerLevel:
+    type: integer
+    description: The ownership depth these policies apply at (0 = the resource itself, higher = ancestor owners)
+  resourceClass:
+    type: string
+  ownerId:
+    type: string
+  hasStandalonePolicies:
+    type: boolean
+  policies:
+    type: array
+    items:
+      $ref: ./PolicyLink.yaml

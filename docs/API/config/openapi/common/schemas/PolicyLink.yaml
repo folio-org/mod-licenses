@@ -1,0 +1,14 @@
+type: object
+required:
+  - policy
+  - type
+properties:
+  id:
+    type: string
+    description: Identifier of this policy link. Supply an existing link's id to update it, or omit to add a new one
+  policy:
+    $ref: ./BasicPolicy.yaml
+  type:
+    $ref: ./AccessPolicyType.yaml
+  description:
+    type: string

@@ -1,0 +1,4 @@
+type: object
+description: Map of access policy type to whether that policy engine is enabled
+additionalProperties:
+  type: boolean

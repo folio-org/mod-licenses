@@ -1,0 +1,14 @@
+type: object
+properties:
+  canRead:
+    type: boolean
+  canUpdate:
+    type: boolean
+  canDelete:
+    type: boolean
+  canCreate:
+    type: boolean
+  canClaim:
+    type: boolean
+  canApplyPolicies:
+    type: boolean

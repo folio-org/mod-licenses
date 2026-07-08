@@ -1,0 +1,4 @@
+type: string
+description: The mechanism used to enforce this access policy
+enum:
+  - ACQ_UNIT
