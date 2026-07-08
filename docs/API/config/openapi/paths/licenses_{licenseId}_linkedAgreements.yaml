@@ -1,0 +1,33 @@
+description: Proxies to the ERM module to retrieve subscription agreements linked to the specified license
+get:
+  tags:
+    - Licenses
+  summary: Get subscription agreements linked to a specified license
+  operationId: getLicenseLinkedAgreements
+  parameters:
+    - $ref: ../components/parameters/licenseId.yaml
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            description: A list of subscription agreements linked to the license
+            items:
+              type: object
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml

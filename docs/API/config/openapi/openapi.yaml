@@ -16,8 +16,8 @@ paths:
      $ref: paths/licenses.yaml
    /licenses/licenses/{licenseId}:
      $ref: paths/licenses_{licenseId}.yaml
-  # /licenses/licenses/{licenseId}/linkedAgreements:
-  #   $ref: paths/licenses_{licenseId}_linkedAgreements.yaml
+   /licenses/licenses/{licenseId}/linkedAgreements:
+     $ref: paths/licenses_{licenseId}_linkedAgreements.yaml
   # /licenses/licenses/{licenseId}/clone:
   #   $ref: paths/licenses_{licenseId}_clone.yaml
    /licenses/licenses/{licenseId}/claim:
