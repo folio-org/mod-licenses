@@ -18,8 +18,8 @@ paths:
      $ref: paths/licenses_{licenseId}.yaml
    /licenses/licenses/{licenseId}/linkedAgreements:
      $ref: paths/licenses_{licenseId}_linkedAgreements.yaml
-  # /licenses/licenses/{licenseId}/clone:
-  #   $ref: paths/licenses_{licenseId}_clone.yaml
+   /licenses/licenses/{licenseId}/clone:
+     $ref: paths/licenses_{licenseId}_clone.yaml
    /licenses/licenses/{licenseId}/claim:
      $ref: paths/licenses_{licenseId}_claim.yaml
    /licenses/licenses/{licenseId}/policies:
@@ -41,8 +41,8 @@ paths:
     $ref: paths/amendments.yaml
    /licenses/amendments/{amendmentId}:
     $ref: paths/amendments_{amendmentId}.yaml
-  # /licenses/amendments/{amendmentId}/clone:
-  #   $ref: paths/amendments_{amendmentId}_clone.yaml
+   /licenses/amendments/{amendmentId}/clone:
+     $ref: paths/amendments_{amendmentId}_clone.yaml
    /licenses/amendments/{amendmentId}/claim:
      $ref: paths/amendments_{amendmentId}_claim.yaml
    /licenses/amendments/{amendmentId}/policies:
