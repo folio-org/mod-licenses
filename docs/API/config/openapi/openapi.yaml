@@ -58,15 +58,15 @@ paths:
    /licenses/amendments/canCreate:
      $ref: paths/amendments_canCreate.yaml
   # ===== Contact paths =====
-  # /licenses/contacts:
-  #   $ref: paths/contacts.yaml
-  # /licenses/contacts/{contactId}:
-  #   $ref: paths/contacts_{contactId}.yaml
+   /licenses/contacts:
+     $ref: paths/contacts.yaml
+   /licenses/contacts/{contactId}:
+     $ref: paths/contacts_{contactId}.yaml
   # ===== Organisation paths =====
-  # /licenses/org:
-  #   $ref: paths/org.yaml
-  # /licenses/org/{orgId}:
-  #   $ref: paths/org_{orgId}.yaml
+   /licenses/org:
+     $ref: paths/org.yaml
+   /licenses/org/{orgId}:
+     $ref: paths/org_{orgId}.yaml
   # ===== Refdata paths =====
    /licenses/refdata:
      $ref: paths/refdata.yaml
