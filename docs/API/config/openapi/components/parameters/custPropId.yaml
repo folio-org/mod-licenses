@@ -1,0 +1,6 @@
+in: path
+name: custPropId
+description: ID for a custom property definition
+required: true
+schema:
+  type: string

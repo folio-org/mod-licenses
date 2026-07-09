@@ -75,12 +75,12 @@ paths:
    /licenses/refdata/{domain}/{property}:
      $ref: paths/refdata_{domain}_{property}.yaml
   # ===== Custom property paths =====
-  # /licenses/custprops:
-  #   $ref: paths/custprops.yaml
-  # /licenses/custprops/{custPropId}:
-  #   $ref: paths/custprops_{custPropId}.yaml
-  # /licenses/custprops/contexts:
-  #   $ref: paths/custprops_contexts.yaml
+   /licenses/custprops:
+     $ref: paths/custprops.yaml
+   /licenses/custprops/{custPropId}:
+     $ref: paths/custprops_{custPropId}.yaml
+   /licenses/custprops/contexts:
+     $ref: paths/custprops_contexts.yaml
   # ===== License link paths =====
   # /licenses/licenseLinks:
   #   $ref: paths/licenseLinks.yaml
