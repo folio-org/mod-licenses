@@ -97,10 +97,10 @@ paths:
   # /licenses/admin/{action}:
   #   $ref: paths/admin_{action}.yaml
   # ===== Settings paths =====
-  # /licenses/settings/appSettings:
-  #   $ref: paths/settings_appSettings.yaml
-  # /licenses/settings/appSettings/{settingId}:
-  #   $ref: paths/settings_appSettings_{settingId}.yaml
+   /licenses/settings/appSettings:
+     $ref: paths/settings_appSettings.yaml
+   /licenses/settings/appSettings/{id}:
+     $ref: paths/settings_appSettings_{id}.yaml
   # ===== Access control paths =====
    /licenses/accessControl:
      $ref: paths/accessControl.yaml
