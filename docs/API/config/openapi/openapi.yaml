@@ -87,12 +87,12 @@ paths:
   # /licenses/licenseLinks/{licenseLinkId}:
   #   $ref: paths/licenseLinks_{licenseLinkId}.yaml
   # ===== File paths =====
-  # /licenses/files:
-  #   $ref: paths/files.yaml
-  # /licenses/files/{fileId}:
-  #   $ref: paths/files_{fileId}.yaml
-  # /licenses/files/{fileId}/raw:
-  #   $ref: paths/files_{fileId}_raw.yaml
+   /licenses/files:
+     $ref: paths/files.yaml
+   /licenses/files/{fileId}:
+     $ref: paths/files_{fileId}.yaml
+   /licenses/files/{fileId}/raw:
+     $ref: paths/files_{fileId}_raw.yaml
   # ===== Admin paths =====
   # /licenses/admin/{action}:
   #   $ref: paths/admin_{action}.yaml

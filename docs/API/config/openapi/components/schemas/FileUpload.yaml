@@ -1,0 +1,21 @@
+type: object
+required:
+  - id
+properties:
+  id:
+    type: string
+    format: uuid
+    readOnly: true
+  name:
+    type: string
+    description: Original filename of the uploaded file
+  contentType:
+    type: string
+    description: MIME type of the uploaded file
+  size:
+    type: integer
+    description: Size of the uploaded file in bytes
+  modified:
+    type: string
+    format: date-time
+    readOnly: true
