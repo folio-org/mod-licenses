@@ -34,8 +34,8 @@ paths:
      $ref: paths/licenses_{licenseId}_canApplyPolicies.yaml
    /licenses/licenses/canCreate:
      $ref: paths/licenses_canCreate.yaml
-  # /licenses/licenses/compareTerms:
-  #   $ref: paths/licenses_compareTerms.yaml
+   /licenses/licenses/compareTerms:
+     $ref: paths/licenses_compareTerms.yaml
   # ===== Amendment paths =====
    /licenses/amendments:
     $ref: paths/amendments.yaml

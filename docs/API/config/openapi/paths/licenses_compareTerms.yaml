@@ -1,0 +1,124 @@
+post:
+  tags:
+    - Licenses
+  summary: Compare license terms
+  description: >-
+    Streams a CSV comparing selected fields and custom properties (terms)
+    across a set of specified licenses. Always writes a header row; a data
+    row is only written for licenses matched by `ids`.
+  operationId: postLicensesCompareTerms
+  parameters:
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            ids:
+              type: array
+              description: UUIDs of the licenses to include in the comparison
+              items:
+                type: string
+                format: uuid
+            include:
+              type: object
+              description: >-
+                Which columns to output. Set a license property name to
+                `true` to output it as a column, or use the special key
+                `customProperties` to select terms. Any other single-value
+                field name on the license is also accepted, set to `true`.
+              properties:
+                id:
+                  type: boolean
+                  description: Include the license id column
+                name:
+                  type: boolean
+                  description: Include the license name column
+                description:
+                  type: boolean
+                  description: Include the license description column
+                status:
+                  type: boolean
+                  description: Include the license status column
+                startDate:
+                  type: boolean
+                  description: Include the license start date column
+                endDate:
+                  type: boolean
+                  description: Include the license end date column
+                endDateSemantics:
+                  type: boolean
+                  description: Include the license end date semantics column
+                openEnded:
+                  type: boolean
+                  description: Include the derived open-ended flag column
+                type:
+                  type: boolean
+                  description: Include the license type column
+                localReference:
+                  type: boolean
+                  description: Include the license local reference column
+                dateCreated:
+                  type: boolean
+                  description: Include the record creation date column
+                lastUpdated:
+                  type: boolean
+                  description: Include the record last-updated date column
+                customProperties:
+                  type: object
+                  description: >-
+                    Map of custom property (term) name to `true`, to include
+                    that term. For each included term, the parts selected in
+                    `terms` are each output as a separate column.
+                  additionalProperties:
+                    type: boolean
+              additionalProperties:
+                type: boolean
+                description: >-
+                  Any other single-value license field name, set to `true`
+                  to include it as a column. Collection-valued fields (e.g.
+                  `tags`, `docs`, `contacts`, `orgs`) are not rejected, but
+                  render poorly since each row is joined from the raw
+                  object's string form rather than a meaningful value.
+            terms:
+              type: object
+              description: >-
+                Which parts of each custom property named in
+                `include.customProperties` to output as columns.
+              properties:
+                value:
+                  type: boolean
+                  description: Include the term's value column
+                internal:
+                  type: boolean
+                  description: Include the term's internal note column
+                note:
+                  type: boolean
+                  description: Include the term's note column
+                publicNote:
+                  type: boolean
+                  description: Include the term's public note column
+  responses:
+    '200':
+      description: >-
+        OK. CSV body, one row per matched license, columns per the `include`
+        and `terms` selections above. The response has a `Content-Disposition:
+        attachment; filename=export.csv` header.
+      content:
+        text/csv:
+          schema:
+            type: string
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
