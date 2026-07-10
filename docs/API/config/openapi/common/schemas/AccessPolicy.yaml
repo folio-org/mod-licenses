@@ -1,0 +1,27 @@
+type: object
+required:
+  - id
+  - type
+  - policyId
+  - resourceClass
+  - resourceId
+properties:
+  id:
+    type: string
+    readOnly: true
+  description:
+    type: string
+  dateCreated:
+    type: string
+    format: date-time
+    readOnly: true
+  type:
+    $ref: ./AccessPolicyType.yaml
+  policyId:
+    type: string
+  resourceClass:
+    type: string
+    readOnly: true
+  resourceId:
+    type: string
+    readOnly: true

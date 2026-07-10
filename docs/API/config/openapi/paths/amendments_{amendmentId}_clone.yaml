@@ -1,0 +1,100 @@
+post:
+  tags:
+    - Amendments
+  summary: Clone a specified amendment record
+  operationId: postAmendmentClone
+  parameters:
+    - $ref: ../components/parameters/amendmentId.yaml
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: Flags indicating which groups of fields, or individual fields, to copy onto the cloned amendment. Each key is either a group name (copies every field in that group) or one of the individual field names, set to true to copy it.
+          properties:
+            amendmentInfo:
+              type: boolean
+              description: 'Group: copy name, type, description and status'
+            internalContacts:
+              type: boolean
+              description: 'Group: copy contacts'
+            organizations:
+              type: boolean
+              description: 'Group: copy orgs'
+            coreDocs:
+              type: boolean
+              description: 'Group: copy docs'
+            terms:
+              type: boolean
+              description: 'Group: copy customProperties'
+            amendmentDateInfo:
+              type: boolean
+              description: 'Group: copy endDateSemantics, startDate and endDate'
+            name:
+              type: boolean
+              description: Copy the amendment name
+            type:
+              type: boolean
+              description: Copy the amendment type
+            description:
+              type: boolean
+              description: Copy the amendment description
+            status:
+              type: boolean
+              description: Copy the amendment status
+            contacts:
+              type: boolean
+              description: Copy internal contacts
+            orgs:
+              type: boolean
+              description: Copy organizations
+            docs:
+              type: boolean
+              description: Copy documents
+            customProperties:
+              type: boolean
+              description: Copy custom properties (terms)
+            endDateSemantics:
+              type: boolean
+              description: Copy end date semantics
+            startDate:
+              type: boolean
+              description: Copy the start date
+            endDate:
+              type: boolean
+              description: Copy the end date
+            supplementaryDocs:
+              type: boolean
+              description: Copy supplementary documents
+          additionalProperties:
+            type: boolean
+            description: Any other single field name on the amendment, set to true to copy it
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/LicenseAmendment.yaml
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '422':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/ValidationErrorResponse.yaml
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml

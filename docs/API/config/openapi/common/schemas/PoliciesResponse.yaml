@@ -1,0 +1,26 @@
+type: object
+properties:
+  readPolicies:
+    type: array
+    items:
+      $ref: ./GroupedExternalPolicies.yaml
+  updatePolicies:
+    type: array
+    items:
+      $ref: ./GroupedExternalPolicies.yaml
+  createPolicies:
+    type: array
+    items:
+      $ref: ./GroupedExternalPolicies.yaml
+  deletePolicies:
+    type: array
+    items:
+      $ref: ./GroupedExternalPolicies.yaml
+  claimPolicies:
+    type: array
+    items:
+      $ref: ./GroupedExternalPolicies.yaml
+  applyPolicies:
+    type: array
+    items:
+      $ref: ./GroupedExternalPolicies.yaml

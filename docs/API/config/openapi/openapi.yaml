@@ -16,11 +16,116 @@ paths:
      $ref: paths/licenses.yaml
    /licenses/licenses/{licenseId}:
      $ref: paths/licenses_{licenseId}.yaml
+   /licenses/licenses/{licenseId}/linkedAgreements:
+     $ref: paths/licenses_{licenseId}_linkedAgreements.yaml
+   /licenses/licenses/{licenseId}/clone:
+     $ref: paths/licenses_{licenseId}_clone.yaml
+   /licenses/licenses/{licenseId}/claim:
+     $ref: paths/licenses_{licenseId}_claim.yaml
+   /licenses/licenses/{licenseId}/policies:
+     $ref: paths/licenses_{licenseId}_policies.yaml
+   /licenses/licenses/{licenseId}/canRead:
+     $ref: paths/licenses_{licenseId}_canRead.yaml
+   /licenses/licenses/{licenseId}/canUpdate:
+     $ref: paths/licenses_{licenseId}_canUpdate.yaml
+   /licenses/licenses/{licenseId}/canDelete:
+     $ref: paths/licenses_{licenseId}_canDelete.yaml
+   /licenses/licenses/{licenseId}/canApplyPolicies:
+     $ref: paths/licenses_{licenseId}_canApplyPolicies.yaml
+   /licenses/licenses/canCreate:
+     $ref: paths/licenses_canCreate.yaml
+   /licenses/licenses/compareTerms:
+     $ref: paths/licenses_compareTerms.yaml
   # ===== Amendment paths =====
    /licenses/amendments:
     $ref: paths/amendments.yaml
    /licenses/amendments/{amendmentId}:
     $ref: paths/amendments_{amendmentId}.yaml
+   /licenses/amendments/{amendmentId}/clone:
+     $ref: paths/amendments_{amendmentId}_clone.yaml
+   /licenses/amendments/{amendmentId}/claim:
+     $ref: paths/amendments_{amendmentId}_claim.yaml
+   /licenses/amendments/{amendmentId}/policies:
+     $ref: paths/amendments_{amendmentId}_policies.yaml
+   /licenses/amendments/{amendmentId}/canRead:
+     $ref: paths/amendments_{amendmentId}_canRead.yaml
+   /licenses/amendments/{amendmentId}/canUpdate:
+     $ref: paths/amendments_{amendmentId}_canUpdate.yaml
+   /licenses/amendments/{amendmentId}/canDelete:
+     $ref: paths/amendments_{amendmentId}_canDelete.yaml
+   /licenses/amendments/{amendmentId}/canApplyPolicies:
+     $ref: paths/amendments_{amendmentId}_canApplyPolicies.yaml
+   /licenses/amendments/canCreate:
+     $ref: paths/amendments_canCreate.yaml
+  # ===== Contact paths =====
+   /licenses/contacts:
+     $ref: paths/contacts.yaml
+   /licenses/contacts/{contactId}:
+     $ref: paths/contacts_{contactId}.yaml
+  # ===== Organisation paths =====
+   /licenses/org:
+     $ref: paths/org.yaml
+   /licenses/org/{orgId}:
+     $ref: paths/org_{orgId}.yaml
+  # ===== Refdata paths =====
+   /licenses/refdata:
+     $ref: paths/refdata.yaml
+   /licenses/refdata/{refdataCategoryId}:
+     $ref: paths/refdata_{refdataCategoryId}.yaml
+   /licenses/refdata/{domain}/{property}:
+     $ref: paths/refdata_{domain}_{property}.yaml
+  # ===== Custom property paths =====
+   /licenses/custprops:
+     $ref: paths/custprops.yaml
+   /licenses/custprops/{custPropId}:
+     $ref: paths/custprops_{custPropId}.yaml
+   /licenses/custprops/contexts:
+     $ref: paths/custprops_contexts.yaml
+  # ===== License link paths =====
+  # Functionality only partially implemented and not supported so leaving commented for now
+  # /licenses/licenseLinks:
+  #   $ref: paths/licenseLinks.yaml
+  # /licenses/licenseLinks/{licenseLinkId}:
+  #   $ref: paths/licenseLinks_{licenseLinkId}.yaml
+  # ===== File paths =====
+   /licenses/files:
+     $ref: paths/files.yaml
+   /licenses/files/{fileId}:
+     $ref: paths/files_{fileId}.yaml
+   /licenses/files/{fileId}/raw:
+     $ref: paths/files_{fileId}_raw.yaml
+  # ===== Admin paths =====
+   /licenses/admin/triggerHousekeeping:
+     $ref: paths/admin_triggerHousekeeping.yaml
+   /licenses/admin/triggerDocMigration:
+     $ref: paths/admin_triggerDocMigration.yaml
+  # ===== Settings paths =====
+   /licenses/settings/appSettings:
+     $ref: paths/settings_appSettings.yaml
+   /licenses/settings/appSettings/{id}:
+     $ref: paths/settings_appSettings_{id}.yaml
+  # ===== Access control paths =====
+   /licenses/accessControl:
+     $ref: paths/accessControl.yaml
+   /licenses/accessControl/{accessControlId}:
+     $ref: paths/accessControl_{accessControlId}.yaml
+   /licenses/accessControl/readPolicies:
+     $ref: paths/accessControl_readPolicies.yaml
+   /licenses/accessControl/deletePolicies:
+     $ref: paths/accessControl_deletePolicies.yaml
+   /licenses/accessControl/updatePolicies:
+     $ref: paths/accessControl_updatePolicies.yaml
+   /licenses/accessControl/createPolicies:
+     $ref: paths/accessControl_createPolicies.yaml
+   /licenses/accessControl/claimPolicies:
+     $ref: paths/accessControl_claimPolicies.yaml
+   /licenses/accessControl/applyPolicies:
+     $ref: paths/accessControl_applyPolicies.yaml
+   /licenses/accessControl/enabledEngines:
+     $ref: paths/accessControl_enabledEngines.yaml
+  # ===== Dashboard paths =====
+   /dashboard/definitions:
+     $ref: paths/dashboard_definitions.yaml
 
 components:
   securitySchemes:

@@ -1,0 +1,53 @@
+get:
+  tags:
+    - Files
+  summary: Get a specified file record
+  operationId: getFile
+  parameters:
+    - $ref: ../components/parameters/fileId.yaml
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FileUpload.yaml
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
+delete:
+  tags:
+    - Files
+  summary: Delete a specified file record
+  operationId: deleteFile
+  parameters:
+    - $ref: ../components/parameters/fileId.yaml
+  responses:
+    '204':
+      description: No content
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml

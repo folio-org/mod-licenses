@@ -1,11 +1,12 @@
 type: object
-required: 
+required:
   - id
 properties:
   desc:
     type: string
   id:
     type: string
+    readOnly: true
   internal:
     type: boolean
   values:

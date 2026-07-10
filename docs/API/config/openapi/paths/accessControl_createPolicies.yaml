@@ -1,0 +1,26 @@
+get:
+  tags:
+    - Access Control
+  summary: Get the policies valid for CREATE operations
+  operationId: getAccessControlCreatePolicies
+  parameters:
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/PoliciesResponse.yaml
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml

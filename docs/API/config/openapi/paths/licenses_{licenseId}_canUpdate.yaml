@@ -1,0 +1,29 @@
+get:
+  tags:
+    - Access Control
+  summary: Check whether the current user can update the specified license record
+  operationId: getLicenseCanUpdate
+  parameters:
+    - $ref: ../components/parameters/licenseId.yaml
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/CanAccessResponse.yaml
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not found error
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml

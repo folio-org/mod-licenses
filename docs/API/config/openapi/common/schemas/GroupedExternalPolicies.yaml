@@ -1,0 +1,11 @@
+type: object
+properties:
+  type:
+    $ref: ./AccessPolicyType.yaml
+  policies:
+    type: array
+    items:
+      $ref: ./BasicPolicy.yaml
+  name:
+    type: string
+    description: A descriptive name for this group of policies

@@ -1,0 +1,6 @@
+in: path
+name: contactId
+description: ID for an internal contact
+required: true
+schema:
+  type: string

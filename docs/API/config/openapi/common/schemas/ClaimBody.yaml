@@ -1,0 +1,8 @@
+type: object
+required:
+  - claims
+properties:
+  claims:
+    type: array
+    items:
+      $ref: ./PolicyLink.yaml

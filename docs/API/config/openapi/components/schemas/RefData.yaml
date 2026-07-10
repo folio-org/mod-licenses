@@ -4,6 +4,7 @@ required:
 properties:
   id:
     type: string
+    readOnly: true
   label:
     type: string
   value:

@@ -43,3 +43,7 @@ ConsoleOutput.txt
 */.idea
 
 cdx-bom.json
+
+
+# Mac
+.DS_Store

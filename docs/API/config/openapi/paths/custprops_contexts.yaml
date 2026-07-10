@@ -1,0 +1,29 @@
+get:
+  tags:
+    - Custom Properties
+  summary: Get the distinct set of contexts in use across custom property definitions
+  operationId: getCustomPropertyDefinitionContexts
+  parameters:
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            description: Distinct context values (the ctx field) found across custom property definitions
+            items:
+              type: string
+    '400':
+      description: Bad request error
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml

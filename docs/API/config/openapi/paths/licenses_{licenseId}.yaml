@@ -1,9 +1,11 @@
 get:
+  tags:
+    - Licenses
   summary: Get a specified license record
   operationId: getLicense
   parameters:
     - $ref: ../components/parameters/licenseId.yaml
-    - $ref: ../components/parameters/x-okapi-tenant.yaml
+    - $ref: ../common/parameters/x-okapi-tenant.yaml
   responses:
     '200':
       description: OK
@@ -13,17 +15,21 @@ get:
             $ref: ../components/schemas/License.yaml
     '400':
       description: Bad request error
+    '401':
+      description: Unauthorized
     '403':
       description: Forbidden
     '404':
       description: Not found error
+    '500':
+      description: Internal server error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/HttpError.yaml
-    '500':
-      description: Internal server error
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
 put:
+  tags:
+    - Licenses
   summary: Update license record
   operationId: putLicense
   parameters:
@@ -43,17 +49,27 @@ put:
             $ref: ../components/schemas/License.yaml
     '400':
       description: Bad request error
+    '401':
+      description: Unauthorized
     '403':
       description: Forbidden
     '404':
       description: Not found error
+    '422':
+      description: Validation error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/HttpError.yaml
+            $ref: ../common/schemas/ValidationErrorResponse.yaml
     '500':
-      description: Internal server error  
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
 delete:
+  tags:
+    - Licenses
   summary: Delete a specified license record
   operationId: deleteLicense
   parameters:
@@ -63,13 +79,15 @@ delete:
       description: No content
     '400':
       description: Bad request error
+    '401':
+      description: Unauthorized
     '403':
       description: Forbidden
     '404':
       description: Not found error
+    '500':
+      description: Internal server error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/HttpError.yaml
-    '500':
-      description: Internal server error
+            $ref: ../common/schemas/GrailsErrorResponse.yaml
