@@ -19,6 +19,8 @@ paths:
     parameters:
       - $ref: '#/components/parameters/x-okapi-tenant'
     get:
+      tags:
+        - Licenses
       summary: Get a set of license records.
       operationId: getLicenses
       parameters:
@@ -41,11 +43,19 @@ paths:
                   - $ref: '#/components/schemas/LicenseResultsArray'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
     post:
+      tags:
+        - Licenses
       summary: Create license record
       operationId: postLicense
       requestBody:
@@ -63,12 +73,26 @@ paths:
                 $ref: '#/components/schemas/License'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
   /licenses/licenses/{licenseId}:
     get:
+      tags:
+        - Licenses
       summary: Get a specified license record
       operationId: getLicense
       parameters:
@@ -83,17 +107,21 @@ paths:
                 $ref: '#/components/schemas/License'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '404':
           description: Not found error
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HttpError'
-        '500':
-          description: Internal server error
+                $ref: '#/components/schemas/GrailsErrorResponse'
     put:
+      tags:
+        - Licenses
       summary: Update license record
       operationId: putLicense
       parameters:
@@ -113,17 +141,27 @@ paths:
                 $ref: '#/components/schemas/License'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '404':
           description: Not found error
+        '422':
+          description: Validation error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HttpError'
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
     delete:
+      tags:
+        - Licenses
       summary: Delete a specified license record
       operationId: deleteLicense
       parameters:
@@ -133,21 +171,500 @@ paths:
           description: No content
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '404':
           description: Not found error
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HttpError'
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/linkedAgreements:
+    description: Proxies to the ERM module to retrieve subscription agreements linked to the specified license
+    get:
+      tags:
+        - Licenses
+      summary: Get subscription agreements linked to a specified license
+      operationId: getLicenseLinkedAgreements
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: A list of subscription agreements linked to the license
+                items:
+                  type: object
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/clone:
+    post:
+      tags:
+        - Licenses
+      summary: Clone a specified license record
+      operationId: postLicenseClone
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Flags indicating which groups of fields, or individual fields, to copy onto the cloned license. Each key is either a group name (copies every field in that group) or one of the individual field names, set to true to copy it.
+              properties:
+                licenseInfo:
+                  type: boolean
+                  description: 'Group: copy name, type, description and status'
+                internalContacts:
+                  type: boolean
+                  description: 'Group: copy contacts'
+                organizations:
+                  type: boolean
+                  description: 'Group: copy orgs'
+                coreDocs:
+                  type: boolean
+                  description: 'Group: copy docs'
+                terms:
+                  type: boolean
+                  description: 'Group: copy customProperties'
+                licenseDateInfo:
+                  type: boolean
+                  description: 'Group: copy endDateSemantics, startDate and endDate'
+                name:
+                  type: boolean
+                  description: Copy the license name
+                type:
+                  type: boolean
+                  description: Copy the license type
+                description:
+                  type: boolean
+                  description: Copy the license description
+                status:
+                  type: boolean
+                  description: Copy the license status
+                contacts:
+                  type: boolean
+                  description: Copy internal contacts
+                orgs:
+                  type: boolean
+                  description: Copy organizations
+                docs:
+                  type: boolean
+                  description: Copy documents
+                customProperties:
+                  type: boolean
+                  description: Copy custom properties (terms)
+                endDateSemantics:
+                  type: boolean
+                  description: Copy end date semantics
+                startDate:
+                  type: boolean
+                  description: Copy the start date
+                endDate:
+                  type: boolean
+                  description: Copy the end date
+                supplementaryDocs:
+                  type: boolean
+                  description: Copy supplementary documents
+              additionalProperties:
+                type: boolean
+                description: Any other single field name on the license, set to true to copy it
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/claim:
+    post:
+      tags:
+        - Access Control
+      summary: Claim the specified license record with a set of access policies
+      operationId: postLicenseClaim
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimBody'
+        required: true
+      responses:
+        '200':
+          description: OK, no changes were made
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '201':
+          description: Created, access policies were updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '404':
+          description: Not found error
+        '405':
+          description: Claiming is not supported on this resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/policies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the access policies for the specified license record, across its ownership chain
+      operationId: getLicensePolicies
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OwnerPolicyLinkList'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/canRead:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can read the specified license record
+      operationId: getLicenseCanRead
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/canUpdate:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can update the specified license record
+      operationId: getLicenseCanUpdate
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/canDelete:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can delete the specified license record
+      operationId: getLicenseCanDelete
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/{licenseId}/canApplyPolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can apply access policies to the specified license record
+      operationId: getLicenseCanApplyPolicies
+      parameters:
+        - $ref: '#/components/parameters/licenseId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/canCreate:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can create license records
+      operationId: getLicenseCanCreate
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/licenses/compareTerms:
+    post:
+      tags:
+        - Licenses
+      summary: Compare license terms
+      description: Streams a CSV comparing selected fields and custom properties (terms) across a set of specified licenses. Always writes a header row; a data row is only written for licenses matched by `ids`.
+      operationId: postLicensesCompareTerms
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  description: UUIDs of the licenses to include in the comparison
+                  items:
+                    type: string
+                    format: uuid
+                include:
+                  type: object
+                  description: Which columns to output. Set a license property name to `true` to output it as a column, or use the special key `customProperties` to select terms. Any other single-value field name on the license is also accepted, set to `true`.
+                  properties:
+                    id:
+                      type: boolean
+                      description: Include the license id column
+                    name:
+                      type: boolean
+                      description: Include the license name column
+                    description:
+                      type: boolean
+                      description: Include the license description column
+                    status:
+                      type: boolean
+                      description: Include the license status column
+                    startDate:
+                      type: boolean
+                      description: Include the license start date column
+                    endDate:
+                      type: boolean
+                      description: Include the license end date column
+                    endDateSemantics:
+                      type: boolean
+                      description: Include the license end date semantics column
+                    openEnded:
+                      type: boolean
+                      description: Include the derived open-ended flag column
+                    type:
+                      type: boolean
+                      description: Include the license type column
+                    localReference:
+                      type: boolean
+                      description: Include the license local reference column
+                    dateCreated:
+                      type: boolean
+                      description: Include the record creation date column
+                    lastUpdated:
+                      type: boolean
+                      description: Include the record last-updated date column
+                    customProperties:
+                      type: object
+                      description: Map of custom property (term) name to `true`, to include that term. For each included term, the parts selected in `terms` are each output as a separate column.
+                      additionalProperties:
+                        type: boolean
+                  additionalProperties:
+                    type: boolean
+                    description: Any other single-value license field name, set to `true` to include it as a column. Collection-valued fields (e.g. `tags`, `docs`, `contacts`, `orgs`) are not rejected, but render poorly since each row is joined from the raw object's string form rather than a meaningful value.
+                terms:
+                  type: object
+                  description: Which parts of each custom property named in `include.customProperties` to output as columns.
+                  properties:
+                    value:
+                      type: boolean
+                      description: Include the term's value column
+                    internal:
+                      type: boolean
+                      description: Include the term's internal note column
+                    note:
+                      type: boolean
+                      description: Include the term's note column
+                    publicNote:
+                      type: boolean
+                      description: Include the term's public note column
+      responses:
+        '200':
+          description: 'OK. CSV body, one row per matched license, columns per the `include` and `terms` selections above. The response has a `Content-Disposition: attachment; filename=export.csv` header.'
+          content:
+            text/csv:
+              schema:
+                type: string
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
   /licenses/amendments:
     description: Supports search and creation of Amendments
     parameters:
       - $ref: '#/components/parameters/x-okapi-tenant'
     get:
+      tags:
+        - Amendments
       summary: Get a set of amendment records.
       operationId: getAmendments
       parameters:
@@ -170,11 +687,19 @@ paths:
                   - $ref: '#/components/schemas/AmendmentResultsArray'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
     post:
+      tags:
+        - Amendments
       summary: Create amendment record
       operationId: postAmendment
       requestBody:
@@ -192,12 +717,26 @@ paths:
                 $ref: '#/components/schemas/LicenseAmendment'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
   /licenses/amendments/{amendmentId}:
     get:
+      tags:
+        - Amendments
       summary: Get a specified amendment record
       operationId: getAmendment
       parameters:
@@ -212,17 +751,21 @@ paths:
                 $ref: '#/components/schemas/LicenseAmendment'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '404':
           description: Not found error
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HttpError'
-        '500':
-          description: Internal server error
+                $ref: '#/components/schemas/GrailsErrorResponse'
     put:
+      tags:
+        - Amendments
       summary: Update amendment record
       operationId: putAmendment
       parameters:
@@ -242,17 +785,27 @@ paths:
                 $ref: '#/components/schemas/LicenseAmendment'
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '404':
           description: Not found error
+        '422':
+          description: Validation error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HttpError'
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
     delete:
+      tags:
+        - Amendments
       summary: Delete a specified amendment record
       operationId: deleteAmendment
       parameters:
@@ -262,16 +815,1586 @@ paths:
           description: No content
         '400':
           description: Bad request error
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
         '404':
           description: Not found error
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HttpError'
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/{amendmentId}/clone:
+    post:
+      tags:
+        - Amendments
+      summary: Clone a specified amendment record
+      operationId: postAmendmentClone
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Flags indicating which groups of fields, or individual fields, to copy onto the cloned amendment. Each key is either a group name (copies every field in that group) or one of the individual field names, set to true to copy it.
+              properties:
+                amendmentInfo:
+                  type: boolean
+                  description: 'Group: copy name, type, description and status'
+                internalContacts:
+                  type: boolean
+                  description: 'Group: copy contacts'
+                organizations:
+                  type: boolean
+                  description: 'Group: copy orgs'
+                coreDocs:
+                  type: boolean
+                  description: 'Group: copy docs'
+                terms:
+                  type: boolean
+                  description: 'Group: copy customProperties'
+                amendmentDateInfo:
+                  type: boolean
+                  description: 'Group: copy endDateSemantics, startDate and endDate'
+                name:
+                  type: boolean
+                  description: Copy the amendment name
+                type:
+                  type: boolean
+                  description: Copy the amendment type
+                description:
+                  type: boolean
+                  description: Copy the amendment description
+                status:
+                  type: boolean
+                  description: Copy the amendment status
+                contacts:
+                  type: boolean
+                  description: Copy internal contacts
+                orgs:
+                  type: boolean
+                  description: Copy organizations
+                docs:
+                  type: boolean
+                  description: Copy documents
+                customProperties:
+                  type: boolean
+                  description: Copy custom properties (terms)
+                endDateSemantics:
+                  type: boolean
+                  description: Copy end date semantics
+                startDate:
+                  type: boolean
+                  description: Copy the start date
+                endDate:
+                  type: boolean
+                  description: Copy the end date
+                supplementaryDocs:
+                  type: boolean
+                  description: Copy supplementary documents
+              additionalProperties:
+                type: boolean
+                description: Any other single field name on the amendment, set to true to copy it
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseAmendment'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/{amendmentId}/claim:
+    post:
+      tags:
+        - Access Control
+      summary: Claim the specified amendment record with a set of access policies
+      operationId: postAmendmentClaim
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimBody'
+        required: true
+      responses:
+        '200':
+          description: OK, no changes were made
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '201':
+          description: Created, access policies were updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '404':
+          description: Not found error
+        '405':
+          description: Claiming is not supported on this resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicyClaimResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/{amendmentId}/policies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the access policies for the specified amendment record, across its ownership chain
+      operationId: getAmendmentPolicies
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OwnerPolicyLinkList'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/{amendmentId}/canRead:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can read the specified amendment record
+      operationId: getAmendmentCanRead
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/{amendmentId}/canUpdate:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can update the specified amendment record
+      operationId: getAmendmentCanUpdate
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/{amendmentId}/canDelete:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can delete the specified amendment record
+      operationId: getAmendmentCanDelete
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/{amendmentId}/canApplyPolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can apply access policies to the specified amendment record
+      operationId: getAmendmentCanApplyPolicies
+      parameters:
+        - $ref: '#/components/parameters/amendmentId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/amendments/canCreate:
+    get:
+      tags:
+        - Access Control
+      summary: Check whether the current user can create amendment records
+      operationId: getAmendmentCanCreate
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanAccessResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/contacts:
+    description: Supports search of internal contacts
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      tags:
+        - Contacts
+      summary: Get a set of internal contact records
+      operationId: getContacts
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/InternalContactResults'
+                  - $ref: '#/components/schemas/InternalContactResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/contacts/{contactId}:
+    get:
+      tags:
+        - Contacts
+      summary: Get a specified internal contact record
+      operationId: getContact
+      parameters:
+        - $ref: '#/components/parameters/contactId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalContact'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/org:
+    description: Supports search of organisations
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      tags:
+        - Organisations
+      summary: Get a set of organisation records
+      operationId: getOrgs
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/OrganisationResults'
+                  - $ref: '#/components/schemas/OrganisationResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/org/{orgId}:
+    get:
+      tags:
+        - Organisations
+      summary: Get a specified organisation record
+      operationId: getOrg
+      parameters:
+        - $ref: '#/components/parameters/orgId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organisation'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/refdata:
+    description: Supports search and creation of reference data category records.
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      tags:
+        - Reference Data
+      summary: Get a set of reference data category records.
+      operationId: getRefdataCategories
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/RefDataCategoryResults'
+                  - $ref: '#/components/schemas/RefDataCategoryResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    post:
+      tags:
+        - Reference Data
+      summary: Create reference data category record
+      operationId: postRefdataCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefDataCategory'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefDataCategory'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/refdata/{refdataCategoryId}:
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+      - $ref: '#/components/parameters/refdataCategoryId'
+    get:
+      tags:
+        - Reference Data
+      summary: Get a specified reference data category record
+      operationId: getRefdataCategory
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefDataCategory'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    put:
+      tags:
+        - Reference Data
+      summary: Update reference data category record
+      operationId: putRefdataCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefDataCategory'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefDataCategory'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    delete:
+      tags:
+        - Reference Data
+      summary: Delete a specified reference data category record. Categories marked internal cannot be deleted and will return a 405.
+      operationId: deleteRefdataCategory
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '405':
+          description: Method not allowed - this reference data category is internal and cannot be deleted
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/refdata/{domain}/{property}:
+    description: Look up the reference data values for a single property of a domain class, e.g. the valid `status` values for `License`. The domain and property are combined into a reference data category name internally. An unrecognised `domain` returns a 404; an unrecognised `property` on a valid `domain` does not error, it returns a 200 with an empty result set, since a category name is always derived even when nothing matches it.
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+      - $ref: '#/components/parameters/refdataDomain'
+      - $ref: '#/components/parameters/refdataProperty'
+    get:
+      tags:
+        - Reference Data
+      summary: Get the reference data values for a domain class property.
+      operationId: getRefdataValuesForProperty
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/RefDataResults'
+                  - $ref: '#/components/schemas/RefDataResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: 'Not found error: `domain` does not match any known domain class. Note an unrecognised `property` on a valid `domain` does not trigger this; it returns 200 with an empty result set instead. This action does not write its own error body, so the response has no content.'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/custprops:
+    description: Supports search and creation of custom property definitions
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      tags:
+        - Custom Properties
+      summary: Get a set of custom property definition records
+      operationId: getCustomPropertyDefinitions
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomPropertyDefinitionResults'
+                  - $ref: '#/components/schemas/CustomPropertyDefinitionResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    post:
+      tags:
+        - Custom Properties
+      summary: Create custom property definition record
+      operationId: postCustomPropertyDefinition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomPropertyDefinition'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomPropertyDefinition'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/custprops/{custPropId}:
+    get:
+      tags:
+        - Custom Properties
+      summary: Get a specified custom property definition record
+      operationId: getCustomPropertyDefinition
+      parameters:
+        - $ref: '#/components/parameters/custPropId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomPropertyDefinition'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    put:
+      tags:
+        - Custom Properties
+      summary: Update custom property definition record
+      operationId: putCustomPropertyDefinition
+      parameters:
+        - $ref: '#/components/parameters/custPropId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomPropertyDefinition'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomPropertyDefinition'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    delete:
+      tags:
+        - Custom Properties
+      summary: Delete a specified custom property definition record
+      operationId: deleteCustomPropertyDefinition
+      parameters:
+        - $ref: '#/components/parameters/custPropId'
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/custprops/contexts:
+    get:
+      tags:
+        - Custom Properties
+      summary: Get the distinct set of contexts in use across custom property definitions
+      operationId: getCustomPropertyDefinitionContexts
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Distinct context values (the ctx field) found across custom property definitions
+                items:
+                  type: string
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/files:
+    description: Supports search and upload of files
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      tags:
+        - Files
+      summary: Get a set of file records
+      operationId: getFiles
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FileUploadResults'
+                  - $ref: '#/components/schemas/FileUploadResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    post:
+      tags:
+        - Files
+      summary: Upload a file
+      operationId: postFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - upload
+              properties:
+                upload:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUpload'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/files/{fileId}:
+    get:
+      tags:
+        - Files
+      summary: Get a specified file record
+      operationId: getFile
+      parameters:
+        - $ref: '#/components/parameters/fileId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUpload'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    delete:
+      tags:
+        - Files
+      summary: Delete a specified file record
+      operationId: deleteFile
+      parameters:
+        - $ref: '#/components/parameters/fileId'
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/files/{fileId}/raw:
+    get:
+      tags:
+        - Files
+      summary: Download the raw content of a specified file
+      operationId: getFileRaw
+      parameters:
+        - $ref: '#/components/parameters/fileId'
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK. The response body is the raw file content; the Content-Type header reflects the original uploaded file's content type.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/admin/triggerHousekeeping:
+    get:
+      tags:
+        - Admin
+      summary: Trigger license housekeeping
+      description: Runs the license housekeeping service. This sets `endDateSemantics` on any records where it is unset, and deletes any Organisation records no longer  linked to a license.
+      operationId: getAdminTriggerHousekeeping
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/admin/triggerDocMigration:
+    get:
+      tags:
+        - Admin
+      summary: Trigger migration of uploaded documents to object storage
+      description: Migrates uploaded license document (LOB) attachments still stored in the Postgres database to the configured S3/MinIO object store.
+      operationId: getAdminTriggerDocMigration
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/settings/appSettings:
+    description: Supports search and creation of application settings. AppSetting is a generic key/value settings record from the shared web-toolkit library, not specific to this module.
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      tags:
+        - Settings
+      summary: Get a set of application setting records
+      operationId: getAppSettings
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AppSettingResults'
+                  - $ref: '#/components/schemas/AppSettingResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    post:
+      tags:
+        - Settings
+      summary: Create application setting record
+      operationId: postAppSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppSetting'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppSetting'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/settings/appSettings/{id}:
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+      - $ref: '#/components/parameters/appSettingId'
+    get:
+      tags:
+        - Settings
+      summary: Get a specified application setting record
+      operationId: getAppSetting
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppSetting'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    put:
+      tags:
+        - Settings
+      summary: Update application setting record
+      operationId: putAppSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppSetting'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppSetting'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+    delete:
+      tags:
+        - Settings
+      summary: Delete a specified application setting record
+      operationId: deleteAppSetting
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl:
+    description: Supports search of access policy records. Access policies cannot be created, updated or deleted directly here — use the claim endpoints on the owning resource instead.
+    parameters:
+      - $ref: '#/components/parameters/x-okapi-tenant'
+    get:
+      tags:
+        - Access Control
+      summary: Get a set of access policy records
+      operationId: getAccessControls
+      parameters:
+        - $ref: '#/components/parameters/filters'
+        - $ref: '#/components/parameters/match'
+        - $ref: '#/components/parameters/term'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/stats'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/page'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AccessPolicyResults'
+                  - $ref: '#/components/schemas/AccessPolicyResultsArray'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/{accessControlId}:
+    get:
+      tags:
+        - Access Control
+      summary: Get a specified access policy record
+      operationId: getAccessControl
+      parameters:
+        - in: path
+          name: accessControlId
+          description: UUID for an access policy
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessPolicy'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/readPolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the policies valid for READ operations
+      operationId: getAccessControlReadPolicies
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/deletePolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the policies valid for DELETE operations
+      operationId: getAccessControlDeletePolicies
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/updatePolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the policies valid for UPDATE operations
+      operationId: getAccessControlUpdatePolicies
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/createPolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the policies valid for CREATE operations
+      operationId: getAccessControlCreatePolicies
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/claimPolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the policies valid for CLAIM operations
+      operationId: getAccessControlClaimPolicies
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/applyPolicies:
+    get:
+      tags:
+        - Access Control
+      summary: Get the policies valid for APPLY_POLICIES operations
+      operationId: getAccessControlApplyPolicies
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesResponse'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /licenses/accessControl/enabledEngines:
+    get:
+      tags:
+        - Access Control
+      summary: Get the enabled policy engines, keyed by access policy type
+      operationId: getAccessControlEnabledEngines
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnabledEngines'
+        '400':
+          description: Bad request error
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
+  /dashboard/definitions:
+    get:
+      tags:
+        - Dashboard
+      summary: List dashboard widget definitions
+      description: |-
+        Returns the dashboard widget definitions bundled with this module, describing the self-service search/list widgets (e.g. simple license search) that can be added to a FOLIO dashboard. Definitions are cached in memory after the first request, for the lifetime of the running instance. No specific permission is required beyond a valid tenant/token.
+
+        This path is provided under the `dashboard` interface, declared as `interfaceType: multiple` in the module descriptor, because other dashboard-capable modules (e.g. mod-agreements) expose the same path for their own widget definitions. Since more than one module enabled for a tenant can answer this exact path, a plain request is ambiguous — Okapi needs an `X-Okapi-Module-Id` header naming which one to route to. Discover the candidate module ids first with `GET /_/proxy/tenants/{tenant}/modules?provide=dashboard`, then pass one of them back on this request.
+      operationId: getDashboardDefinitions
+      parameters:
+        - $ref: '#/components/parameters/x-okapi-tenant'
+        - $ref: '#/components/parameters/x-okapi-module-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DashboardWidgetDefinition'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrailsErrorResponse'
 components:
   securitySchemes:
     okapiToken:
@@ -353,6 +2476,70 @@ components:
       schema:
         type: string
         format: uuid
+    contactId:
+      in: path
+      name: contactId
+      description: ID for an internal contact
+      required: true
+      schema:
+        type: string
+    orgId:
+      in: path
+      name: orgId
+      description: ID for an organisation
+      required: true
+      schema:
+        type: string
+    refdataCategoryId:
+      in: path
+      name: refdataCategoryId
+      description: ID for a reference data category
+      required: true
+      schema:
+        type: string
+    refdataDomain:
+      in: path
+      name: domain
+      description: Simple (case-insensitive) name of the domain class that owns the property, e.g. `License`, `LicenseAmendment`
+      required: true
+      schema:
+        type: string
+    refdataProperty:
+      in: path
+      name: property
+      description: Name of the refdata-backed property on the domain class, e.g. `type` (on `License`)
+      required: true
+      schema:
+        type: string
+    custPropId:
+      in: path
+      name: custPropId
+      description: ID for a custom property definition
+      required: true
+      schema:
+        type: string
+    fileId:
+      in: path
+      name: fileId
+      description: UUID for a file
+      required: true
+      schema:
+        type: string
+        format: uuid
+    appSettingId:
+      in: path
+      name: id
+      description: Identifier for an application setting
+      required: true
+      schema:
+        type: string
+    x-okapi-module-id:
+      in: header
+      name: X-Okapi-Module-Id
+      required: true
+      description: 'ID of the specific module to route this request to. Required on paths  backed by an `interfaceType: multiple` interface'
+      schema:
+        type: string
   schemas:
     ResultsMeta:
       type: object
@@ -376,6 +2563,7 @@ components:
       properties:
         id:
           type: string
+          readOnly: true
         label:
           type: string
         value:
@@ -391,6 +2579,7 @@ components:
           type: string
         id:
           type: string
+          readOnly: true
         internal:
           type: boolean
         values:
@@ -399,6 +2588,8 @@ components:
             $ref: '#/components/schemas/RefData'
     Tag:
       type: object
+      required:
+        - id
       properties:
         id:
           type: integer
@@ -409,6 +2600,8 @@ components:
           type: string
     DocumentAttachment:
       type: object
+      required:
+        - id
       properties:
         id:
           type: string
@@ -431,6 +2624,8 @@ components:
           readOnly: true
     InternalContact:
       type: object
+      required:
+        - id
       properties:
         id:
           type: string
@@ -477,6 +2672,8 @@ components:
           $ref: '#/components/schemas/RefDataCategory'
     CustomPropertyValue:
       type: object
+      required:
+        - id
       properties:
         id:
           type: integer
@@ -497,6 +2694,7 @@ components:
     LicenseCore:
       type: object
       required:
+        - id
         - name
       properties:
         id:
@@ -571,6 +2769,7 @@ components:
     AlternateName:
       type: object
       required:
+        - id
         - name
       properties:
         id:
@@ -602,6 +2801,8 @@ components:
           type: object
     LicenseOrg:
       type: object
+      required:
+        - id
       properties:
         id:
           type: string
@@ -692,13 +2893,144 @@ components:
         - properties:
             results:
               $ref: '#/components/schemas/LicenseResultsArray'
-    HttpError:
+    GrailsErrorResponse:
+      type: object
+      description: Error-handler body for an uncaught exception raised during request processing. `exception` and `stackTrace` usually suppressed in production systems
+      required:
+        - error
+        - timestamp
+        - message
+      properties:
+        error:
+          type: integer
+          description: HTTP status code
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        exception:
+          type: string
+          description: Exception class and message.
+        stackTrace:
+          type: array
+          items:
+            type: string
+    ValidationError:
+      type: object
+      required:
+        - message
+        - path
+        - _links
+      properties:
+        message:
+          type: string
+        path:
+          type: string
+        _links:
+          type: object
+          required:
+            - self
+          properties:
+            self:
+              type: object
+              required:
+                - href
+              properties:
+                href:
+                  type: string
+                  format: uri
+    ValidationErrorResponse:
+      description: 'Validation error body returned when a create/update request fails domain-object validation. Shape depends on the number of errors: a single ValidationError when there is exactly one, otherwise a wrapper with a count and an embedded array.'
+      oneOf:
+        - $ref: '#/components/schemas/ValidationError'
+        - type: object
+          required:
+            - total
+            - _embedded
+          properties:
+            total:
+              type: integer
+            _embedded:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ValidationError'
+    BasicPolicy:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: Identifier of the policy in the external system that owns it (e.g. an acquisition unit id)
+    AccessPolicyType:
+      type: string
+      description: The mechanism used to enforce this access policy
+      enum:
+        - ACQ_UNIT
+    PolicyLink:
+      type: object
+      required:
+        - policy
+        - type
+      properties:
+        id:
+          type: string
+          description: Identifier of this policy link. Supply an existing link's id to update it, or omit to add a new one
+        policy:
+          $ref: '#/components/schemas/BasicPolicy'
+        type:
+          $ref: '#/components/schemas/AccessPolicyType'
+        description:
+          type: string
+    ClaimBody:
+      type: object
+      required:
+        - claims
+      properties:
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyLink'
+    AccessPolicyClaimResponse:
       type: object
       properties:
         message:
           type: string
-        error:
+    OwnerPolicyLinkList:
+      type: object
+      properties:
+        ownerLevel:
           type: integer
+          description: The ownership depth these policies apply at (0 = the resource itself, higher = ancestor owners)
+        resourceClass:
+          type: string
+        ownerId:
+          type: string
+        hasStandalonePolicies:
+          type: boolean
+        policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyLink'
+    CanAccessResponse:
+      type: object
+      properties:
+        canRead:
+          type: boolean
+        canUpdate:
+          type: boolean
+        canDelete:
+          type: boolean
+        canCreate:
+          type: boolean
+        canClaim:
+          type: boolean
+        canApplyPolicies:
+          type: boolean
     AmendmentResultsArray:
       type: array
       items:
@@ -713,3 +3045,413 @@ components:
         - properties:
             results:
               $ref: '#/components/schemas/AmendmentResultsArray'
+    InternalContactResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/InternalContact'
+    InternalContactResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/InternalContactResultsArray'
+    OrganisationResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Organisation'
+    OrganisationResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/OrganisationResultsArray'
+    RefDataCategoryResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/RefDataCategory'
+    RefDataCategoryResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/RefDataCategoryResultsArray'
+    RefDataResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/RefData'
+    RefDataResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/RefDataResultsArray'
+    CustomPropertyDefinitionResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/CustomPropertyDefinition'
+    CustomPropertyDefinitionResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/CustomPropertyDefinitionResultsArray'
+    FileUpload:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          description: Original filename of the uploaded file
+        contentType:
+          type: string
+          description: MIME type of the uploaded file
+        size:
+          type: integer
+          description: Size of the uploaded file in bytes
+        modified:
+          type: string
+          format: date-time
+          readOnly: true
+    FileUploadResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FileUpload'
+    FileUploadResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/FileUploadResultsArray'
+    AppSetting:
+      type: object
+      required:
+        - id
+        - key
+      properties:
+        id:
+          type: string
+          readOnly: true
+        section:
+          type: string
+        key:
+          type: string
+        settingType:
+          type: string
+        vocab:
+          type: string
+        defValue:
+          type: string
+        value:
+          type: string
+        hidden:
+          type: boolean
+          description: If true, this setting is excluded from filter/search results but is otherwise still retrievable and modifiable normally.
+    AppSettingResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/AppSetting'
+    AppSettingResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/AppSettingResultsArray'
+    AccessPolicy:
+      type: object
+      required:
+        - id
+        - type
+        - policyId
+        - resourceClass
+        - resourceId
+      properties:
+        id:
+          type: string
+          readOnly: true
+        description:
+          type: string
+        dateCreated:
+          type: string
+          format: date-time
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/AccessPolicyType'
+        policyId:
+          type: string
+        resourceClass:
+          type: string
+          readOnly: true
+        resourceId:
+          type: string
+          readOnly: true
+    AccessPolicyResultsArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/AccessPolicy'
+    AccessPolicyResults:
+      type: object
+      required:
+        - results
+      allOf:
+        - $ref: '#/components/schemas/ResultsMeta'
+        - type: object
+        - properties:
+            results:
+              $ref: '#/components/schemas/AccessPolicyResultsArray'
+    GroupedExternalPolicies:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AccessPolicyType'
+        policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/BasicPolicy'
+        name:
+          type: string
+          description: A descriptive name for this group of policies
+    PoliciesResponse:
+      type: object
+      properties:
+        readPolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedExternalPolicies'
+        updatePolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedExternalPolicies'
+        createPolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedExternalPolicies'
+        deletePolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedExternalPolicies'
+        claimPolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedExternalPolicies'
+        applyPolicies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedExternalPolicies'
+    EnabledEngines:
+      type: object
+      description: Map of access policy type to whether that policy engine is enabled
+      additionalProperties:
+        type: boolean
+    DashboardWidgetResultColumn:
+      type: object
+      description: A single column in a dashboard widget's results table.
+      properties:
+        name:
+          type: string
+          description: Internal column identifier.
+        label:
+          type: string
+          description: Display label for the column.
+        accessPath:
+          type: string
+          description: Dot-path into the resource record used to derive the cell value.
+        valueType:
+          type: string
+          description: How the UI should render the cell value.
+          enum:
+            - String
+            - Link
+            - Date
+            - Boolean
+            - Array
+        arrayDisplayPath:
+          type: string
+          description: 'For `valueType: Array` columns, the dot-path within each array item to display.'
+      additionalProperties: true
+    DashboardWidgetMatchColumn:
+      type: object
+      description: A field the widget's free-text quick search matches against.
+      properties:
+        name:
+          type: string
+          description: Internal field identifier.
+        label:
+          type: string
+          description: Display label for the field.
+        accessPath:
+          type: string
+          description: Dot-path into the resource record to match the search term against.
+        default:
+          type: boolean
+          description: Whether this field is matched by default.
+      additionalProperties: true
+    DashboardWidgetFilterColumn:
+      type: object
+      description: A field available for building a structured filter.
+      properties:
+        name:
+          type: string
+          description: Internal field identifier.
+        label:
+          type: string
+          description: Display label for the field.
+        filterPath:
+          type: string
+          description: Dot-path/query field the filter is applied to.
+        valueType:
+          type: string
+          description: Value type the filter compares, e.g. `String`, `UUID`, `Date`, `Enum`, `Array`.
+        resource:
+          type: string
+          description: 'For `valueType: UUID` reference filters, the related resource type to look up candidate values from.'
+        comparators:
+          type: array
+          description: Comparison operators the UI may offer for this filter.
+          items:
+            type: string
+        enumValues:
+          type: array
+          description: 'For `valueType: Enum` filters, the allowed values.'
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              label:
+                type: string
+      additionalProperties: true
+    DashboardWidgetSortColumn:
+      type: object
+      description: A field the widget's results table can be sorted by.
+      properties:
+        name:
+          type: string
+          description: Internal field identifier.
+        label:
+          type: string
+          description: Display label for the field.
+        sortPath:
+          type: string
+          description: Dot-path/query field used when sorting.
+        sortTypes:
+          type: array
+          description: Supported sort directions.
+          items:
+            type: string
+            enum:
+              - asc
+              - desc
+      additionalProperties: true
+    DashboardWidgetDefinition:
+      type: object
+      description: A single dashboard widget definition, describing a self-service search/list widget that a dashboard-capable FOLIO app can render against one of its own resources. The `definition` block configures the columns available for the results table, quick-search matching, structured filtering, and sorting.
+      required:
+        - type
+        - version
+        - name
+        - definition
+      properties:
+        type:
+          type: object
+          description: The widget implementation this definition targets.
+          properties:
+            name:
+              type: string
+              description: Widget type name, e.g. `SimpleSearch`.
+            version:
+              type: string
+              description: Version of the widget type's own configuration format.
+        version:
+          type: string
+          description: Version of this specific widget definition.
+        name:
+          type: string
+          description: Display name of the widget, e.g. `ERM Licenses`.
+        definition:
+          type: object
+          properties:
+            baseUrl:
+              type: string
+              description: API path the widget queries for `resource` records.
+            resource:
+              type: string
+              description: Name of the resource type the widget lists/searches.
+            results:
+              type: object
+              description: Columns available in the widget's results table.
+              properties:
+                columns:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DashboardWidgetResultColumn'
+            matches:
+              type: object
+              description: Fields the widget's free-text quick search matches against.
+              properties:
+                columns:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DashboardWidgetMatchColumn'
+                termConfigurable:
+                  type: boolean
+                  description: Whether the user can choose which of these fields to search.
+            filters:
+              type: object
+              description: Fields available for building structured filters.
+              properties:
+                columns:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DashboardWidgetFilterColumn'
+            sort:
+              type: object
+              description: Fields the results table can be sorted by.
+              properties:
+                columns:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DashboardWidgetSortColumn'
+            configurableProperties:
+              type: object
+              description: Per-instance widget settings a user can override when adding this widget to a dashboard, keyed by property name.
+              additionalProperties:
+                type: object
+                properties:
+                  configurable:
+                    type: boolean
+                    description: Whether the user may override this property.
+                  defValue:
+                    description: Default value. Type depends on the property.
