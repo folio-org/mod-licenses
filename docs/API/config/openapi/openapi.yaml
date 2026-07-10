@@ -82,6 +82,7 @@ paths:
    /licenses/custprops/contexts:
      $ref: paths/custprops_contexts.yaml
   # ===== License link paths =====
+  # Functionality only partially implemented and not supported so leaving commented for now
   # /licenses/licenseLinks:
   #   $ref: paths/licenseLinks.yaml
   # /licenses/licenseLinks/{licenseLinkId}:
@@ -94,8 +95,10 @@ paths:
    /licenses/files/{fileId}/raw:
      $ref: paths/files_{fileId}_raw.yaml
   # ===== Admin paths =====
-  # /licenses/admin/{action}:
-  #   $ref: paths/admin_{action}.yaml
+   /licenses/admin/triggerHousekeeping:
+     $ref: paths/admin_triggerHousekeeping.yaml
+   /licenses/admin/triggerDocMigration:
+     $ref: paths/admin_triggerDocMigration.yaml
   # ===== Settings paths =====
    /licenses/settings/appSettings:
      $ref: paths/settings_appSettings.yaml
