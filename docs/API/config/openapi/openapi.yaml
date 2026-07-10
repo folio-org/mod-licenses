@@ -124,8 +124,8 @@ paths:
    /licenses/accessControl/enabledEngines:
      $ref: paths/accessControl_enabledEngines.yaml
   # ===== Dashboard paths =====
-  # /dashboard/definitions:
-  #   $ref: paths/dashboard_definitions.yaml
+   /dashboard/definitions:
+     $ref: paths/dashboard_definitions.yaml
 
 components:
   securitySchemes:
