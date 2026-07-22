@@ -43,8 +43,8 @@ The /licenses resource allows module clients to Create, Retrieve, Update and Del
 
 ## Module installation and upgrade notes
 
-The module has important dependences on reference data. initial installations and module upgrades should specify loadReference=true. The module
-may not work as expected if this is omitted.
+The module has important dependences on reference data. **Initial installations and module upgrades should specify loadReference=true. The module
+may not work as expected if this is omitted.**
 
 ### Environment variables
 This is a NON-EXHAUSTIVE list of environment variables which tweak behaviour in this module
