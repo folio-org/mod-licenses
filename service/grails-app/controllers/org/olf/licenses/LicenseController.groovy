@@ -10,6 +10,7 @@ import com.k_int.web.toolkit.refdata.RefdataValue
 import grails.gorm.multitenancy.CurrentTenant
 import grails.gorm.transactions.Transactional
 import org.grails.web.json.JSONObject
+import org.olf.licenses.events.LicenseEventService
 
 
 /**
@@ -21,11 +22,33 @@ import org.grails.web.json.JSONObject
 class LicenseController extends AccessPolicyAwareController<License> {
 
   LicenseService licenseService
-  
+  LicenseEventService licenseEventService
+
   LicenseController() {
     super(License)
   }
   
+  /**
+   * Wraps {@code super.update()} to publish a Kafka UPDATE domain event
+   * carrying pre- and post- snapshots. Delegates snapshot capture and
+   * publish to {@link LicenseEventService} — this method's only job is
+   * orchestration around {@code super.update()}.
+   */
+  @Transactional
+  def update() {
+    Map<String, Object> oldSnapshot = licenseEventService.captureSnapshotAndDiscard(
+      License.get(params.id))
+
+    super.update()
+
+    if (oldSnapshot == null) return
+    if (response.status < 200 || response.status >= 300) return
+
+    Map<String, Object> newSnapshot = licenseEventService.captureSnapshotAndDiscard(
+      License.get(params.id))
+    licenseEventService.publishUpdate(oldSnapshot, newSnapshot)
+  }
+
   // Override the show method
   @Transactional(readOnly=true)
   def show() {

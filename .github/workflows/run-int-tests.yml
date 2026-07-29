@@ -51,6 +51,7 @@ jobs:
           cd tools/testing
           docker ps -a > ps.log
           docker logs testing_pg > postgres.log
+          docker logs testing_kafka > kafka.log
       - name: Stop containers
         if: always()
         run: |

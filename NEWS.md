@@ -1,4 +1,6 @@
 ## 6.4.0 IN PROGRESS
+  * ERM-4124: Add Kafka domain event producer and publish License CREATE/UPDATE events
+
 
 ## 6.3.2 2026-06-04
   * ERM-4093: Licenses: Bump access-control-grails version to handle jackson vulnerability
