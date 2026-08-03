@@ -46,7 +46,14 @@ class LicenseController extends AccessPolicyAwareController<License> {
 
     Map<String, Object> newSnapshot = licenseEventService.captureSnapshotAndDiscard(
       License.get(params.id))
+
+    if (withoutLastUpdated(oldSnapshot) == withoutLastUpdated(newSnapshot)) return
+
     licenseEventService.publishUpdate(oldSnapshot, newSnapshot)
+  }
+
+  private static Map<String, Object> withoutLastUpdated(Map<String, Object> snapshot) {
+    snapshot.findAll { entry -> entry.key != 'lastUpdated' }
   }
 
   // Override the show method
