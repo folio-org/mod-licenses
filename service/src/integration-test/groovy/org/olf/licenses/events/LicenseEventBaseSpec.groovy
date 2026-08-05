@@ -6,8 +6,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import org.apache.kafka.common.PartitionInfo
-import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringDeserializer
 
 import org.olf.licenses.BaseSpec
@@ -50,44 +48,32 @@ abstract class LicenseEventBaseSpec extends BaseSpec {
     }
 
     /**
-     * Read the topic from offset 0 to its current end and return every event on it.
+     * Read the topic from the beginning and return what is found, stopping
+     * early once {@code minRecords} have been collected.
      *
-     * Uses manual partition assignment plus an explicit seek rather than
-     * {@code subscribe()}: a subscribing consumer has to join a consumer group
-     * and wait out a rebalance before its first fetch, which regularly costs
-     * more than the poll budget of a test and yields zero records even though
-     * the messages are sitting on the broker. {@code assign()} skips group
-     * coordination entirely, so the first poll returns data immediately and
-     * the read is deterministic.
+     * Each call uses a throwaway group id with {@code auto.offset.reset=earliest},
+     * so every call replays the topic in full rather than resuming an offset.
+     * Pass {@code Integer.MAX_VALUE} to burn the whole timeout and collect
+     * everything — that is what negative assertions want.
      *
      * The topic is shared by every spec, so callers must filter for their own
      * events rather than assuming what they find belongs to them.
      */
-    List<Map> readAllEvents(String topic, long timeoutMs = 10_000L) {
+    List<Map> pollForEvents(String topic, int minRecords = 1, long timeoutMs = 10_000L) {
+        Properties props = new Properties()
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers)
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-${UUID.randomUUID()}".toString())
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, 'earliest')
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, 'false')
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.name)
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.name)
+
         List<Map> events = []
-
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProps())
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props)
         try {
-            List<PartitionInfo> partitionInfo = consumer.partitionsFor(topic)
-            if (!partitionInfo) {
-                log.debug("Topic {} does not exist yet — no events", topic)
-                return events
-            }
-
-            List<TopicPartition> partitions = partitionInfo.collect {
-                new TopicPartition(it.topic(), it.partition())
-            }
-            consumer.assign(partitions)
-
-            Map<TopicPartition, Long> endOffsets = consumer.endOffsets(partitions)
-            consumer.seekToBeginning(partitions)
-
+            consumer.subscribe([topic])
             long deadline = System.currentTimeMillis() + timeoutMs
-            while (System.currentTimeMillis() < deadline) {
-                // Stop as soon as every partition has been read up to the end
-                // offset captured above; no need to burn the whole budget.
-                if (partitions.every { consumer.position(it) >= endOffsets[it] }) break
-
+            while (System.currentTimeMillis() < deadline && events.size() < minRecords) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(500))
                 for (ConsumerRecord<String, String> r : records) {
                     log.debug("Got event on {} key={}: {}", topic, r.key(), r.value())
@@ -98,42 +84,5 @@ abstract class LicenseEventBaseSpec extends BaseSpec {
             consumer.close(Duration.ofSeconds(5))
         }
         return events
-    }
-
-    /**
-     * Give in-flight async sends a moment to land, then read the topic.
-     * For negative assertions ("no event was produced for this request").
-     */
-    List<Map> drainEvents(String topic, long settleMs = 3_000L) {
-        Thread.sleep(settleMs)
-        readAllEvents(topic)
-    }
-
-    /**
-     * Re-read the topic until an event satisfies {@code predicate} or
-     * {@code timeoutMs} elapses. Publishing happens after commit and the send
-     * itself is async, so the event is not guaranteed to be there the instant
-     * the HTTP response returns.
-     */
-    Map pollForEvent(String topic, long timeoutMs = 15_000L, Closure<Boolean> predicate) {
-        long deadline = System.currentTimeMillis() + timeoutMs
-        while (true) {
-            Map match = readAllEvents(topic).find(predicate)
-            if (match != null) return match
-            if (System.currentTimeMillis() >= deadline) return null
-            Thread.sleep(500)
-        }
-    }
-
-    private Properties consumerProps() {
-        Properties props = new Properties()
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers)
-        // Required by the client even though assign() does no group coordination.
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-${UUID.randomUUID()}".toString())
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, 'earliest')
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, 'false')
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.name)
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.name)
-        return props
     }
 }
