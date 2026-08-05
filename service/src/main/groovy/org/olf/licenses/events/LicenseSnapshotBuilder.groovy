@@ -48,17 +48,29 @@ class LicenseSnapshotBuilder {
         out.endDateSemantics    = refdata(license.endDateSemantics)
         out.type                = refdata(license.type)
 
-        out.alternateNames     = (license.alternateNames ?: []).collect { altName((AlternateName) it) }
-        out.orgs               = (license.orgs ?: []).collect { licenseOrg((LicenseOrg) it) }
-        out.contacts           = (license.contacts ?: []).collect { contact((InternalContact) it) }
-        out.tags               = (license.tags ?: []).collect { tag((Tag) it) }
-        out.docs               = (license.docs ?: []).collect { doc((DocumentAttachment) it) }
-        out.supplementaryDocs   = (license.supplementaryDocs ?: []).collect { doc((DocumentAttachment) it) }
-        out.links               = (license.links ?: []).collect { link((LicenseLink) it) }
+        out.alternateNames     = sortById((license.alternateNames ?: []).collect { altName((AlternateName) it) })
+        out.orgs               = sortById((license.orgs ?: []).collect { licenseOrg((LicenseOrg) it) })
+        out.contacts           = sortById((license.contacts ?: []).collect { contact((InternalContact) it) })
+        out.tags               = sortById((license.tags ?: []).collect { tag((Tag) it) })
+        out.docs               = sortById((license.docs ?: []).collect { doc((DocumentAttachment) it) })
+        out.supplementaryDocs   = sortById((license.supplementaryDocs ?: []).collect { doc((DocumentAttachment) it) })
+        out.links               = sortById((license.links ?: []).collect { link((LicenseLink) it) })
 
-        out.amendments          = (license.amendments ?: []).collect { [id: ((LicenseAmendment) it).id] }
+        out.amendments          = sortById((license.amendments ?: []).collect { [id: ((LicenseAmendment) it).id] })
 
         return out
+    }
+
+    /**
+     * Impose a deterministic order on a collection projection.
+     *
+     * The source {@code hasMany} collections are Hibernate Sets over domain
+     * classes that define no {@code equals}/{@code hashCode}, so iteration
+     * order follows identity hash codes and differs between two loads of the
+     * same rows.
+     */
+    private static List sortById(List items) {
+        items.sort { Object item -> (String) (((Map) item)?.id ?: '') }
     }
 
     private static Map refdata(RefdataValue rv) {
@@ -77,7 +89,7 @@ class LicenseSnapshotBuilder {
             id         : lo.id,
             primaryOrg : lo.primaryOrg,
             note       : lo.note,
-            roles      : (lo.roles ?: []).collect { licenseOrgRole((LicenseOrgRole) it) },
+            roles      : sortById((lo.roles ?: []).collect { licenseOrgRole((LicenseOrgRole) it) }),
             org        : orgWrapper(lo.org)
         ]
     }

@@ -107,8 +107,24 @@ class LicenseAmendmentEventService {
         newSnapshots.each { String id, Map newSnapshot ->
             Map oldSnapshot = oldSnapshots.get(id)
             if (oldSnapshot == null) return
-            if (oldSnapshot == newSnapshot) return
+            if (withoutLastUpdated(oldSnapshot) == withoutLastUpdated(newSnapshot)) return
             publishUpdate((Map<String, Object>) oldSnapshot, (Map<String, Object>) newSnapshot)
         }
+    }
+
+    /**
+     * {@code lastUpdated} is excluded from the changed-only comparison — but
+     * kept in the published payload — exactly as on the License path in
+     * {@code LicenseController.update()}.
+     *
+     * The UI saves a license by PUTting the whole record, amendments array
+     * included. Data binding re-touches every amendment in that array, so
+     * Hibernate bumps its {@code lastUpdated} even when no field the client
+     * sent actually differs. Comparing the raw maps therefore emitted an
+     * UPDATE per amendment on a license-only edit, whose old/new sides were
+     * identical apart from that timestamp.
+     */
+    private static Map withoutLastUpdated(Map snapshot) {
+        snapshot.findAll { entry -> entry.key != 'lastUpdated' }
     }
 }

@@ -100,6 +100,50 @@ class AmendmentUpdateEventSpec extends LicenseEventBaseSpec {
                 it.new?.id == amendmentId
             }.isEmpty()
     }
+    
+    void 'full-record PUT changing only a license field emits no amendment UPDATE'() {
+        given: 'a license carrying one amendment'
+            String licenseName = "kafka-am-fullrecord-${System.currentTimeMillis()}".toString()
+            def license = doPost('/licenses/licenses', [
+                name     : licenseName,
+                status   : 'Active',
+                type     : 'Local',
+                startDate: '2019-01-01'
+            ])
+            String amendmentName = "amendment-fullrecord-${System.currentTimeMillis()}".toString()
+            def withAmendment = doPut("/licenses/licenses/${license.id}", [
+                amendments: [[
+                    name     : amendmentName,
+                    status   : 'Active',
+                    startDate: '2020-01-01'
+                ]]
+            ])
+            String amendmentId = (withAmendment.amendments as List)[0].id
+
+        when: 'we snapshot the topic, then add a doc to the license and send the amendment back untouched'
+            String topic = topicFor('amendment')
+            long snapshotTs = System.currentTimeMillis()
+            doPut("/licenses/licenses/${license.id}", [
+                description: 'license-only edit via full record',
+                docs       : [[name: 'test-doc']],
+                amendments : [[
+                    id       : amendmentId,
+                    name     : amendmentName,
+                    status   : 'Active',
+                    startDate: '2020-01-01'
+                ]]
+            ])
+
+        and: 'we drain the amendment topic'
+            List<Map> events = drainEvents(topic)
+
+        then: 'a lastUpdated-only difference is not a change'
+            events.findAll {
+                (it.eventTs as long) >= snapshotTs &&
+                it.type == 'UPDATE' &&
+                it.new?.id == amendmentId
+            }.isEmpty()
+    }
 
     void 'PUT /licenses/amendments/{id} emits no UPDATE event'() {
         given: 'a license carrying one amendment'

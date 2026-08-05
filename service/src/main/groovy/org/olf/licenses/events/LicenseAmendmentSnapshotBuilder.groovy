@@ -43,11 +43,11 @@ class LicenseAmendmentSnapshotBuilder {
         // license rename. The License topic already carries that change.
         out.owner               = owner(amendment)
 
-        out.contacts            = (amendment.contacts ?: []).collect { contact((InternalContact) it) }
-        out.tags                = (amendment.tags ?: []).collect { tag((Tag) it) }
-        out.docs                = (amendment.docs ?: []).collect { doc((DocumentAttachment) it) }
-        out.supplementaryDocs   = (amendment.supplementaryDocs ?: []).collect { doc((DocumentAttachment) it) }
-        out.links               = (amendment.links ?: []).collect { link((LicenseLink) it) }
+        out.contacts            = sortById((amendment.contacts ?: []).collect { contact((InternalContact) it) })
+        out.tags                = sortById((amendment.tags ?: []).collect { tag((Tag) it) })
+        out.docs                = sortById((amendment.docs ?: []).collect { doc((DocumentAttachment) it) })
+        out.supplementaryDocs   = sortById((amendment.supplementaryDocs ?: []).collect { doc((DocumentAttachment) it) })
+        out.links               = sortById((amendment.links ?: []).collect { link((LicenseLink) it) })
 
 
         return out
@@ -86,6 +86,18 @@ class LicenseAmendmentSnapshotBuilder {
         // .id off a lazy proxy does not force initialisation — which matters on
         // the CREATE path, where this runs mid-flush.
         [id: amendment.owner.id]
+    }
+
+    /**
+     * Impose a deterministic order on a collection projection.
+     *
+     * The source {@code hasMany} collections are Hibernate Sets over domain
+     * classes that define no {@code equals}/{@code hashCode}, so iteration
+     * order follows identity hash codes and differs between two loads of the
+     * same rows.
+     */
+    private static List sortById(List items) {
+        items.sort { Object item -> (String) (((Map) item)?.id ?: '') }
     }
 
     // ---- shared mappers ----------------------------------------------------
