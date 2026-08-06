@@ -46,7 +46,7 @@ class AmendmentUpdateEventSpec extends LicenseEventBaseSpec {
 
         when: 'we consume the UPDATE event off the amendment topic'
             String topic = topicFor('amendment')
-            Map event = pollForEvent(topic) { it.type == 'UPDATE' && it.new?.id == amendmentId }
+            Map event = pollForUpdateEvent(topic, amendmentId)
 
         then: 'envelope is UPDATE with both sides populated'
             event != null
@@ -90,8 +90,8 @@ class AmendmentUpdateEventSpec extends LicenseEventBaseSpec {
             long snapshotTs = System.currentTimeMillis()
             doPut("/licenses/licenses/${license.id}", [description: 'license-only edit'])
 
-        and: 'we drain the amendment topic'
-            List<Map> events = drainEvents(topic)
+        and: 'we drain the amendment topic for a few seconds'
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
 
         then: 'the untouched amendment produced no UPDATE — the changed-only guard held'
             events.findAll {
@@ -134,8 +134,8 @@ class AmendmentUpdateEventSpec extends LicenseEventBaseSpec {
                 ]]
             ])
 
-        and: 'we drain the amendment topic'
-            List<Map> events = drainEvents(topic)
+        and: 'we drain the amendment topic for a few seconds'
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
 
         then: 'a lastUpdated-only difference is not a change'
             events.findAll {
@@ -172,8 +172,8 @@ class AmendmentUpdateEventSpec extends LicenseEventBaseSpec {
         then: 'the rename itself succeeded — only the event is suppressed'
             updated?.name == directName
 
-        when: 'we drain the amendment topic'
-            List<Map> events = drainEvents(topic)
+        when: 'we drain the amendment topic for a few seconds'
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
 
         then: 'no UPDATE event was published for it'
             events.findAll {
@@ -181,5 +181,15 @@ class AmendmentUpdateEventSpec extends LicenseEventBaseSpec {
                 it.type == 'UPDATE' &&
                 it.new?.id == amendmentId
             }.isEmpty()
+    }
+
+    private Map pollForUpdateEvent(String topic, String amendmentId, long timeoutMs = 15_000L) {
+        long deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
+            Map match = events.find { it.type == 'UPDATE' && it.new?.id == amendmentId }
+            if (match != null) return match
+        }
+        return null
     }
 }

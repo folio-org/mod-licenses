@@ -40,7 +40,7 @@ class AmendmentCreateEventSpec extends LicenseEventBaseSpec {
 
         when: 'we consume the CREATE event off the amendment topic'
             String topic = topicFor('amendment')
-            Map event = pollForEvent(topic) { it.type == 'CREATE' && it.new?.id == amendmentId }
+            Map event = pollForCreateEvent(topic, amendmentId)
 
         then: 'envelope is CREATE with new only'
             event != null
@@ -84,7 +84,7 @@ class AmendmentCreateEventSpec extends LicenseEventBaseSpec {
 
         when: 'we consume the CREATE event'
             String topic = topicFor('amendment')
-            Map event = pollForEvent(topic) { it.type == 'CREATE' && it.new?.id == created.id }
+            Map event = pollForCreateEvent(topic, created.id as String)
 
         then: 'the event carries the new snapshot and the owner linkage'
             event != null
@@ -115,12 +115,22 @@ class AmendmentCreateEventSpec extends LicenseEventBaseSpec {
         then: 'the request did not succeed'
             caught || true
 
-        when: 'we drain the topic'
-            List<Map> events = drainEvents(topic)
+        when: 'we drain the topic for a few seconds'
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
 
         then: 'nothing was published for that name after the snapshot'
             events.findAll {
                 (it.eventTs as long) >= snapshotTs && it.new?.name == amendmentName
             }.isEmpty()
+    }
+
+    private Map pollForCreateEvent(String topic, String amendmentId, long timeoutMs = 15_000L) {
+        long deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
+            Map match = events.find { it.type == 'CREATE' && it.new?.id == amendmentId }
+            if (match != null) return match
+        }
+        return null
     }
 }

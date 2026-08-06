@@ -46,7 +46,7 @@ class AmendmentDeleteEventSpec extends LicenseEventBaseSpec {
 
         when: 'we consume the DELETE event'
             String topic = topicFor('amendment')
-            Map event = pollForEvent(topic) { it.type == 'DELETE' && it.old?.id == amendmentId }
+            Map event = pollForDeleteEvent(topic, amendmentId)
 
         then: 'envelope is DELETE with old only'
             event != null
@@ -100,7 +100,7 @@ class AmendmentDeleteEventSpec extends LicenseEventBaseSpec {
 
         and: 'we consume the DELETE event'
             String topic = topicFor('amendment')
-            Map event = pollForEvent(topic) { it.type == 'DELETE' && it.old?.id == amendmentId }
+            Map event = pollForDeleteEvent(topic, amendmentId)
 
         then: 'the listener fired even though no controller override exists'
             event != null
@@ -109,4 +109,14 @@ class AmendmentDeleteEventSpec extends LicenseEventBaseSpec {
             !event.containsKey('new')
     }
 
+    // Matches on old.id, not new.id — a DELETE envelope carries no new side.
+    private Map pollForDeleteEvent(String topic, String amendmentId, long timeoutMs = 15_000L) {
+        long deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
+            Map match = events.find { it.type == 'DELETE' && it.old?.id == amendmentId }
+            if (match != null) return match
+        }
+        return null
+    }
 }
