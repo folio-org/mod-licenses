@@ -1,7 +1,7 @@
 ## 6.4.0 IN PROGRESS
   * ERM-4124: Add Kafka domain event producer and publish License CREATE/UPDATE events
   * ERM-4125: Publish LicenseAmendment CREATE/UPDATE events
-  * ERM-4125: Publish LicenseAmendment DELETE events with a pre-delete projection
+  * ERM-4127: Publish LicenseAmendment DELETE events with a pre-delete projection
 
 
 ## 6.3.2 2026-06-04

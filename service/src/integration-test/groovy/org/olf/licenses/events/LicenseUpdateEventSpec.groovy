@@ -140,7 +140,7 @@ class LicenseUpdateEventSpec extends LicenseEventBaseSpec {
             caught || true
 
         when: 'we drain the topic for a few seconds'
-            List<Map> events = drainEvents(topic)
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
 
         then: 'no UPDATE event for our license appeared after the snapshot'
             events.findAll {
@@ -149,7 +149,13 @@ class LicenseUpdateEventSpec extends LicenseEventBaseSpec {
     }
 
     private Map pollForUpdateEvent(String topic, String licenseId, long timeoutMs = 15_000L) {
-        pollForEvent(topic, timeoutMs) { it.type == 'UPDATE' && it.new?.id == licenseId }
+        long deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
+            Map match = events.find { it.type == 'UPDATE' && it.new?.id == licenseId }
+            if (match != null) return match
+        }
+        return null
     }
 }
 

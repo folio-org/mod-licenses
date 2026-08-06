@@ -28,7 +28,7 @@ class LicenseCreateEventSpec extends LicenseEventBaseSpec {
 
         when: 'we consume from the tenant-scoped topic'
             String topic = topicFor('license')
-            Map event = pollForEvent(topic) { it.type == 'CREATE' && it.new?.id == response.id }
+            Map event = pollForCreateEvent(topic, response.id as String, 15_000L)
 
         then: 'a CREATE envelope for this license landed with only the new snapshot'
             event != null
@@ -99,7 +99,7 @@ class LicenseCreateEventSpec extends LicenseEventBaseSpec {
 
         when: 'we consume the CREATE event'
             String topic = topicFor('license')
-            Map event = pollForEvent(topic) { it.type == 'CREATE' && it.new?.id == response.id }
+            Map event = pollForCreateEvent(topic, response.id as String, 15_000L)
 
         then: 'the event arrived at all — walking the graph mid-flush did not break the insert'
             event != null
@@ -155,7 +155,7 @@ class LicenseCreateEventSpec extends LicenseEventBaseSpec {
             caught
 
         when: 'we drain the topic for a few seconds'
-            List<Map> events = drainEvents(topic)
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
 
         then: 'no event newer than our snapshot slipped onto the topic'
             events.findAll { (it.eventTs as long) >= snapshotTs }.isEmpty()
@@ -198,7 +198,7 @@ class LicenseCreateEventSpec extends LicenseEventBaseSpec {
             amendmentId != null
 
         when: 'we drain the topic'
-            List<Map> events = drainEvents(topic, 5_000L)
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
             List<Map> newEvents = events.findAll { (it.eventTs as long) >= snapshotTs }
 
         then: 'positive control — the PUT itself did produce an UPDATE event for the parent'
@@ -213,5 +213,15 @@ class LicenseCreateEventSpec extends LicenseEventBaseSpec {
             Map updateEvent = newEvents.find { it.type == 'UPDATE' && it.new?.id == created.id }
             (updateEvent.new.amendments as List).any { it.id == amendmentId }
             (updateEvent.new.amendments as List).every { ((Map) it).keySet() == ['id'] as Set }
+    }
+
+    private Map pollForCreateEvent(String topic, String licenseId, long timeoutMs) {
+        long deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            List<Map> events = pollForEvents(topic, Integer.MAX_VALUE, 6_000L)
+            Map match = events.find { it.type == 'CREATE' && it.new?.id == licenseId }
+            if (match != null) return match
+        }
+        return null
     }
 }
