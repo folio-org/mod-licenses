@@ -57,6 +57,27 @@ class LicenseCreateEventSpec extends LicenseEventBaseSpec {
     // inserted yet when the parent's PostInsertEvent fires, so their uuid2 ids may
     // still be null. Content (names, values, flags) comes from the bound in-memory
     // graph and is what consumers actually need.
+    void 'the event carries the tenant, user and request id of the request, and no credentials'() {
+        given: 'a request carrying a request id and a token'
+            String requestId = UUID.randomUUID().toString()
+            setHeaders(['X-Okapi-Request-Id': requestId, 'X-Okapi-Token': 'secret-token'])
+
+        when: 'we POST a license'
+            def response = doPost('/licenses/licenses', [
+                name  : "kafka-headers-${System.currentTimeMillis()}".toString(),
+                status: 'Active',
+                type  : 'Local'
+            ])
+            Map<String, String> headers = pollForHeaders(topicFor('license'), response.id as String, 15_000L)
+
+        then: 'tenant, user and request id travel as record headers; the token does not'
+            headers != null
+            headers['x-okapi-tenant'] == currentTenant
+            headers['x-okapi-user-id'] == "${this.class.simpleName}_user".toString()
+            headers['x-okapi-request-id'] == requestId
+            !headers.containsKey('x-okapi-token')
+    }
+
     void 'POST with populated collections emits CREATE event carrying the whole graph'() {
         given: 'a license payload with every locally-owned collection populated'
             String licenseName = "kafka-create-collections-${System.currentTimeMillis()}".toString()
