@@ -215,7 +215,8 @@ dependencies {
   testImplementation "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
 
 	/* ---- Custom non profile deps ---- */
-  implementation "org.apache.kafka:kafka-clients:$kafkaVersion"
+  implementation "org.springframework.kafka:spring-kafka:$springKafkaVersion"
+  testImplementation "org.springframework.kafka:spring-kafka-test:$springKafkaVersion"
   implementation "com.github.everit-org.json-schema:org.everit.json.schema:$jsonSchemaVersion"
 
 	// Better test reports.

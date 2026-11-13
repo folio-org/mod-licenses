@@ -10,6 +10,8 @@ import com.k_int.web.toolkit.refdata.RefdataValue
 import grails.gorm.multitenancy.CurrentTenant
 import grails.gorm.transactions.Transactional
 import org.grails.web.json.JSONObject
+import org.olf.licenses.events.LicenseAmendmentEventService
+import org.olf.licenses.events.LicenseEventService
 
 
 /**
@@ -21,11 +23,47 @@ import org.grails.web.json.JSONObject
 class LicenseController extends AccessPolicyAwareController<License> {
 
   LicenseService licenseService
-  
+  LicenseEventService licenseEventService
+  LicenseAmendmentEventService licenseAmendmentEventService
+
   LicenseController() {
     super(License)
   }
   
+  /**
+   * Wraps {@code super.update()} to publish a Kafka UPDATE domain event
+   * carrying pre- and post- snapshots. Delegates snapshot capture and
+   * publish to {@link LicenseEventService} — this method's only job is
+   * orchestration around {@code super.update()}.
+   *
+   * Amendments ride along here because this endpoint is where they are
+   * actually mutated
+   */
+  @Transactional
+  def update() {
+    License license = License.get(params.id)
+    Map<String, Map> oldAmendments = licenseAmendmentEventService.captureAmendmentSnapshots(license)
+    Map<String, Object> oldSnapshot = licenseEventService.captureSnapshotAndDiscard(license)
+
+    super.update()
+
+    if (oldSnapshot == null) return
+    if (response.status < 200 || response.status >= 300) return
+
+    License updated = License.get(params.id)
+    Map<String, Map> newAmendments = licenseAmendmentEventService.captureAmendmentSnapshots(updated)
+    Map<String, Object> newSnapshot = licenseEventService.captureSnapshotAndDiscard(updated)
+
+    if (withoutLastUpdated(oldSnapshot) != withoutLastUpdated(newSnapshot)) {
+      licenseEventService.publishUpdate(oldSnapshot, newSnapshot)
+    }
+    licenseAmendmentEventService.publishUpdates(oldAmendments, newAmendments)
+  }
+
+  private static Map<String, Object> withoutLastUpdated(Map<String, Object> snapshot) {
+    snapshot.findAll { entry -> entry.key != 'lastUpdated' }
+  }
+
   // Override the show method
   @Transactional(readOnly=true)
   def show() {
